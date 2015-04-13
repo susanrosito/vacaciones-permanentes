@@ -1,0 +1,51 @@
+{% set title = "Vacaciones Permanentes" %}
+{% set description = "Trabajo Práctico de la materia Desarrollo de Software de la UNQ" %}
+{% set keywords = "FVacaciones, Permanentes, TP, MEAN, UNQ, Desarrollo, Software" %}
+
+{% extends "base.html" %}
+
+{% block main %}
+<md-toolbar ng-controller="NavCtrl">
+    <md-content layout="row">
+        <div flex="50">
+            <h2><a class="md-toolbar-title" href="#/home">Vacaciones Permanentes</a></h2>
+        </div>
+        <div flex="50" class="text-right">
+            <a ng-click="toggleRight()">
+                <span ng-show="isLoggedIn()">[[currentUser()]]</span>
+                <img ng-show="isLoggedIn()" gravatar-src="[['currentUser()']]" gravatar-size="100" class="face">
+            </a>
+            <ul>
+                <li>
+                    <a ng-hide="isLoggedIn()" href="/#/login">Log In</a>
+                </li>
+                <li>
+                    <a ng-hide="isLoggedIn()" href="/#/register">Register</a>
+                </li>
+            </ul>
+        </div>
+    </md-content>
+</md-toolbar>
+<md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="right">
+    <md-content ng-controller="NavCtrl" class="md-padding">
+        <ul>
+            <li ng-show="isLoggedIn()">
+                <a ng-click="logOut()"><i class="fa fa-sign-out"></i> Log Out</a>
+            </li>
+        </ul>
+    </md-content>
+</md-sidenav>
+<ui-view></ui-view>
+{% endblock %}
+
+{% block inline_views %}
+<script type="text/ng-template" id="/home.html">
+    {% include "home.html" %}
+</script>
+<script type="text/ng-template" id="/login.html">
+    {% include "login.html" %}
+</script>
+<script type="text/ng-template" id="/register.html">
+    {% include "register.html" %}
+</script>
+{% endblock %}
