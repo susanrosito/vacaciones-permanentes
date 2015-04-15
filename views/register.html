@@ -1,0 +1,29 @@
+<div ng-show="error" class="alert alert-danger row">
+    <span>{{ error.message }}</span>
+</div>
+
+<div layout="row" layout-align="center center">
+    <md-content class="standalone-card" flex="40" layout="row" layout-align="center center">
+        <div flex="80">
+            <h3>Register</h3>
+            <form ng-submit="register()">
+                <md-input-container flex>
+                    <label>Email</label>
+                    <input type="email" ng-model="user.username" placeholder="e.g. someone@company.com">
+                </md-input-container>
+                <md-input-container flex>
+                    <label>Password</label>
+                    <input type="password" ng-model="user.password" placeholder="Use letters and numbers only">
+                </md-input-container>
+                <div class="md-content-button-containers" layout="row" layout-align="end center">
+                    <md-button ng-href="#/home">
+                        Cancel
+                    </md-button>
+                    <md-button type="submit" ng-click="post()" class="md-primary">
+                        Register
+                    </md-button>
+                </div>
+            </form>
+        </div>
+    </md-content>
+</div>

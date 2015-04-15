@@ -1,0 +1,20 @@
+# humanstxt.org/
+# The humans responsible & technology colophon
+
+# TEAM
+
+    Name: Alan Rodas Bonjour
+    Site: alanrodas.com
+    Twitter : @alanrodas
+    Location: Buenos Aires, Argentina
+
+# THANKS
+
+    To the people at humanstxt.org
+
+# TECHNOLOGY COLOPHON
+
+
+    Last update: 2015/03/28
+    Standards: HTML5, CSS3
+    Components: Modernizr, jQuery, AngularJS.
