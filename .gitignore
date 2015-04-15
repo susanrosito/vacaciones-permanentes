@@ -36,5 +36,7 @@ build/Release
 node_modules
 
 # Bower dependency directory
-assets/vendor
+bower_components
 
+#Target directory
+target/

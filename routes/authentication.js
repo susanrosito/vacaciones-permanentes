@@ -1,10 +1,10 @@
-logger.info("Creating comment routes...");
+logger.info('Creating comment routes...');
 
 var passport = require('passport');
 
-var router = express.Router();
+var User = mongoose.model('User');
 
-var User = mongoose.model("User");
+var router = module.exports =  express.Router();
 
 router.post('/register', function(req, res, next){
     if(!req.body.username || !req.body.password){
@@ -35,5 +35,3 @@ router.post('/login', function(req, res, next){
         }
     })(req, res, next);
 });
-
-module.exports = router;

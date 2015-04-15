@@ -1,8 +1,8 @@
-logger.info("Creating trip routes...");
+logger.info('Creating trip routes...');
 
-var router = express.Router();
+var Trip = mongoose.model('Trip');
 
-var Trip = mongoose.model("Trip");
+var router = module.exports = express.Router();
 
 router.param('trip', function(req, res, next, id) {
     var query = Trip.findById(id);
@@ -44,8 +44,9 @@ router.get('/:trip', function(req, res) {
 router.delete('/:trip', function(req, res) {
     req.trip.delete(function(err){
         if(err){ return next(err); }
-        res.json({status: "Success"});
+        res.json({
+            status: 200,
+            message: 'Success'
+        });
     })
 });
-
-module.exports = router;

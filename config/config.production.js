@@ -1,6 +1,6 @@
 var config = module.exports = require('./config.global');
 
-config.env = 'development';
-config.mongo.db = 'vacaciones_permanentes';
+config.env = 'production';
+config.mongo.db = 'vacaciones_test';
 
 config.log.level = 'info';

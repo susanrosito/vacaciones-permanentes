@@ -1,26 +1,20 @@
-var underscore = require("underscore"),
+var underscore = require('underscore'),
     winston = require('winston'),
-    mongoose = require("mongoose"),
-    express = require("express"),
-    consolidate = require('consolidate'),
-    nunjucks = require('nunjucks'),
+    mongoose = require('mongoose'),
+    express = require('express'),
     jwt = require('express-jwt');
 
+underscore.str = require('underscore.string');
+underscore.mixin(underscore.str.exports());
+
 module.exports = function(config) {
-    underscore.str = require('underscore.string');
-    underscore.mixin(underscore.str.exports());
 
     global._ = underscore;
     global.mongoose = mongoose;
     global.express = express;
     global.app = express();
 
-// Set Nunjucks template engine support
-    global.app.engine("html", consolidate.nunjucks);
-    global.app.set("view engine", "html");
-    global.app.set("views", "views");
-
-// Setup the global logger
+    // Setup the global logger
     global.loggerTransports = [
         new (winston.transports.Console)({
             colorize: true,

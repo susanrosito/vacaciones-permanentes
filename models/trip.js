@@ -9,4 +9,4 @@ var TripSchema = new mongoose.Schema({
     // comments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Location' }]
 });
 
-mongoose.model("Trip", TripSchema);
+module.exports = mongoose.model("Trip", TripSchema);

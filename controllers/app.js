@@ -1,6 +1,6 @@
-var app = angular.module('vacacionesPermanentes', ["ui.router", "ngMaterial", "ui.gravatar", "angularMoment", "materialDatePicker"]);
+var app = angular.module('vacacionesPermanentes', ["ui.router", "ngMaterial", "ui.gravatar", "angularMoment"]);
 
-app.config(function ($interpolateProvider, $stateProvider, $urlRouterProvider) {
+app.config(function ($interpolateProvider, $stateProvider, $urlRouterProvider, $mdThemingProvider) {
     $interpolateProvider.startSymbol('[[');
     $interpolateProvider.endSymbol(']]');
 
@@ -36,6 +36,10 @@ app.config(function ($interpolateProvider, $stateProvider, $urlRouterProvider) {
             }]
         });
     $urlRouterProvider.otherwise('home');
+
+    $mdThemingProvider.theme('default')
+        .primaryPalette('light-green')
+        .accentPalette('red');
 });
 app.run(function(amMoment) {
     amMoment.changeLocale('es');
