@@ -1,10 +1,11 @@
-logger.info("Creating User Schema");
+logger.info(__('Creating User Schema'));
 
-var crypto = require("crypto");
-var jwt = require("jsonwebtoken");
+var crypto = require('crypto');
+var jwt = require('jsonwebtoken');
 
 var UserSchema = new mongoose.Schema({
     username: {type: String, lowercase: true, unique: true},
+    language: {type: String, lowercase: true, default: 'es'},
     hash: String,
     salt: String
 });
@@ -26,8 +27,9 @@ UserSchema.methods.generateJWT = function() {
     return jwt.sign({
         _id: this._id,
         username: this.username,
+        language: this.language,
         exp: parseInt(exp.getTime() / 1000)
     }, config.auth.secret);
 };
 
-module.exports = mongoose.model("User", UserSchema);
+module.exports = mongoose.model('User', UserSchema);

@@ -3,7 +3,7 @@
         <md-content layout="row">
             <div flex="50">
                 <a ng-click="toggleLeft()"><i class="fa fa-bars"></i> </a>
-                <h2><a class="md-toolbar-title" ui-sref="home">Vacaciones Permanentes</a></h2>
+                <h2><a class="md-toolbar-title" ui-sref="home" translate>Permanent Vacations</a></h2>
             </div>
             <div flex="50" class="text-right">
                 <a ng-click="toggleRight()">
@@ -12,10 +12,10 @@
                 </a>
                 <ul>
                     <li>
-                        <a ng-hide="isLoggedIn()" ui-sref="login">Log In</a>
+                        <a ng-hide="isLoggedIn()" ui-sref="login" translate>Log In</a>
                     </li>
                     <li>
-                        <a ng-hide="isLoggedIn()" ui-sref="register">Register</a>
+                        <a ng-hide="isLoggedIn()" ui-sref="register" translate>Register</a>
                     </li>
                 </ul>
             </div>
@@ -47,7 +47,7 @@
         <md-content class="md-padding">
             <ul>
                 <li ng-show="isLoggedIn()">
-                    <a ng-click="logOut()"><i class="fa fa-sign-out"></i> Log Out</a>
+                    <a ng-click="logOut()"><i class="fa fa-sign-out"></i> <span translate>Log Out</span></a>
                 </li>
             </ul>
         </md-content>

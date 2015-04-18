@@ -1,4 +1,4 @@
-logger.info('Creating routes...');
+logger.info(__('Creating routes...'));
 
 app.use('/trips', require('./trip.js'));
 app.use(require('./authentication.js'));

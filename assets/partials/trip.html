@@ -1,28 +1,28 @@
 <md-dialog aria-label="Dialog Trip">
     <md-content class="sticky-container">
-        <h3>[[isNew ? 'Add New' : 'Edit' ]] Trip</h3>
+        <h3>[[(isNew ? 'Add New Trip' : 'Edit Trip') | translate]]</h3>
         <div class="dialog-content">
             <md-input-container flex>
-                <label>Title</label>
-                <input ng-model="trip.title" placeholder="e.g. Summer Vacations">
+                <label translate>Title</label>
+                <input ng-model="trip.title" placeholder="[["e.g. Summer Vacations" | translate]]">
             </md-input-container>
             <md-input-container flex>
-                <label>Start Date</label>
-                <input ng-model="trip.startDate" placeholder="e.g. August 1, 2015">
+                <label translate>Start Date</label>
+                <input ng-model="trip.startDate" placeholder="[["e.g. August 1, 2015" | translate]]">
             </md-input-container>
             <md-input-container flex>
-                <label>End Date</label>
-                <input ng-model="trip.endDate" placeholder="e.g. August 1, 2015">
+                <label translate>End Date</label>
+                <input ng-model="trip.endDate" placeholder="[["e.g. August 1, 2015" | translate]]">
             </md-input-container>
         </div>
     </md-content>
     <div class="md-actions" layout="row">
         <span flex></span>
         <md-button ng-click="cancel()">
-            Cancel
+            [["Cancel" | translate]]
         </md-button>
         <md-button ng-click="accept()" class="md-primary">
-            [[isNew ? 'Add' : 'Edit' ]] Trip
+            [[(isNew ? 'Add New Trip' : 'Edit Trip') | translate ]]
         </md-button>
     </div>
 </md-dialog>
