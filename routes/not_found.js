@@ -1,22 +1,20 @@
-logger.info("Defining 404 page not found actions...");
+logger.info('Defining 404 page not found actions...');
 
-var router = express.Router();
+var router = module.exports = express.Router();
 
 router.use(function(req, res){
     res.status(404);
-    logger.warn("NOT FOUND");
-    // respond with html page
+    logger.info('NOT FOUND');
     if (req.accepts('html')) {
-        res.render("404");
+        res.status(404).redirect('404.html');
     }
-    // respond with json
     else if (req.accepts('json')) {
-        res.send({ error: 'Not found' });
+        res.send({
+            error: 'Not found',
+            status: 404
+        });
     }
-    // default to plain-text. send()
     else {
         res.type('txt').send('Not found');
     }
 });
-
-module.exports = router;
