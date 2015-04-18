@@ -1,12 +1,14 @@
 logger.info('Defining 404 page not found actions...');
 
+var fs = require('fs');
+
 var router = module.exports = express.Router();
 
 router.use(function(req, res){
     res.status(404);
     logger.info('NOT FOUND');
     if (req.accepts('html')) {
-        res.status(404).redirect('404.html');
+        res.status(404).send(fs.readFileSync('public/404.html'));
     }
     else if (req.accepts('json')) {
         res.send({

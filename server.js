@@ -23,7 +23,7 @@ logger.info('Database connected');
 
 require('./models');
 require('./config/passport');
-require('./routes/');
+require('./routes');
 app.use(passport.initialize());
 
 app.use(expressWinston.errorLogger({
