@@ -27,6 +27,14 @@
     </md-content>
 </md-toolbar>
 <md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="right">
+    <md-toolbar layout="row" layout-align="center end" ng-controller="NavCtrl">
+        <md-content class="text-right">
+            <a ng-click="toggleRight()">
+                <span ng-show="isLoggedIn()">[[currentUser()]]</span>
+                <img ng-show="isLoggedIn()" gravatar-src="[['currentUser()']]" gravatar-size="100" class="face">
+            </a>
+        </md-content>
+    </md-toolbar>
     <md-content ng-controller="NavCtrl" class="md-padding">
         <ul>
             <li ng-show="isLoggedIn()">

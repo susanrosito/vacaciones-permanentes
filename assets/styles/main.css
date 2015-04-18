@@ -1,16 +1,19 @@
 body {background-color: #eee;}
 md-card {background-color: white}
-md-toolbar a {
-    color: #ddd !important;
+md-toolbar a,
+md-sidenav md-toolbar a {
+    color: #eee !important;
     font-weight: bold;
     text-decoration: none !important;
     cursor: pointer;
 }
-md-toolbar a:hover {
+md-toolbar a:hover,
+md-sidenav md-toolbar a:hover {
     color: #fff !important;
     text-decoration: none !important;
 }
-.md-toolbar a:focus {
+md-toolbar a:focus
+md-sidenav md-toolbar a:focus {
     color: #fff !important;
     text-decoration: none !important;
 }
@@ -19,23 +22,33 @@ md-toolbar h2,
 md-toolbar h3,
 md-toolbar h4,
 md-toolbar h5,
-md-toolbar h6 {
+md-toolbar h6
+md-sidenav md-toolbar h1,
+md-sidenav md-toolbar h2,
+md-sidenav md-toolbar h3,
+md-sidenav md-toolbar h4,
+md-sidenav md-toolbar h5,
+md-sidenav md-toolbar h6 {
     display: inline-block;
     margin: 0;
 }
-md-toolbar ul {
+md-toolbar ul,
+md-sidenav md-toolbar ul {
     list-style: none;
 }
-md-toolbar li {
+md-toolbar li,
+md-sidenav md-toolbar li {
     display: inline-block;
     padding: 0 10px 0 10px;
 }
-md-toolbar md-content {
+md-toolbar md-content,
+md-sidenav md-toolbar md-content {
     background-color: transparent !important;
     line-height: 64px;
     height: 64px;
 }
-md-toolbar md-content div { padding: 0 20px; }
+md-toolbar md-content div,
+md-sidenav md-toolbar md-content div{ padding: 0 20px; }
 
 md-sidenav {
     color: #222;
@@ -81,8 +94,7 @@ md-content .md-content-button-containers button {
     right: 10%;
 }
 .md-sidenav-right {
-    top: 64px;
-    height: 93vh;
+    height: 100vh;
 }
 .face {
     width: 48px;
