@@ -1,5 +1,5 @@
-app.controller('AddTripDialogCtrl', ['$scope', '$mdDialog', 'authService', function(
-        $scope, $mdDialog, authService) {
+app.controller('AddTripDialogCtrl', ['$scope', '$mdDialog', 'authService', 'tripService', function(
+        $scope, $mdDialog, authService, tripService) {
 
     $scope.isLoggedIn = authService.isLoggedIn;
     $scope.hide = function () {
