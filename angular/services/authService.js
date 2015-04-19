@@ -10,7 +10,7 @@ app.factory('authService', ['$http', '$window', function($http, $window) {
     };
     authService.getHeader = function() {
         return {
-            headers: {Authorization: 'Bearer ' + auth.getToken()}
+            headers: {Authorization: 'Bearer ' + authService.getToken()}
         };
     };
     authService.getPayload = function() {
