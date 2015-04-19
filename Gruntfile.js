@@ -84,7 +84,7 @@ module.exports = function(grunt) {
         browserify: {
             compile: {
                 files: set({},
-                    target.dev.path + '/public/javascripts/controllers.js', ['./controllers/index.js']
+                    target.dev.path + '/public/javascripts/controllers.js', ['./angular/app.js']
                 )
             }
         },

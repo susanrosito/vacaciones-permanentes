@@ -1,0 +1,15 @@
+<div layout="row" layout-align="center center">
+    <div flex="66">
+        <md-card class="post-card">
+            <h4>[[trip.title]]</h4>
+            <p>from [[trip.startDate | amDateFormat:'MMMM DD, YYYY']]</p>
+            <p>to [[trip.endDate | amDateFormat:'MMMM, DD, YYYY']]</p>
+        </md-card>
+    </div>
+</div>
+
+<md-button class="add-post md-fab md-accent" aria-label="Add New Post" ng-click="showAddDialog($event)">
+    <md-tooltip>Add New Trip</md-tooltip>
+    <i class="fa fa-plus"></i>
+</md-button>
+
