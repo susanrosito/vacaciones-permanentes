@@ -88,11 +88,7 @@ md-content .md-content-button-containers {
 md-content .md-content-button-containers button {
     margin: 0 10px;
 }
-.md-fab {
-    position: absolute;
-    bottom: 50px;
-    right: 10%;
-}
+
 .md-sidenav-right {
     height: 100vh;
 }
@@ -100,6 +96,18 @@ md-content .md-content-button-containers button {
     width: 48px;
     border-radius: 48px;
     border: 1px solid #ddd;
+}
+
+.add-trip {
+    position: absolute;
+    bottom: 50px;
+    right: 10%;
+}
+
+.delete-trip {
+    position: absolute;
+    bottom: 115px;
+    right: 10%;
 }
 
 .post-card .post-title-container {

@@ -12,4 +12,5 @@ app.controller('TripCtrl', ['$scope', '$http', '$stateParams', '$mdDialog', 'tri
             $mdDialog.hide();
         });
     };
+    
 }]);
