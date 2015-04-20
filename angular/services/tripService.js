@@ -4,16 +4,16 @@ app.factory('tripService', ['$http', 'authService', function ($http, authService
         else { return '/trips'; }
     };
 
-    var tripService = [];
-    tripService.all = tripService;
+    var tripService = {};
+    tripService.all = [];
     tripService.getAll = function () {
         return $http.get(remote_uri()).success(function (data) {
-            angular.copy(data, tripService);
+            angular.copy(data, tripService.all);
         });
     };
     tripService.create = function (trip) {
         return $http.post(remote_uri(), trip, authService.getHeader()).success(function (data) {
-            trips.push(data);
+            tripService.all.push(data);
         });
     };
     tripService.get = function (id) {
