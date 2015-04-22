@@ -42,7 +42,7 @@ router.get('/:trip', function(req, res) {
 });
 
 router.delete('/:trip', function(req, res) {
-    req.trip.delete(function(err){
+    req.trip.remove(function(err){
         if(err){ return next(err); }
         res.json({
             status: 200,
