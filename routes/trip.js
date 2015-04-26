@@ -16,11 +16,11 @@ router.param('trip', function(req, res, next, id) {
     });
 });
 
-router.get('/', function(req, res, next) {
+router.get('/', auth, function(req, res, next) {
     Trip.find(function(err, trips){
         if(err){ return next(err); }
         res.json(trips);
-    });
+    }).where('author', req.user.username);
 });
 
 router.post('/', auth, function(req, res, next) {
