@@ -6,9 +6,10 @@ app.controller('SingleTripCtrl', ['$scope', '$http', '$state', '$stateParams', '
 
     $scope.showAddDialog = function (ev) {
         $mdDialog.show({
-            controller: 'AddTripDialogCtrl',
-            templateUrl: '/partials/addTrip.html',
-            targetEvent: ev
+            controller: 'TripDialogCtrl',
+            templateUrl: '/partials/trip.html',
+            targetEvent: ev,
+            locals: { trip: {} }
         }).then(function (answer) {}, function () {
             $mdDialog.hide();
         });
@@ -29,6 +30,20 @@ app.controller('SingleTripCtrl', ['$scope', '$http', '$state', '$stateParams', '
                 $mdDialog.hide();
         });
     };
+
+    $scope.showEditDialog = function (ev) {
+        $mdDialog.show({
+            controller: 'TripDialogCtrl',
+            templateUrl: '/partials/trip.html',
+            targetEvent: ev,
+            locals: { trip: $scope.trip }
+        }).then(function (answer) {
+            $state.go('home');
+        }, function () {
+            $mdDialog.hide();
+        });
+    };
+
 
     //$scope.deleteTrip = function (trip) {
     //   tripService.delete(trip)

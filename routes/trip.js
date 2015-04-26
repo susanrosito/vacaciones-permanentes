@@ -48,5 +48,15 @@ router.delete('/:trip', function(req, res) {
             status: 200,
             message: 'Success'
         });
-    })
+    });
+});
+
+router.put('/:trip', function(req, res, next){
+    var trip = req.trip;
+
+    trip.update(req.body, function(err, trip){
+        if(err){return next(err); }
+        res.json(trip);
+    });
+
 });
