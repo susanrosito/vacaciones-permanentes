@@ -31,12 +31,22 @@ app.factory('tripService', ['$http', 'authService', function ($http, authService
         });
     };
     tripService.delete = function (trip) {
-        return $http.delete(remote_uri(trip._id)).success(function (res) {
-            var index = getIndexBYId(trip._id);
+        return $http.delete(remote_uri(trip._id), authService.getHeader()).success(function (res) {
+            var index = tripService.getIndexBYId(trip._id);
             if(index != -1) {
                 tripService.all.splice(index, 1);
             }
         });
     };
+
+    tripService.edit = function (trip) {
+        return $http.put(remote_uri(trip._id), trip, authService.getHeader()).success(function (data){
+            var index = tripService.getIndexBYId(trip._id);
+            if(index != -1) {
+                tripService.all.splice(index, 1, data);
+            }
+        });
+    };
+
     return tripService;
 }]);

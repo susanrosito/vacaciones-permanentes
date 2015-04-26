@@ -5,8 +5,8 @@ app.controller('TripCtrl', ['$scope', '$http', '$stateParams', '$mdDialog', 'tri
 
     $scope.showAddDialog = function (ev) {
         $mdDialog.show({
-            controller: 'AddTripDialogCtrl',
-            templateUrl: '/partials/addTrip.html',
+            controller: 'TripDialogCtrl',
+            templateUrl: '/partials/trip.html',
             targetEvent: ev
         }).then(function (answer) {}, function () {
             $mdDialog.hide();
