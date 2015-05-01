@@ -26,7 +26,7 @@ app.factory('tripService', ['$http', 'authService', function ($http, authService
         });
     };
     tripService.get = function (id) {
-        return $http.get(remote_uri(id)).then(function (res) {
+        return $http.get(remote_uri(id), authService.getHeader()).then(function (res) {
             return res.data;
         });
     };
