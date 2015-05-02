@@ -16,7 +16,7 @@ app.factory('tripService', ['$http', 'authService', function ($http, authService
         return arrayObjectIndexOf(tripService.all, id, '_id');
     }
     tripService.getAll = function () {
-        return $http.get(remote_uri()).success(function (data) {
+        return $http.get(remote_uri(), authService.getHeader()).success(function (data) {
             angular.copy(data, tripService.all);
         });
     };
@@ -26,7 +26,7 @@ app.factory('tripService', ['$http', 'authService', function ($http, authService
         });
     };
     tripService.get = function (id) {
-        return $http.get(remote_uri(id)).then(function (res) {
+        return $http.get(remote_uri(id), authService.getHeader()).then(function (res) {
             return res.data;
         });
     };

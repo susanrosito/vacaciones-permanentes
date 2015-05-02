@@ -16,11 +16,19 @@ router.param('trip', function(req, res, next, id) {
     });
 });
 
-router.get('/', function(req, res, next) {
+router.all('/:trip*', auth, function(req, res, next) {
+    if (req.trip.author === req.user.username) {
+        next();
+    } else {
+        res.status(401).send({status: 401, message: 'Unauthorized'});
+    }
+});
+
+router.get('/', auth, function(req, res, next) {
     Trip.find(function(err, trips){
         if(err){ return next(err); }
         res.json(trips);
-    });
+    }).where('author', req.user.username);
 });
 
 router.post('/', auth, function(req, res, next) {
@@ -33,7 +41,7 @@ router.post('/', auth, function(req, res, next) {
     });
 });
 
-router.get('/:trip', function(req, res) {
+router.get('/:trip', auth, function(req, res) {
     // populate with locations in the future
     //req.trip.populate('locations', function(err, trip) {
     //   if (err) { return next(err); }
@@ -41,7 +49,7 @@ router.get('/:trip', function(req, res) {
     //});
 });
 
-router.delete('/:trip', function(req, res) {
+router.delete('/:trip', auth, function(req, res) {
     req.trip.remove(function(err){
         if(err){ return next(err); }
         res.json({
@@ -51,7 +59,7 @@ router.delete('/:trip', function(req, res) {
     });
 });
 
-router.put('/:trip', function(req, res, next){
+router.put('/:trip', auth, function(req, res, next){
     var trip = req.trip;
 
     trip.update(req.body, function(err, trip){
