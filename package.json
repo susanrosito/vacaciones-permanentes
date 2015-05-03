@@ -17,11 +17,14 @@
     "express": "^4.12.3",
     "express-jwt": "^2.1.0",
     "express-winston": "^0.2.12",
+    "grunt-angular-gettext": "^2.1.0",
     "jsonwebtoken": "^4.2.1",
     "mongoose": "^3.8.25",
     "mongoose-troop": "0.0.8",
+    "node-gettext": "^1.0.1",
     "passport": "^0.2.1",
     "passport-local": "^1.0.0",
+    "sprintf-js": "^1.0.2",
     "underscore": "^1.8.2",
     "underscore.string": "^3.0.3",
     "winston": "^0.9.0"
@@ -42,6 +45,7 @@
     "grunt-keepalive": "0.0.1",
     "grunt-npm-install": "^0.2.0",
     "grunt-nunjucks": "^0.1.4",
-    "grunt-nunjucks-2-html": "^0.2.6"
+    "grunt-nunjucks-2-html": "^0.2.6",
+    "nunjucks": "^1.2.0"
   }
 }

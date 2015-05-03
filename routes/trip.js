@@ -1,4 +1,4 @@
-logger.info('Creating trip routes...');
+logger.info(__('Creating trip routes...'));
 
 var Trip = mongoose.model('Trip');
 

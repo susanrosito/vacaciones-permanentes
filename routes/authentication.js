@@ -1,4 +1,4 @@
-logger.info('Creating comment routes...');
+logger.info(__('Creating authentication routes...'));
 
 var passport = require('passport');
 
@@ -6,8 +6,8 @@ var User = mongoose.model('User');
 
 var router = module.exports =  express.Router();
 
-router.post('/register', function(req, res, next){
-    if(!req.body.username || !req.body.password){
+router.post('/register', function(req, res, next) {
+    if(!req.body.username || !req.body.password) {
         return res.status(400).json({message: 'Please fill out all fields'});
     }
 
@@ -21,8 +21,8 @@ router.post('/register', function(req, res, next){
     });
 });
 
-router.post('/login', function(req, res, next){
-    if(!req.body.username || !req.body.password){
+router.post('/login', function(req, res, next) {
+    if(!req.body.username || !req.body.password) {
         return res.status(400).json({message: 'Please fill out all fields'});
     }
 

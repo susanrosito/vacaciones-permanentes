@@ -1,5 +1,5 @@
 var app = angular.module('vacacionesPermanentes',
-    ['ui.router', 'ngMaterial', 'ui.gravatar', 'angularMoment']);
+    ['ui.router', 'ngMaterial', 'ui.gravatar', 'angularMoment', 'gettext']);
 
 function onLoggedIn() {
     return ['$state', 'authService', function($state, authService) {
@@ -17,8 +17,8 @@ function onNotLoggedIn() {
         }
     }];
 }
-app.config(['$interpolateProvider', '$stateProvider', '$urlRouterProvider', '$mdThemingProvider', function (
-        $interpolateProvider, $stateProvider, $urlRouterProvider, $mdThemingProvider) {
+app.config(['$interpolateProvider', '$stateProvider', '$urlRouterProvider', '$mdThemingProvider',
+    function ($interpolateProvider, $stateProvider, $urlRouterProvider, $mdThemingProvider) {
     $interpolateProvider.startSymbol('[[');
     $interpolateProvider.endSymbol(']]');
 
@@ -61,14 +61,18 @@ app.config(['$interpolateProvider', '$stateProvider', '$urlRouterProvider', '$md
         });
     $urlRouterProvider.otherwise('home');
 
-
     $mdThemingProvider.theme('default')
         .primaryPalette('light-green')
         .accentPalette('red');
 }]);
 
-app.run(['amMoment', function(amMoment) {
-    amMoment.changeLocale('es');
+app.run(['amMoment', 'gettextCatalog', function(amMoment, gettextCatalog) {
+    var defaultLang = 'es';
+
+    gettextCatalog.loadRemote("/locales/" + defaultLang + ".json");
+
+    amMoment.changeLocale(defaultLang);
+    gettextCatalog.setCurrentLanguage(defaultLang);
 }]);
 
 global.app = module.exports = app;

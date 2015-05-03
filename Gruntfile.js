@@ -60,7 +60,7 @@ module.exports = function(grunt) {
                 files: [
                 {
                     expand: true,
-                    src: ['./server.js', 'controllers/**', 'routes/**', 'models/**', 'config/**'],
+                    src: ['./server.js', 'controllers/**', 'routes/**', 'models/**', 'config/**', 'locales/**'],
                     dest: target.dev.path
                 }, {
                     expand: true,
@@ -84,7 +84,7 @@ module.exports = function(grunt) {
         browserify: {
             compile: {
                 files: set({},
-                    target.dev.path + '/public/javascripts/controllers.js', ['./angular/app.js']
+                    target.dev.path + 'public/javascripts/controllers.js', ['./angular/app.js']
                 )
             }
         },
@@ -120,7 +120,7 @@ module.exports = function(grunt) {
                     cwd: target.dev.path,
                     server: 'server.js',
                     port: 3000,
-                    bases: ['public']
+                    bases: ['public', 'locales']
                 }
             }
         },
@@ -139,6 +139,22 @@ module.exports = function(grunt) {
             test: [target.test.path]
         },
 
+        nggettext_compile: {
+            all: {
+                options: {
+                    format: 'json'
+                },
+                files: [
+                    {
+                        expand: true,
+                        src: ['./locales/**.po'],
+                        dest: target.dev.path + 'public',
+                        ext: '.json'
+                    }
+                ]
+            }
+        },
+
         default: ['run']
     });
 
@@ -153,6 +169,8 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-express');
 
+    grunt.loadNpmTasks('grunt-angular-gettext');
+
     // grunt.loadNpmTasks('grunt-wiredep');
 
     grunt.registerMultiTask('cwd', function() {
@@ -163,7 +181,7 @@ module.exports = function(grunt) {
     });
 
     grunt.registerTask('install', ['npm-install', 'bower-install-simple']);
-    grunt.registerTask('compile', ['nunjucks', 'browserify', 'copy:dev']);
+    grunt.registerTask('compile', ['nunjucks', 'browserify', 'nggettext_compile', 'copy:dev']);
     grunt.registerTask('deploy', ['compile']);
     grunt.registerTask('test', ['compile']);
     grunt.registerTask('run', ['compile', 'cwd:dev', 'express', 'express-keepalive']);

@@ -1,4 +1,3 @@
-
 var config = require('./config');
 
 var cors = require('cors'),
@@ -17,9 +16,9 @@ app.use(bodyParser.urlencoded({extended: true}));
 // Set UTF-8 Encoding
 app.use('/', function(req, res, next){ res.charset = 'utf-8'; next(); });
 
-logger.info('Connecting to MongoDB at %s', config.mongo.connectionString);
+logger.info(__('Connecting to MongoDB at %s', config.mongo.connectionString));
 mongoose.connect(config.mongo.connectionString);
-logger.info('Database connected');
+logger.info(__('Database connected'));
 
 require('./models');
 require('./config/passport');
@@ -30,9 +29,5 @@ app.use(expressWinston.errorLogger({
     transports: loggerTransports,
     expressFormat: true
 }));
-
-app.listen(config.port, function() {
-    logger.info('Express Server started at port: ' + config.port);
-});
 
 module.exports = app;

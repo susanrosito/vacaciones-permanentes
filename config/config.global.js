@@ -13,4 +13,5 @@ config.auth = {};
 config.auth.secret = 'SOMESECRET';
 
 config.log = {};
-config.log.level = 'warn';
+
+config.log.level = 'info';
