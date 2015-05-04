@@ -62,7 +62,7 @@ app.config(['$interpolateProvider', '$stateProvider', '$urlRouterProvider', '$md
 
     GoogleMapApi.configure({
         v:'3.17',
-        libraries: 'places'
+        libraries: 'places,geometry'
     });
 
     $urlRouterProvider.otherwise('home');

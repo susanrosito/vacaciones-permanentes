@@ -17,14 +17,25 @@
             <md-card class="post-card" ng-repeat="city in trip.cities" id="[[post._id]]">
                 <h4>[[city.city]]</h4>
             </md-card>
-            <md-button ng-click="addCity()" class="md-primary">
+            <md-button ng-click="addCity()" class="md-primary" ng-disabled="disableAddCityButton()">
                 Add City
             </md-button>
             <script type="text/ng-template" id="searchbox.tpl.html">
-                <input ng-model="trip.cities" placeholder="Search Box">
+                <input ng-model="searchPlace" placeholder="Search Box">
             </script>
             <ui-gmap-google-map center="map.center" zoom="map.zoom" dragging="map.dragging" bounds="map.bounds" events="map.events" options="map.options" pan="true" control="map.control">
                 <ui-gmap-search-box options="searchbox.options" template="searchbox.template" events="searchbox.events" position="searchbox.position"></ui-gmap-search-box>
+                <ui-gmap-polylines
+                        models="map.polys"
+                        path="'path'"
+                        stroke="'stroke'"
+                        draggable="'draggable'"
+                        editable="'editable'"
+                        geodesic="'geodesic'"
+                        visible="'visible'"
+                        static='false'
+                        >
+                </ui-gmap-polylines>
             </ui-gmap-google-map>
         </div>
     </md-content>
