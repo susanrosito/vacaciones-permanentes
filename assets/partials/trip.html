@@ -25,17 +25,7 @@
             </script>
             <ui-gmap-google-map center="map.center" zoom="map.zoom" dragging="map.dragging" bounds="map.bounds" events="map.events" options="map.options" pan="true" control="map.control">
                 <ui-gmap-search-box options="searchbox.options" template="searchbox.template" events="searchbox.events" position="searchbox.position"></ui-gmap-search-box>
-                <ui-gmap-polylines
-                        models="map.polys"
-                        path="'path'"
-                        stroke="'stroke'"
-                        draggable="'draggable'"
-                        editable="'editable'"
-                        geodesic="'geodesic'"
-                        visible="'visible'"
-                        static='false'
-                        >
-                </ui-gmap-polylines>
+                <ui-gmap-polylines models="map.polys" path="'path'" stroke="'stroke'" draggable="'draggable'" editable="'editable'" geodesic="'geodesic'" visible="'visible'" static='false'></ui-gmap-polylines>
             </ui-gmap-google-map>
         </div>
     </md-content>
