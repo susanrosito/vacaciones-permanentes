@@ -1,5 +1,5 @@
 var app = angular.module('vacacionesPermanentes',
-    ['ui.router', 'ngMaterial', 'ui.gravatar', 'angularMoment', 'gettext']);
+    ['ui.router', 'ngMaterial', 'ui.gravatar', 'angularMoment','gettext', 'uiGmapgoogle-maps']);
 
 function onLoggedIn() {
     return ['$state', 'authService', function($state, authService) {
@@ -17,8 +17,8 @@ function onNotLoggedIn() {
         }
     }];
 }
-app.config(['$interpolateProvider', '$stateProvider', '$urlRouterProvider', '$mdThemingProvider',
-    function ($interpolateProvider, $stateProvider, $urlRouterProvider, $mdThemingProvider) {
+app.config(['$interpolateProvider', '$stateProvider', '$urlRouterProvider', '$mdThemingProvider','uiGmapGoogleMapApiProvider', function (
+        $interpolateProvider, $stateProvider, $urlRouterProvider, $mdThemingProvider, GoogleMapApi) {
     $interpolateProvider.startSymbol('[[');
     $interpolateProvider.endSymbol(']]');
 
@@ -59,6 +59,12 @@ app.config(['$interpolateProvider', '$stateProvider', '$urlRouterProvider', '$md
                 }]
             }
         });
+
+    GoogleMapApi.configure({
+        v:'3.17',
+        libraries: 'places,geometry'
+    });
+
     $urlRouterProvider.otherwise('home');
 
     $mdThemingProvider.theme('default')
