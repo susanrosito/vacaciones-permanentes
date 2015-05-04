@@ -5,8 +5,12 @@ var TripSchema = new mongoose.Schema({
     author: String,
     title: String,
     startDate: {type: Date },
-    endDate: {type: Date}
-    // comments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Location' }]
+    endDate: {type: Date},
+    cities: [{ type: mongoose.Schema.Types.ObjectId, ref: 'City' }]
 });
 
-module.exports = mongoose.model('Trip', TripSchema);
+TripSchema.methods.addCity = function(city){
+  this.cities.push(city);
+};
+
+module.exports = mongoose.model("Trip", TripSchema);
