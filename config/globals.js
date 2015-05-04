@@ -2,7 +2,9 @@ var underscore = require('underscore'),
     winston = require('winston'),
     mongoose = require('mongoose'),
     express = require('express'),
-    jwt = require('express-jwt');
+    http = require('http'),
+    jwt = require('express-jwt'),
+    HTTPStatus = require('http-status');
 
 underscore.str = require('underscore.string');
 underscore.mixin(underscore.str.exports());
@@ -13,6 +15,25 @@ module.exports = function(config) {
     global.mongoose = mongoose;
     global.express = express;
     global.app = express();
+    global.HTTPStatus = HTTPStatus;
+
+    // Set an error response method to the response prototype
+    // So you can return standar error responses
+    express.response.error = function(statusCode, message) {
+        statusCode = statusCode || HttpStatus.INTERNAL_SERVER_ERROR;
+        message = message || '';
+        // If there is no code, send basic Error 500
+        if (typeof(statusCode) == 'string') {
+            message = statusCode;
+            statusCode = HttpStatus.INTERNAL_SERVER_ERROR;
+        }
+        var status = http.STATUS_CODES[statusCode] || String(statusCode);
+        return this.status(statusCode).json({
+            statusCode: statusCode,
+            status: status,
+            message: message
+        });
+    };
 
     // Setup the global logger
     global.loggerTransports = [

@@ -69,7 +69,7 @@ module.exports = function(grunt) {
         watch: {
             html: { files: 'views/**', tasks: ['compile:html'] },
             assets: { files: ['assets/**'], tasks: ['compile:assets'] },
-            angular: { files: ['angular/**'], tasks: ['compile:angular'] },
+            angular: { files: ['angular/**', 'locales/**'], tasks: ['compile:angular'] },
             server: { files: ['routes/**', 'models/**', 'config/**', './server.js'],
                 tasks: ['compile:server']
             }
