@@ -109,6 +109,14 @@ module.exports = function(grunt) {
             }
         },
 
+        shell: { mongodb: {
+            command: 'mongod',
+            options: {
+                async: true, stdout: false, stderr: true, failOnError: true,
+                execOptions: {cwd: '.'}
+            } }
+        },
+
         default: ['run']
     });
 
@@ -126,6 +134,8 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-angular-gettext');
     grunt.loadNpmTasks('grunt-wiredep');
 
+    grunt.loadNpmTasks('grunt-shell-spawn');
+
     grunt.registerMultiTask('cwd', function() {
         if (this.data && this.data !== process.cwd()) {
             process.chdir(this.data);
@@ -138,5 +148,5 @@ module.exports = function(grunt) {
     });
 
     grunt.registerTask('install', ['npm-install', 'bower-install-simple']);
-    grunt.registerTask('run', ['cwd:target', 'express', 'cwd:current', 'watch']);//,  'express-keepalive']);
+    grunt.registerTask('run', ['cwd:target', 'shell:mongodb', 'express', 'cwd:current', 'watch']);//,  'express-keepalive']);
 };

@@ -41,6 +41,7 @@
     "grunt-express": "^1.4.1",
     "grunt-npm-install": "^0.2.0",
     "grunt-nunjucks-2-html": "^0.2.6",
+    "grunt-shell-spawn": "^0.3.8",
     "grunt-wiredep": "^2.0.0"
   }
 }
