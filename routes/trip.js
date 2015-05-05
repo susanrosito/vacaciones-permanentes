@@ -20,7 +20,7 @@ router.all('/:trip*', auth, function(req, res, next) {
     if (req.trip.author === req.user.username) {
         next();
     } else {
-        res.status(401).send({status: 401, message: 'Unauthorized'});
+        res.error(HTTPStatus.UNAUTHORIZED, 'Unauthorized');
     }
 });
 

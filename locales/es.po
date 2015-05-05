@@ -79,6 +79,21 @@ msgstr "Iniciar Sesión"
 msgid "Register"
 msgstr "Registrarse"
 
+# views/navigations.html : Line 6
+# views/register.html : Line 6
+msgid "Please fill out all fields"
+msgstr "Por favor, complete todos los campos"
+
+# views/navigations.html : Line 6
+# views/register.html : Line 6
+msgid "There is no user with that email registered"
+msgstr "No hay un usuario con ese correo electrónico registrado"
+
+# views/navigations.html : Line 6
+# views/register.html : Line 6
+msgid "The username and password do not match"
+msgstr "El usuario y la contraseña no coinciden"
+
 # views/navigations.html : Line 50
 msgid "Log Out"
 msgstr "Cerrar Sesión"

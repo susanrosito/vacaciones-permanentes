@@ -79,6 +79,21 @@ msgstr ""
 msgid "Register"
 msgstr ""
 
+# views/navigations.html : Line 6
+# views/register.html : Line 6
+msgid "Please fill out all fields"
+msgstr ""
+
+# views/navigations.html : Line 6
+# views/register.html : Line 6
+msgid "There is no user with that email registered"
+msgstr ""
+
+# views/navigations.html : Line 6
+# views/register.html : Line 6
+msgid "The username and password do not match"
+msgstr ""
+
 # views/navigations.html : Line 50
 msgid "Log Out"
 msgstr ""

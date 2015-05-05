@@ -8,10 +8,10 @@ passport.use(new LocalStrategy(
         User.findOne({ username: username }, function (err, user) {
             if (err) { return done(err); }
             if (!user) {
-                return done(null, false, { message: 'Incorrect username.' });
+                return done(null, false, 'There is no user with that email registered');
             }
             if (!user.validPassword(password)) {
-                return done(null, false, { message: 'Incorrect password.' });
+                return done(null, false, 'The username and password do not match');
             }
             return done(null, user);
         });
