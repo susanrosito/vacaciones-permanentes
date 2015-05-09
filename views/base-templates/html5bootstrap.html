@@ -33,23 +33,18 @@
 
         <!-- Notification URL -->
         <meta name="msapplication-notification" content="frequency=30; polling-uri=1.xml; polling-uri2=2.xml; polling-uri3=3.xml; polling-uri4=4.xml; polling-uri5=5.xml" />
-        <!--
-        <script src="vendor/modernizr/modernizr.js"></script>
-        -->
-        <link href="vendor/angular/angular-csp.css" rel="stylesheet">
-        {% block styles %}
-        {% endblock %}
+        <!-- bower:css -->
+        <!-- endbower -->
+        <link rel="stylesheet" href="styles/main.css">
     </head>
     <body ng-app="{{ ng_app }}">
         <!--[if lt IE 8]>
             {% block upgrade_browser_notice %}{% endblock %}
         <![endif]-->
             {% block main %}{% endblock %}
-        <script src="vendor/angular/angular.js"></script>
-        <script src="vendor/angular-ui-router/release/angular-ui-router.js"></script>
-        {% block angular_plugins %}{% endblock %}
+        <!-- bower:js -->
+        <!-- endbower -->
         <script src="javascripts/controllers.js"></script>
-        {% block scripts %}{% endblock %}
         {% block inline_views %}{% endblock %}
     </body>
 </html>

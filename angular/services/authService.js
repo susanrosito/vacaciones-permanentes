@@ -10,7 +10,8 @@ app.factory('authService', ['$http', '$window', function($http, $window) {
     };
     authService.getHeader = function() {
         return {
-            headers: {Authorization: 'Bearer ' + authService.getToken()}
+            headers: {Authorization: 'Bearer ' + authService.getToken()},
+            timeout: 5000
         };
     };
     authService.getPayload = function() {
@@ -31,7 +32,13 @@ app.factory('authService', ['$http', '$window', function($http, $window) {
     };
     authService.currentUser = function() {
         if(authService.isLoggedIn()) {
-            return authService.getPayload().username;
+            var payload = authService.getPayload();
+            return {
+                _id: payload._id,
+                email: payload.email,
+                name: payload.name,
+                lang: payload.lang
+            };
         }
         return null;
     };

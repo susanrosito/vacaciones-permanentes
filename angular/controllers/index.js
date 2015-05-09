@@ -1,5 +1,5 @@
 require('./TripDialogCtrl.js');
-require('./SingleTripCtrl.js');
+require('./TripCtrl.js');
 require('./NavigationCtrl.js');
 require('./AuthCtrl.js');
-require('./TripCtrl.js');
+require('./TriplistCtrl.js');

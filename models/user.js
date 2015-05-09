@@ -4,10 +4,11 @@ var crypto = require('crypto');
 var jwt = require('jsonwebtoken');
 
 var UserSchema = new mongoose.Schema({
-    username: {type: String, lowercase: true, unique: true},
-    language: {type: String, lowercase: true, default: 'es'},
+    email: {type: String, lowercase: true, unique: true},
     hash: String,
-    salt: String
+    salt: String,
+    language: {type: String, lowercase: true, default: 'es'},
+    name: { type: String, default: '' }
 });
 
 UserSchema.methods.setPassword = function(password){
@@ -26,7 +27,8 @@ UserSchema.methods.generateJWT = function() {
     exp.setDate(today.getDate() + 60);
     return jwt.sign({
         _id: this._id,
-        username: this.username,
+        email: this.email,
+        name: this.name,
         language: this.language,
         exp: parseInt(exp.getTime() / 1000)
     }, config.auth.secret);

@@ -3,5 +3,5 @@ logger.info(__('Creating models...'));
 module.exports = {
     Trip: require("./user.js"),
     User: require("./trip.js"),
-    City: require("./city.js")
+    Destination: require("./destination.js")
 };
