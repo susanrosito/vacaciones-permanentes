@@ -63,12 +63,12 @@ module.exports = function(grunt) {
             server: ['copy:server'],
             angular: ['browserify', 'nggettext_compile'],
             html: ['nunjucks', 'copy:vendor', 'copy:modernizr', 'wiredep'],
-            assets: ['copy:assets']
+            assets: ['copy:assets', 'sass']
         },
 
         watch: {
             html: { files: 'views/**', tasks: ['compile:html'] },
-            assets: { files: ['assets/**'], tasks: ['compile:assets'] },
+            assets: { files: ['assets/**', 'styles/**'], tasks: ['compile:assets'] },
             angular: { files: ['angular/**', 'locales/**'], tasks: ['compile:angular'] },
             server: { files: ['routes/**', 'models/**', 'config/**', './server.js'],
                 tasks: ['compile:server']
@@ -117,6 +117,21 @@ module.exports = function(grunt) {
             } }
         },
 
+        sass: { target: {
+            options: {
+            // includePaths: require('node-bourbon').with('other/path', 'another/path')
+            // - or -
+                includePaths: [
+                    require('node-bourbon').includePaths,
+                    require('node-neat').includePaths,
+                    require('node-refills').includePaths
+                ]
+            },
+            files: {
+                'target/public/styles/main.css': 'styles/main.scss'
+            }
+        } },
+
         default: ['run']
     });
 
@@ -135,6 +150,8 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-wiredep');
 
     grunt.loadNpmTasks('grunt-shell-spawn');
+
+    grunt.loadNpmTasks('grunt-sass');
 
     grunt.registerMultiTask('cwd', function() {
         if (this.data && this.data !== process.cwd()) {

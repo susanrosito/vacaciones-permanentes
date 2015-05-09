@@ -43,7 +43,11 @@
     "grunt-express": "^1.4.1",
     "grunt-npm-install": "^0.2.0",
     "grunt-nunjucks-2-html": "^0.2.6",
+    "grunt-sass": "^0.18.1",
     "grunt-shell-spawn": "^0.3.8",
-    "grunt-wiredep": "^2.0.0"
+    "grunt-wiredep": "^2.0.0",
+    "node-bourbon": "^4.2.2",
+    "node-neat": "^1.7.1-beta1",
+    "node-refills": "^1.0.1"
   }
 }
