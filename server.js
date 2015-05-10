@@ -24,7 +24,6 @@ mongoose.connect(config.mongo.connectionString);
 logger.info(__('Database connected'));
 
 require('./models');
-require('./config/passport');
 require('./routes');
 app.use(passport.initialize());
 
