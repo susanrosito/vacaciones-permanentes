@@ -2,15 +2,19 @@ logger.info(__('Creating Trip Schema'));
 
 var TripSchema = new mongoose.Schema({
     creationDate: {type: Date, default: Date.now },
-    author: String,
     title: String,
     startDate: {type: Date },
     endDate: {type: Date},
-    cities: [{ type: mongoose.Schema.Types.ObjectId, ref: 'City' }]
+    user: { type: ObjectId, ref: 'User' },
+    destinations: [{ type: ObjectId, ref: 'Destination' }]
 });
 
-TripSchema.methods.addCity = function(city){
-  this.cities.push(city);
+TripSchema.methods.belongsTo = function(user){
+    return this.user.equals(user._id);
+};
+
+TripSchema.methods.addDestination = function(destination){
+  this.destinations.push(destination);
 };
 
 module.exports = mongoose.model("Trip", TripSchema);

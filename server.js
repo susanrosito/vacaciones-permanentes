@@ -9,9 +9,11 @@ var cors = require('cors'),
 app.use(cors());
 
 app.use(require('./routes/request_logger.js'));
+
 app.use(function staticsPlaceholder(req, res, next) {
     return next();
 });
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 // Set UTF-8 Encoding
@@ -31,5 +33,9 @@ app.use(expressWinston.errorLogger({
     expressFormat: true
 }));
 
-app.use(errorHandler());
+// Handle all the remaining errors
+app.use(function(err, req, res) {
+    return res.error(HTTPStatus.INTERNAL_SERVER_ERROR, err);
+});
+
 module.exports = app;

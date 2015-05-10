@@ -13,6 +13,7 @@ module.exports = function(config) {
 
     global._ = underscore;
     global.mongoose = mongoose;
+    global.ObjectId = mongoose.Schema.Types.ObjectId;
     global.express = express;
     global.app = express();
     global.HTTPStatus = HTTPStatus;
@@ -20,7 +21,7 @@ module.exports = function(config) {
     // Set an error response method to the response prototype
     // So you can return standar error responses
     express.response.error = function(statusCode, message) {
-        statusCode = statusCode || HttpStatus.INTERNAL_SERVER_ERROR;
+        statusCode = statusCode || HTTPStatus.INTERNAL_SERVER_ERROR;
         message = message || '';
         // If there is no code, send basic Error 500
         if (typeof(statusCode) == 'string') {
@@ -29,6 +30,7 @@ module.exports = function(config) {
         }
         var status = http.STATUS_CODES[statusCode] || String(statusCode);
         return this.status(statusCode).json({
+            isError: true,
             statusCode: statusCode,
             status: status,
             message: message

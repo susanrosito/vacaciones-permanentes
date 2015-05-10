@@ -1,25 +1,19 @@
-{% set title = "Vacaciones Permanentes" %}
-{% set description = "Trabajo Práctico de la materia Desarrollo de Software de la UNQ" %}
-{% set keywords = "Vacaciones, Permanentes, TP, MEAN, UNQ, Desarrollo, Software" %}
-
-{% extends "base.html" %}
-
-{% block main %}
-    {% include "navigation.html" %}
-    <ui-view></ui-view>
-{% endblock %}
+{% extends "base-templates/base.html" %}
 
 {% block inline_views %}
-<script type="text/ng-template" id="/home.html">
-    {% include "home.html" %}
-</script>
-<script type="text/ng-template" id="/login.html">
-    {% include "login.html" %}
-</script>
-<script type="text/ng-template" id="/register.html">
-    {% include "register.html" %}
-</script>
-<script type="text/ng-template" id="/trip.html">
-    {% include "trip.html" %}
-</script>
+    <script type="text/ng-template" id="/home.html">
+        {% include "states/home.html" %}
+    </script>
+    <script type="text/ng-template" id="/login.html">
+        {% include "states/login.html" %}
+    </script>
+    <script type="text/ng-template" id="/register.html">
+        {% include "states/register.html" %}
+    </script>
+    <script type="text/ng-template" id="/trip.html">
+        {% include "states/trip.html" %}
+    </script>
+    <script type="text/ng-template" id="/trip-edit.html">
+        {% include "states/trip-edit.html" %}
+    </script>
 {% endblock %}

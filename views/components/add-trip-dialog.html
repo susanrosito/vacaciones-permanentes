@@ -1,0 +1,30 @@
+<lx-dialog class="dialog dialog--l add-trip-dialog" id="add-trip-dialog" auto-close="true" onclose="closeAddDialog()">
+    <div class="sticky-container">
+        <h3 translate>Add New Trip</h3>
+        <div class="dialog-content">
+
+            <lx-text-field label="[['Ttitle' | translate]]">
+                <input type="text" ng-model="newTrip.title" focus-on="add-dialog-show">
+            </lx-text-field>
+
+            <lx-date-picker model="newTrip.startDate" label="[['Start Date' | translate]]"
+                            auto-close="true" locale="es" class="date-start"
+                            ng-class="{'dt-picker-error': !newTrip.hasValidDates()}">
+            </lx-date-picker>
+            <lx-date-picker model="newTrip.endDate" label="[['End Date' | translate]]"
+                            auto-close="true" locale="es" class="date-end"
+                            ng-class="{'dt-picker-error': !newTrip.hasValidDates()}">
+            </lx-date-picker>
+        </div>
+    </div>
+    <div class="action-buttons">
+        <span flex></span>
+        <button class="btn btn--m btn--flat" lx-ripple lx-dialog-close translate>
+            Cancel
+        </button>
+        <button class="btn btn--m btn--primary btn--raised" ng-disabled="!newTrip.readyToSave()"
+                ng-click="newTrip.create()" lx-ripple  translate>
+            Add New Trip
+        </button>
+    </div>
+</lx-dialog>

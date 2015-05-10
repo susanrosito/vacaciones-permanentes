@@ -56,19 +56,26 @@ module.exports = function(grunt) {
 
         wiredep: { target: {
             directory: target.path + 'public/vendor',
-            src: [target.path + 'public/*.html']
+            src: [target.path + 'public/*.html'],
+            // excludes: ['bower_components/lumx/dist/lumx.css'],
+            overrides: {
+                angular: { dependencies: { jquery : '>=2.1'} },
+                moment: { main: 'min/moment-with-locales.js'}
+            }
         } },
 
         compile: {
             server: ['copy:server'],
             angular: ['browserify', 'nggettext_compile'],
             html: ['nunjucks', 'copy:vendor', 'copy:modernizr', 'wiredep'],
-            assets: ['copy:assets', 'sass']
+            assets: ['copy:assets'],
+            styles: ['sass']
         },
 
         watch: {
             html: { files: 'views/**', tasks: ['compile:html'] },
-            assets: { files: ['assets/**', 'styles/**'], tasks: ['compile:assets'] },
+            assets: { files: ['assets/**'], tasks: ['compile:assets'] },
+            styles: { files: ['styles/**'], task: ['compile:styles'] },
             angular: { files: ['angular/**', 'locales/**'], tasks: ['compile:angular'] },
             server: { files: ['routes/**', 'models/**', 'config/**', './server.js'],
                 tasks: ['compile:server']
@@ -121,11 +128,11 @@ module.exports = function(grunt) {
             options: {
             // includePaths: require('node-bourbon').with('other/path', 'another/path')
             // - or -
-                includePaths: [
-                    require('node-bourbon').includePaths,
-                    require('node-neat').includePaths,
-                    require('node-refills').includePaths
-                ]
+                includePaths:
+                    require('node-neat').includePaths.concat([
+                        'bower_components/lumx/dist/scss/',
+                        'bower_components/sass-mediaqueries/',
+                    ])
             },
             files: {
                 'target/public/styles/main.css': 'styles/main.scss'

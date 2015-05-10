@@ -1,5 +1,5 @@
-app.controller('TripDialogCtrl', ['$scope', '$mdDialog', 'authService', 'tripService', 'trip', 'uiGmapGoogleMapApi', function(
-        $scope, $mdDialog, authService, tripService, trip, GoogleMapApi) {
+app.controller('TripDialogCtrl', ['$scope', 'authService', 'tripService', 'trip', 'uiGmapGoogleMapApi', function(
+        $scope, authService, tripService, trip, uiGmapGoogleMapApi) {
 
     $scope.isLoggedIn = authService.isLoggedIn;
     $scope.trip = trip;
@@ -68,7 +68,7 @@ app.controller('TripDialogCtrl', ['$scope', '$mdDialog', 'authService', 'tripSer
     };
 
 
-    GoogleMapApi.then(function(maps) {
+    uiGmapGoogleMapApi.then(function(maps) {
         maps.visualRefresh = true;
         $scope.map.polys =  [
             {id:1, editable: true, draggable: false, "geodesic": true, "visible": true,
