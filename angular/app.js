@@ -1,10 +1,10 @@
 helpers = require('./helpers');
 
 var app = angular.module('vacacionesPermanentes',
-    ['ui.router', 'ui.gravatar', 'lumx', 'angularMoment','gettext', 'uiGmapgoogle-maps']);
+    ['ui.router', 'ui.gravatar', 'lumx', 'angularMoment','gettext', 'ngMap']);
 
-app.config(['$interpolateProvider', '$stateProvider', '$urlRouterProvider','uiGmapGoogleMapApiProvider', function (
-        $interpolateProvider, $stateProvider, $urlRouterProvider, uiGmapGoogleMapApiProvider) {
+app.config(['$interpolateProvider', '$stateProvider', '$urlRouterProvider', function (
+        $interpolateProvider, $stateProvider, $urlRouterProvider) {
     $interpolateProvider.startSymbol('[[');
     $interpolateProvider.endSymbol(']]');
 
@@ -50,7 +50,6 @@ app.config(['$interpolateProvider', '$stateProvider', '$urlRouterProvider','uiGm
 
     $urlRouterProvider.otherwise('home');
 
-    uiGmapGoogleMapApiProvider.configure({v:'3.17', libraries: 'places, geometry'});
 }]);
 
 app.run(['amMoment', 'gettextCatalog', function(amMoment, gettextCatalog) {

@@ -40,9 +40,9 @@ router.get('/:trip', auth, function(req, res) {
     req.trip.populate('destinations', function(err, trip) {
        if (err) { return next(err); }
         trip.destinations = [
-            {city: 'San Francisco', location: {latitude: 125, longitude: 132.23}, image: null},
-            {city: 'Los Angeles', location: {latitude: 111, longitude: 124.23}, image: null},
-            {city: 'Las Vegas', location: {latitude: 132, longitude: 142.23}, image: null}
+            {city: 'San Francisco', location: {latitude: 37.771608, longitude: -122.422837}, image: null},
+            {city: 'Los Angeles', location: {latitude: 34.040416, longitude: -118.240071}, image: null},
+            {city: 'Las Vegas', location: {latitude: 36.161874, longitude: -115.142728}, image: null}
         ];
         res.json(trip);
     });

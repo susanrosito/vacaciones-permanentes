@@ -1,14 +1,15 @@
-app.controller('TripCtrl', ['$scope', '$state', 'LxNotificationService', 'gettextCatalog', 'uiGmapGoogleMapApi',
-    'authService', 'tripService', 'trip', function (
-    $scope, $state, LxNotificationService, gettextCatalog, uiGmapGoogleMapApi, authService, tripService, trip) {
+app.controller('TripCtrl', ['$scope', '$state', 'LxNotificationService', 'gettextCatalog', 'authService', 'tripService', 'trip', function (
+    $scope, $state, LxNotificationService, gettextCatalog, authService, tripService, trip) {
 
     if (authService.isLoggedIn() && tripService.all.length ===0) {
         tripService.getAll();
     }
+
     $scope.trips = tripService.all;
     $scope.trip = trip;
     $scope.editedTrip = new tripService.Trip();
     $scope.editedTrip.resetTo($scope.trip);
+    $scope.map = {center: {latitude: 40.1451, longitude: -99.6680 }, zoom: 4, polys:[]};
 
     /*
     $scope.showAddDialog = function (ev) {
@@ -96,32 +97,17 @@ app.controller('TripCtrl', ['$scope', '$state', 'LxNotificationService', 'gettex
             });
     };
 
-
-
-
-    $scope.addCity = function () {
-        if(!$scope.places || $scope.places.length == 0){return;}
-
-        if($scope.places.length == 1){
-            trip.destinations = trip.destinations || [];
-            place = $scope.places[0];
-            destination = {city: place.name, location: {longitude: place.geometry.location.B, latitude: place.geometry.location.k}, image: {} };
-            trip.destinations.push(destination);
-            addPoly(destination);
-            updateMapBounds();
-            $scope.places = null;
-        }
-    };
-
     addPoly = function (destination) {
-        path = {latitude: destination.locations.latitude, longitude: destination.location.longitude};
-        $scope.map.polys[0].path.push(path);
+        var location = destination.location;
+        var path = [location.latitude, location.longitude];
+        $scope.map.polys.push(path);
     };
 
     updateMapBounds = function (bounds) {
         var bounds = new google.maps.LatLngBounds();
-        _.each(trip.destination, function(city){
-            bounds.extend(new google.maps.LatLng(destination.location.latitude, destination.latitude.longitude));
+        _.each(trip.destinations, function(destination){
+            var location = destination.location;
+            bounds.extend(new google.maps.LatLng(location.latitude, location.longitude));
         });
         $scope.map.bounds = {
             northeast: {
@@ -135,28 +121,17 @@ app.controller('TripCtrl', ['$scope', '$state', 'LxNotificationService', 'gettex
         }
     };
 
+    $scope.loadDestinationsInMap = function(){
+        console.log('esta pasando por loadDestination');
+        if(!trip.destinations || trip.destinations.length === 0) { return; }
 
-    uiGmapGoogleMapApi.then(function(maps) {
-        maps.visualRefresh = true;
-        $scope.map.polys =  [
-            {id:1, editable: true, draggable: false, "geodesic": true, "visible": true,
-                path: [],
-                stroke: {"color": "#6060FB","weight": 3}}
-        ];
+        _.each(trip.destinations, function(destination){
+            addPoly(destination);
+        });
 
-        updateMapBounds(new google.maps.LatLngBounds());
-        $scope.searchbox.options.bounds = new google.maps.LatLngBounds();
-    });
+        updateMapBounds();
+    };
 
-    $scope.map = {center: {latitude: 40.1451, longitude: -99.6680 }, zoom: 4, control: {}, polys:[]};
-    $scope.options = {scrollwheel: false};
-    $scope.searchbox = { template:'searchbox.tpl.html', position:'top-left', options: { bounds: {} }, events: {
-        places_changed: function (searchBox) {
-            $scope.places = searchBox.getPlaces();
-        }
-    }};
+    $scope.loadDestinationsInMap();
 
-    $scope.disableAddCityButton = function(){
-        return $scope.places == null || $scope.places.length <= 0;
-    }
 }]);
