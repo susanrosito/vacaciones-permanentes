@@ -3,8 +3,8 @@
         <h3 translate>Add New Destination</h3>
         <div class="dialog-content">
 
-            <lx-text-field label="[['Title' | translate]]">
-                <input type="text" ng-model="tempDestination.title" focus-on="add-dialog-show" places-auto-complete types="['geocode']", placeholder="">
+            <lx-text-field label="[['City' | translate]]">
+                <input type="text" ng-model="tempDestination.title" focus-on="add-dialog-show" places-auto-complete types="['geocode']", placeholder="" on-place-changed="placeChanged(place)">
             </lx-text-field>
             <lx-date-picker id="startDate" model="tempDestination.startDate" label="[['Start Date' | translate]]"
                             auto-close="true" locale="es" class="date-start"

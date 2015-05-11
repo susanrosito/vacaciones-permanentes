@@ -68,6 +68,7 @@ app.factory('tripService', ['$http', 'authService', function ($http, authService
         this.title = '';
         this.startDate = today;
         this.endDate = defaultEnd;
+        this.location = {latitude:0, longitude:0};
         tripService.addValidationMethods(this);
     };
     tripService.addValidationMethods = function(dateable) {
@@ -95,7 +96,7 @@ app.factory('tripService', ['$http', 'authService', function ($http, authService
             tripService.addValidationMethods(trip);
             trip.resetTo = function (reseter) {
                 this._resetTo(reseter);
-                this.destination = [];
+                this.destinations = [];
                 angular.copy(reseter.destinations, this.destinations);
             };
             trip.copy = function() {
