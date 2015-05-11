@@ -71,7 +71,16 @@ app.controller('TripCtrl', ['$scope', '$state', 'LxNotificationService', 'LxDial
     };
 
     $scope.removeDestination = function(destination) {
-        $scope.editedTrip.removeDestination(destination);
+        LxNotificationService.confirm(gettextCatalog.getString('Delete Destination'),
+            gettextCatalog.getString('Are you sure you want to delete the destination') + ' "' +
+            destination.city + '"', {
+                cancel:gettextCatalog.getString('Cancel'),
+                ok:gettextCatalog.getString('Confirm')
+            }, function(answer) {
+                if (answer) {
+                    $scope.editedTrip.removeDestination(destination);
+                }
+            });
     };
 
 
