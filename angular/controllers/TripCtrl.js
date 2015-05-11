@@ -14,6 +14,12 @@ app.controller('TripCtrl', ['$scope', '$state', 'LxNotificationService', 'LxDial
     $scope.editedTrip.resetTo($scope.trip);
     $scope.editedTrip.isEditing = false;
     $scope.tempDestination = new tripService.Destination();
+    $scope.polyline = new google.maps.Polyline({
+        strokeColor: '#6060FB',
+        strokeOpacity: 1.0,
+        geodesic: true,
+        strokeWeight: 3
+    });
     setTimeout(function() { LxDatePickerService.disableAll() }, 1000);
     // In display mode, will display the current trip
 
@@ -28,6 +34,7 @@ app.controller('TripCtrl', ['$scope', '$state', 'LxNotificationService', 'LxDial
         $state.go('trip', {id: $scope.trip._id})
         LxDatePickerService.disableAll();
         $scope.editedTrip.isEditing = false;
+        $scope.loadDestinationsInMap($scope.trip);
     };
 
     $scope.confirmEdit = function() {
@@ -35,6 +42,7 @@ app.controller('TripCtrl', ['$scope', '$state', 'LxNotificationService', 'LxDial
         $scope.trip.resetTo($scope.editedTrip);
         LxDatePickerService.disableAll();
         $scope.editedTrip.isEditing = false;
+        $scope.loadDestinationsInMap($scope.trip);
     };
 
     $scope.confirmDelete = function() {
@@ -52,66 +60,77 @@ app.controller('TripCtrl', ['$scope', '$state', 'LxNotificationService', 'LxDial
     };
 
     $scope.showAddDestinationDialog = function (ev) {
-        LxDialogService.open('add-trip-dialog');
+        LxDialogService.open('add-destination-dialog');
         $scope.tempDestination.resetTo(new tripService.Destination());
-        LxDatePickerService.handleClicks('add-trip-dialog');
+        LxDatePickerService.handleClicks('add-destination-dialog');
     };
 
     $scope.closeAddDestinationDialog = function() {
-        LxDatePickerService.endHandleClicks('add-trip-dialog');
+        LxDatePickerService.endHandleClicks('add-destination-dialog');
 
     };
 
     $scope.addDestination = function(destination) {
         var dest = new tripService.Destination();
         dest.resetTo($scope.tempDestination);
+        dest = $scope.addLatLongToDestination(dest);
         $scope.editedTrip.addDestination(dest);
+        $scope.loadDestinationsInMap($scope.editedTrip);
         $scope.tempDestination.resetTo(new tripService.Destination());
-        LxDialogService.close('add-trip-dialog');
+        LxDialogService.close('add-destination-dialog');
+
     };
 
     $scope.removeDestination = function(destination) {
-        $scope.editedTrip.removeDestination(destination);
+        LxNotificationService.confirm(gettextCatalog.getString('Delete Destination'),
+            gettextCatalog.getString('Are you sure you want to delete the destination') + ' "' +
+            destination.city + '"', {
+                cancel:gettextCatalog.getString('Cancel'),
+                ok:gettextCatalog.getString('Confirm')
+            }, function(answer) {
+                if (answer) {
+                    $scope.editedTrip.removeDestination(destination);
+                    $scope.loadDestinationsInMap($scope.editedTrip);
+                }
+            });
+    };
+
+    $scope.placeChanged = function() {
+        $scope.place = this.getPlace();
+    };
+
+    $scope.addLatLongToDestination = function(destination) {
+        var location = $scope.place.geometry.location;
+        destination.location.latitude = location.A;
+        destination.location.longitude = location.F;
+        return destination;
     };
 
 
-    $scope.map = {center: {latitude: 40.1451, longitude: -99.6680 }, zoom: 4, polys:[]};
-
-    addPoly = function (destination) {
-        var location = destination.location;
-        var path = [location.latitude, location.longitude];
-        $scope.map.polys.push(path);
-    };
-
-    updateMapBounds = function (bounds) {
+    updateMapBounds = function (aTrip) {
         var bounds = new google.maps.LatLngBounds();
-        _.each(trip.destinations, function(destination){
-            var location = destination.location;
-            bounds.extend(new google.maps.LatLng(location.latitude, location.longitude));
+        _.each($scope.polyline.getPath().j, function(latLng){
+            bounds.extend(latLng);
         });
-        $scope.map.bounds = {
-            northeast: {
-                latitude: bounds.getNorthEast().lat(),
-                longitude: bounds.getNorthEast().lng()
-            },
-            southwest: {
-                latitude: bounds.getSouthWest().lat(),
-                longitude: bounds.getSouthWest().lng()
-            }
+        $scope.map.setCenter(bounds.getCenter());
+        $scope.map.fitBounds(bounds);
+    };
+
+    $scope.loadDestinationsInMap = function(aTrip){
+        if(!aTrip.destinations || aTrip.destinations.length === 0) { return; }
+
+        if($scope.map){
+            $scope.polyline.setPath(_.map(aTrip.destinations, function(destination){
+                var location = destination.location;
+                return new google.maps.LatLng(location.latitude, location.longitude);
+            }));
+            updateMapBounds(aTrip);
         }
     };
 
-    $scope.loadDestinationsInMap = function(){
-        console.log('esta pasando por loadDestination');
-        if(!trip.destinations || trip.destinations.length === 0) { return; }
-
-        _.each(trip.destinations, function(destination){
-            addPoly(destination);
-        });
-
-        updateMapBounds();
-    };
-
-    $scope.loadDestinationsInMap();
+    $scope.$on('mapInitialized', function(event, map) {
+        $scope.loadDestinationsInMap(trip);
+        $scope.polyline.setMap($scope.map);
+    });
 
 }]);
