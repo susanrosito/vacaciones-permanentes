@@ -1,16 +1,7 @@
-app.controller('TripListCtrl', ['$scope', '$state', 'LxDialogService', 'LxNotificationService',
+app.controller('TripListCtrl', ['$scope', '$state', 'LxDialogService', 'LxNotificationService', 'LxDatePickerService',
         'gettextCatalog', 'tripService', 'authService', function (
-        $scope, $state, LxDialogService, LxNotificationService,
+        $scope, $state, LxDialogService, LxNotificationService, LxDatePickerService,
         gettextCatalog, tripService, authService) {
-
-
-    function avoidOpeningTwoDatePickers(ev) {
-        if (!angular.element('.lx-date-picker--is-shown').length == 0) {
-            ev.preventDefault();
-            ev.stopPropagation();
-            return false;
-        }
-    }
 
     if (authService.isLoggedIn() && tripService.all.length === 0) {
         tripService.getAll();
@@ -29,11 +20,11 @@ app.controller('TripListCtrl', ['$scope', '$state', 'LxDialogService', 'LxNotifi
     $scope.showAddDialog = function (ev) {
         LxDialogService.open('add-trip-dialog');
         $scope.newTrip.resetTo(new tripService.Trip());
-        angular.element('#add-trip-dialog')[0].addEventListener('click', avoidOpeningTwoDatePickers, true);
+        LxDatePickerService.handleClicks('add-trip-dialog');
     };
 
     $scope.closeAddDialog = function() {
-        angular.element('#add-trip-dialog')[0].removeEventListener('click', avoidOpeningTwoDatePickers, true);
+        LxDatePickerService.endHandleClicks('add-trip-dialog');
     };
 
 }]);

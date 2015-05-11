@@ -1,5 +1,6 @@
-app.controller('TripCtrl', ['$scope', '$state', 'LxNotificationService', 'gettextCatalog', 'authService', 'tripService', 'trip', function (
-    $scope, $state, LxNotificationService, gettextCatalog, authService, tripService, trip) {
+app.controller('TripCtrl', ['$scope', '$state', 'LxNotificationService', 'LxDialogService', 'LxDatePickerService',
+    'gettextCatalog', 'authService', 'tripService', 'trip', function (
+    $scope, $state, LxNotificationService, LxDialogService, LxDatePickerService, gettextCatalog, authService, tripService, trip) {
 
     if (authService.isLoggedIn() && tripService.all.length ===0) {
         tripService.getAll();
@@ -7,80 +8,33 @@ app.controller('TripCtrl', ['$scope', '$state', 'LxNotificationService', 'gettex
 
     $scope.trips = tripService.all;
     $scope.trip = trip;
+
+
     $scope.editedTrip = new tripService.Trip();
     $scope.editedTrip.resetTo($scope.trip);
-    $scope.map = {center: {latitude: 40.1451, longitude: -99.6680 }, zoom: 4, polys:[]};
+    $scope.editedTrip.isEditing = false;
+    $scope.tempDestination = new tripService.Destination();
+    setTimeout(function() { LxDatePickerService.disableAll() }, 1000);
+    // In display mode, will display the current trip
 
-    /*
-    $scope.showAddDialog = function (ev) {
-        $mdDialog.show({
-            controller: 'TripDialogCtrl',
-            templateUrl: '/partials/trip.html',
-            targetEvent: ev,
-            locals: { trip: {} }
-        }).then(function (answer) {}, function () {
-            $mdDialog.hide();
-        });
+
+    $scope.enterEditMode = function() {
+        LxDatePickerService.enableAll();
+        $scope.editedTrip.isEditing = true;
     };
-
-
-    $scope.showDeleteDialog = function (ev) {
-        $mdDialog.show($mdDialog.confirm()
-            .title('Would you like to delete this trip?')
-            .ok('Delete')
-            .cancel('Cancel')
-            .targetEvent(ev)
-        ).then(function (answer) {
-                tripService.remove($scope.trip);
-                $mdDialog.hide();
-                $state.go('home');
-        }, function () {
-                $mdDialog.hide();
-        });
-    };
-
-    $scope.showEditDialog = function (ev) {
-        $mdDialog.show({
-            controller: 'TripDialogCtrl',
-            templateUrl: '/partials/trip.html',
-            targetEvent: ev,
-            locals: { trip: $scope.trip }
-        }).then(function (answer) {
-            $state.go('home');
-        }, function () {
-            $mdDialog.hide();
-        });
-    };
-
-    */
-
-    /*
-     <script type="text/ng-template" id="searchbox.tpl.html">
-     <input ng-model="searchPlace" placeholder="Search Box">
-     </script>
-
-     <md-card class="post-card" ng-repeat="city in trip.cities" id="[[post._id]]">
-     <h4>[[city.city]]</h4>
-     </md-card>
-     <md-button ng-click="addCity()" class="md-primary" ng-disabled="disableAddCityButton()">
-     Add City
-     </md-button>
-
-     <ui-gmap-google-map center="map.center" zoom="map.zoom" dragging="map.dragging" bounds="map.bounds" events="map.events" options="map.options" pan="true" control="map.control">
-     <ui-gmap-search-box options="searchbox.options" template="searchbox.template" events="searchbox.events" position="searchbox.position"></ui-gmap-search-box>
-     <ui-gmap-polylines models="map.polys" path="'path'" stroke="'stroke'" draggable="'draggable'" editable="'editable'" geodesic="'geodesic'" visible="'visible'" static='false'></ui-gmap-polylines>
-     </ui-gmap-google-map>
-     */
 
     $scope.cancelEdit = function() {
         $scope.editedTrip.resetTo($scope.trip);
         $state.go('trip', {id: $scope.trip._id})
+        LxDatePickerService.disableAll();
+        $scope.editedTrip.isEditing = false;
     };
 
     $scope.confirmEdit = function() {
         tripService.update($scope.editedTrip);
         $scope.trip.resetTo($scope.editedTrip);
-        $state.go('trip', {id: $scope.trip._id})
+        LxDatePickerService.disableAll();
+        $scope.editedTrip.isEditing = false;
     };
 
     $scope.confirmDelete = function() {
@@ -96,6 +50,32 @@ app.controller('TripCtrl', ['$scope', '$state', 'LxNotificationService', 'gettex
                 }
             });
     };
+
+    $scope.showAddDestinationDialog = function (ev) {
+        LxDialogService.open('add-trip-dialog');
+        $scope.tempDestination.resetTo(new tripService.Destination());
+        LxDatePickerService.handleClicks('add-trip-dialog');
+    };
+
+    $scope.closeAddDestinationDialog = function() {
+        LxDatePickerService.endHandleClicks('add-trip-dialog');
+
+    };
+
+    $scope.addDestination = function(destination) {
+        var dest = new tripService.Destination();
+        dest.resetTo($scope.tempDestination);
+        $scope.editedTrip.addDestination(dest);
+        $scope.tempDestination.resetTo(new tripService.Destination());
+        LxDialogService.close('add-trip-dialog');
+    };
+
+    $scope.removeDestination = function(destination) {
+        $scope.editedTrip.removeDestination(destination);
+    };
+
+
+    $scope.map = {center: {latitude: 40.1451, longitude: -99.6680 }, zoom: 4, polys:[]};
 
     addPoly = function (destination) {
         var location = destination.location;

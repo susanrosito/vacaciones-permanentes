@@ -5,7 +5,7 @@ exports.getTrip = ['$stateParams', 'LxNotificationService', 'gettextCatalog', 't
     result.error(function(err) {
         LxNotificationService.error(gettextCatalog.getString(err.message));
     });
-    return result.then(function(res) { return tripService.addValidationMethods(res.data); });
+    return result.then(function(res) { return tripService.addMethods(res.data); });
 }];
 
 exports.getAllTrips = ['tripService', function (tripService) {

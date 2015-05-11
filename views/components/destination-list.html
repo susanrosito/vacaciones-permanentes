@@ -1,0 +1,26 @@
+<div class="trip-calendar">
+    <div class="mt++">
+        <span class="trip-calendar-title fs-title display-block mb" translate>Cities to Visit</span>
+        <a class="btn-add-city btn btn--m btn--primary btn--flat" ng-show="editedTrip.isEditing" ng-click="showAddDestinationDialog()">
+            <i class="icon icon--xs icon--flat mdi mdi-plus"></i>
+        </a>
+        <div class="divider divider--dark"></div>
+        <ul class="list mt++">
+            <li class="list-row list-row--has-separator city-list-item" ng-repeat="destination in editedTrip.destinations | orderBy: 'startDate'">
+                <div class="list-row__primary">
+                    <img src="http://ui.lumapps.com/images/placeholder/2-horizontal.jpg" class="img-round city-image">
+                </div>
+                <div class="list-row__content">
+                    <span class="display-block">[[destination.city]]</span>
+                    <span class="display-block fs-body-1 tc-black-2"><span translate>from</span> [[destination.startDate | amDateFormat:'DD [de] MMMM [de] YYYY']]</span>
+                    <span class="display-block fs-body-1 tc-black-2"><span translate>to</span> [[destination.endDate | amDateFormat:'DD [de] MMMM [de] YYYY']]</span>
+                </div>
+                <div class="list-row__secondary city-remove-icon" ng-show="editedTrip.isEditing">
+                    <a ng-click="removeDestination(destination)" class="remove-destination-button">
+                        <i class="icon icon--xs icon--grey icon--flat mdi mdi-close"></i>
+                    </a>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>

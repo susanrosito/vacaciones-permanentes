@@ -1,21 +1,47 @@
-{% include "components/trip-card.html" %}
+<form ng-submit="confirmEdit()">
+    {% include "components/trip-card.html" %}
 
-<a class="btn btn--m btn--fab btn-back" lx-tooltip="[['Back to Trip List' | translate]]"
-        tooltip-position="left" lx-ripple ui-sref="home">
-    <i class="mdi mdi-arrow-left"></i>
-</a>
+    <div ng-show="editedTrip.isEditing">
+        <a class="btn btn--m btn--fab btn-discard-changes" lx-tooltip="[['Discarg Changes' | translate]]"
+           tooltip-position="left" lx-ripple ng-click="cancelEdit()">
+            <i class="mdi mdi-close"></i>
+        </a>
 
-<div class="fab btn-edit-group">
-    <button class="fab__primary btn btn--xl btn--fab btn-edit" lx-ripple
-            lx-tooltip="[['Edit Trip' | translate]]" tooltip-position="left"
-            ui-sref="trip-edit({id: trip._id})">
-        <i class="mdi mdi-pencil"></i>
-        <i class="mdi mdi-pencil"></i>
-    </button>
+        <div class="fab btn-edit-group">
+            <button class="fab__primary btn btn--xl btn--fab btn-save-changes" lx-ripple
+                    lx-tooltip="[['Edit Trip' | translate]]" tooltip-position="left"
+                    type="submit">
+                <i class="mdi mdi-content-save"></i>
+                <i class="mdi mdi-content-save"></i>
+            </button>
 
-    <div class="fab__actions fab__actions--up">
-        <button class="btn btn--l btn--fab btn-delete" lx-ripple lx-tooltip="[['Delete Trip' | translate]]"
-                tooltip-position="left" ng-click="confirmDelete()">
-            <i class="mdi mdi-delete"></i></button>
+            <div class="fab__actions fab__actions--up">
+                <button class="btn btn--l btn--fab btn-delete" lx-ripple lx-tooltip="[['Delete Trip' | translate]]"
+                        tooltip-position="left" ng-click="confirmDelete()">
+                    <i class="mdi mdi-delete"></i></button>
+            </div>
+        </div>
+    </div>
+</form>
+
+<div ng-hide="editedTrip.isEditing">
+    <a class="btn btn--m btn--fab btn-back" lx-tooltip="[['Back to Trip List' | translate]]"
+       tooltip-position="left" lx-ripple ui-sref="home">
+        <i class="mdi mdi-arrow-left"></i>
+    </a>
+
+    <div class="fab btn-edit-group">
+        <button class="fab__primary btn btn--xl btn--fab btn-edit" lx-ripple
+                lx-tooltip="[['Edit Trip' | translate]]" tooltip-position="left"
+                ng-click="enterEditMode()">
+            <i class="mdi mdi-pencil"></i>
+            <i class="mdi mdi-pencil"></i>
+        </button>
+
+        <div class="fab__actions fab__actions--up">
+            <button class="btn btn--l btn--fab btn-delete" lx-ripple lx-tooltip="[['Delete Trip' | translate]]"
+                    tooltip-position="left" ng-click="confirmDelete()">
+                <i class="mdi mdi-delete"></i></button>
+        </div>
     </div>
 </div>

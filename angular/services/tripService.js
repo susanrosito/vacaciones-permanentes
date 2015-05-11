@@ -57,29 +57,62 @@ app.factory('tripService', ['$http', 'authService', function ($http, authService
         this.title = '';
         this.startDate = today;
         this.endDate = defaultEnd;
+        this.destinations = [];
+        tripService.addMethods(this);
+    };
+    tripService.Destination = function() {
+        var today = new Date();
+        var defaultEnd = new Date(today);
+        // Set end as 5 days from now
+        defaultEnd.setDate(today.getDate() + 5);
+        this.title = '';
+        this.startDate = today;
+        this.endDate = defaultEnd;
         tripService.addValidationMethods(this);
     };
-    tripService.addValidationMethods = function(trip) {
-        if (!trip.hasValidDates) {
-            trip.hasValidDates = function () {
+    tripService.addValidationMethods = function(dateable) {
+        if (!dateable.hasValidDates) {
+            dateable.hasValidDates = function () {
                 return !this.startDate || !this.endDate ||
                         this.startDate < this.endDate;
             };
-            trip.readyToSave = function () {
-                return (this.startDate && this.endDate && !(this.title === '') &&
-                        this.hasValidDates()) == true;
+            dateable.readyToSave = function () {
+                return (this.startDate && this.endDate && !(this.title === '') && this.hasValidDates()) == true;
                 // Yes, I have to compare to true for the ng-disabled to work
             };
-            trip.resetTo = function (reseter) {
+            dateable._resetTo = function (reseter) {
                 this._id = reseter._id;
                 this.title = reseter.title;
                 this.startDate = new Date(reseter.startDate);
                 this.endDate = new Date(reseter.endDate);
             };
+            dateable.resetTo = dateable._resetTo
+        }
+        return dateable;
+    };
+    tripService.addMethods = function(trip) {
+        if (!trip.hasValidDates) {
+            tripService.addValidationMethods(trip);
+            trip.resetTo = function (reseter) {
+                this._resetTo(reseter);
+                this.destination = [];
+                angular.copy(reseter.destinations, this.destinations);
+            };
             trip.copy = function() {
                 var newTrip = new tripService.Trip();
                 newTrip.resetTo(this);
                 return newTrip;
+            };
+            trip.addDestination = function(destination) {
+                // Called city in the server
+                destination.city = destination.title;
+                this.destinations.push(destination);
+            };
+            trip.removeDestination = function(destination) {
+                var index = this.destinations.indexOf(destination);
+                if (index != -1) {
+                    this.destinations.splice(index, 1);
+                }
             }
         }
         return trip;

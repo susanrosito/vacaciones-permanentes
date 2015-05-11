@@ -7,11 +7,11 @@
                 <input type="text" ng-model="newTrip.title" focus-on="add-dialog-show">
             </lx-text-field>
 
-            <lx-date-picker model="newTrip.startDate" label="[['Start Date' | translate]]"
+            <lx-date-picker id="startDate" model="newTrip.startDate" label="[['Start Date' | translate]]"
                             auto-close="true" locale="es" class="date-start"
                             ng-class="{'dt-picker-error': !newTrip.hasValidDates()}">
             </lx-date-picker>
-            <lx-date-picker model="newTrip.endDate" label="[['End Date' | translate]]"
+            <lx-date-picker id="endDate" model="newTrip.endDate" label="[['End Date' | translate]]"
                             auto-close="true" locale="es" class="date-end"
                             ng-class="{'dt-picker-error': !newTrip.hasValidDates()}">
             </lx-date-picker>
