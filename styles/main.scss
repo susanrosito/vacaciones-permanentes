@@ -111,7 +111,7 @@ body {
   @include fab-floating-button();
   bottom: 120px;
 }
-a.btn .mdi { line-height: 54px !important; }
+a.btn.btn--fab .mdi { line-height: 54px !important; }
 .btn {
   &.btn-add, &.btn-back, &.btn-discard-changes { @include fab-floating-button(); }
   &.btn-back, &.btn-discard-changes { @include fab-primary-button($primary-color); }
@@ -208,3 +208,6 @@ a.btn .mdi { line-height: 54px !important; }
 
 .action-buttons { float: right; padding: 20px 0;}
 
+.remove-destination-button {
+  cursor: pointer;
+}

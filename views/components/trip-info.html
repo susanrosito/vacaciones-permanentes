@@ -1,0 +1,15 @@
+<div class="trip-info">
+    <div class="p+">
+        <lx-text-field label="[['Title' | translate]]">
+            <input type="text" ng-model="editedTrip.title" ng-disabled="!editedTrip.isEditing">
+        </lx-text-field>
+        <lx-date-picker model="editedTrip.startDate" label="[['Start Date' | translate]]"
+                        auto-close="true" locale="es" class="date-start"
+                        ng-class="{'dt-picker-error': !editedTrip.hasValidDates()}">
+        </lx-date-picker>
+        <lx-date-picker model="editedTrip.endDate" label="[['End Date' | translate]]"
+                        auto-close="true" locale="es" class="date-end"
+                        ng-class="{'dt-picker-error': !editedTrip.hasValidDates()}">
+        </lx-date-picker>
+    </div>
+</div>

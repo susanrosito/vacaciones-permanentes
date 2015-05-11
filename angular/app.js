@@ -36,16 +36,6 @@ app.config(['$interpolateProvider', '$stateProvider', '$urlRouterProvider', func
                 trips: helpers.getAllTrips,
                 trip: helpers.getTrip
             }
-        })
-        .state('trip-edit', {
-            url: '/trip/:id/edit',
-            templateUrl: '/trip-edit.html',
-            controller: 'TripCtrl',
-            onEnter: helpers.goToLogin,
-            resolve: {
-                trips: helpers.getAllTrips,
-                trip: helpers.getTrip
-            }
         });
 
     $urlRouterProvider.otherwise('home');

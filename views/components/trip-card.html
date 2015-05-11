@@ -1,51 +1,13 @@
 <div class="trip-card">
     <div class="card">
         <div class="left">
-            <div class="trip-info">
-                <div class="p+">
-                    <lx-text-field label="[['Title' | translate]]">
-                        <input type="text" ng-model="editedTrip.title" disabled>
-                    </lx-text-field>
-                    <lx-date-picker model="editedTrip.startDate" label="[['Start Date' | translate]]"
-                                    auto-close="true" locale="es" class="date-start"
-                                    ng-class="{'dt-picker-error': !editedTrip.hasValidDates()}" disabled>
-                    </lx-date-picker>
-                    <lx-date-picker model="editedTrip.endDate" label="[['End Date' | translate]]"
-                                    auto-close="true" locale="es" class="date-end"
-                                    ng-class="{'dt-picker-error': !editedTrip.hasValidDates()}" disabled>
-                    </lx-date-picker>
-                </div>
-            </div>
-            <div class="trip-calendar">
-                <div class="mt++">
-                    <span class="trip-calendar-title fs-title display-block mb" translate>Cities to Visit</span>
-                    <div class="divider divider--dark"></div>
-                    <ul class="list mt++">
-                        <li class="list-row list-row--has-separator city-list-item" ng-repeat="destination in trip.destinations">
-                            <div class="list-row__primary">
-                                <img src="http://ui.lumapps.com/images/placeholder/2-horizontal.jpg" class="img-round city-image">
-                            </div>
-                            <div class="list-row__content">
-                                <span class="display-block">[[destination.city]]</span>
-                                <span class="display-block fs-body-1 tc-black-2">[[destination.startDate]]</span>
-                                <span class="display-block fs-body-1 tc-black-2">[[destination.endDate]]</span>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+            {% include "components/trip-info.html" %}
+            {% include "components/destination-list.html" %}
         </div>
         <div class="right">
-            <div class="trip-image-container">
-                <div class="card__img card__img--top">
-                    <img class="trip-image" src="http://ui.lumapps.com/images/placeholder/2-horizontal.jpg">
-                </div>
-            </div>
-            <div class="trip-map">
-                <map center="37.6216, -122.3929" zoom="8">
-                    <shape id="polyline" name="polyline" geodesic="true" stroke-color="#6060FB" stroke-opacity="1.0" stroke-weight="3" path="[[map.polys]]" ></shape>
-                </map>
-            </div>
+            {% include "components/trip-visualization.html" %}
         </div>
     </div>
 </div>
+
+{% include "components/add-destination-dialog.html" %}
