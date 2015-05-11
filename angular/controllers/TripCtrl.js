@@ -83,13 +83,12 @@ app.controller('TripCtrl', ['$scope', '$state', 'LxNotificationService', 'LxDial
             });
     };
 
-
-    $scope.map = {center: {latitude: 40.1451, longitude: -99.6680 }, zoom: 4, polys:[]};
+    $scope.mapModel = {center: {latitude: 40.1451, longitude: -99.6680 }, zoom: 4, polys:[]};
 
     addPoly = function (destination) {
         var location = destination.location;
         var path = [location.latitude, location.longitude];
-        $scope.map.polys.push(path);
+        $scope.mapModel.polys.push(path);
     };
 
     updateMapBounds = function (bounds) {
@@ -98,28 +97,21 @@ app.controller('TripCtrl', ['$scope', '$state', 'LxNotificationService', 'LxDial
             var location = destination.location;
             bounds.extend(new google.maps.LatLng(location.latitude, location.longitude));
         });
-        $scope.map.bounds = {
-            northeast: {
-                latitude: bounds.getNorthEast().lat(),
-                longitude: bounds.getNorthEast().lng()
-            },
-            southwest: {
-                latitude: bounds.getSouthWest().lat(),
-                longitude: bounds.getSouthWest().lng()
-            }
-        }
+        $scope.map.setCenter(bounds.getCenter());
+        $scope.map.fitBounds(bounds);
     };
 
     $scope.loadDestinationsInMap = function(){
-        console.log('esta pasando por loadDestination');
         if(!trip.destinations || trip.destinations.length === 0) { return; }
 
         _.each(trip.destinations, function(destination){
             addPoly(destination);
         });
-
-        updateMapBounds();
     };
+
+    $scope.$on('mapInitialized', function(event, map) {
+        updateMapBounds();
+    });
 
     $scope.loadDestinationsInMap();
 
