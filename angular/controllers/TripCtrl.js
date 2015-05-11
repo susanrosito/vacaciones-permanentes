@@ -52,13 +52,13 @@ app.controller('TripCtrl', ['$scope', '$state', 'LxNotificationService', 'LxDial
     };
 
     $scope.showAddDestinationDialog = function (ev) {
-        LxDialogService.open('add-trip-dialog');
+        LxDialogService.open('add-destination-dialog');
         $scope.tempDestination.resetTo(new tripService.Destination());
-        LxDatePickerService.handleClicks('add-trip-dialog');
+        LxDatePickerService.handleClicks('add-destination-dialog');
     };
 
     $scope.closeAddDestinationDialog = function() {
-        LxDatePickerService.endHandleClicks('add-trip-dialog');
+        LxDatePickerService.endHandleClicks('add-destination-dialog');
 
     };
 
@@ -67,7 +67,7 @@ app.controller('TripCtrl', ['$scope', '$state', 'LxNotificationService', 'LxDial
         dest.resetTo($scope.tempDestination);
         $scope.editedTrip.addDestination(dest);
         $scope.tempDestination.resetTo(new tripService.Destination());
-        LxDialogService.close('add-trip-dialog');
+        LxDialogService.close('add-destination-dialog');
     };
 
     $scope.removeDestination = function(destination) {
