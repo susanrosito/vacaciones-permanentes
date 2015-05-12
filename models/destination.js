@@ -4,8 +4,10 @@ var DestinationSchema = new mongoose.Schema({
     city: String,
     startDate: Date,
     endDate: Date,
-    location: {latitude: Number,longitude: Number},
-    image: {data: Buffer, contentType: String}
+    latitude: Number,
+    longitude: Number
+    //}
+    // image: {data: Buffer, contentType: String}
     // activities: [{type: ActivitySchema}]
 });
 
