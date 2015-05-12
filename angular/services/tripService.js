@@ -68,7 +68,8 @@ app.factory('tripService', ['$http', 'authService', function ($http, authService
         this.title = '';
         this.startDate = today;
         this.endDate = defaultEnd;
-        this.location = {latitude:0, longitude:0};
+        this.latitude = 0;
+        this.longitude = 0;
         tripService.addValidationMethods(this);
     };
     tripService.addValidationMethods = function(dateable) {

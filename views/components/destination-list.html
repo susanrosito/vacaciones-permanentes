@@ -1,10 +1,13 @@
 <div class="trip-calendar">
     <div class="mt++">
         <span class="trip-calendar-title fs-title display-block mb" translate>Cities to Visit</span>
-        <a class="btn-add-city btn btn--m btn--primary btn--flat" ng-show="editedTrip.isEditing" ng-click="showAddDestinationDialog()">
+        <a class="btn-add-city btn btn--m btn--primary btn--flat" ng-show="editedTrip.isEditing" ng-click="showAddDestinationBox()">
             <i class="icon icon--xs icon--flat mdi mdi-plus"></i>
         </a>
         <div class="divider divider--dark"></div>
+
+        {% include "components/add-destination-dialog.html" %}
+
         <ul class="list mt++">
             <li class="list-row list-row--has-separator city-list-item" ng-repeat="destination in editedTrip.destinations | orderBy: 'startDate'">
                 <div class="list-row__primary">

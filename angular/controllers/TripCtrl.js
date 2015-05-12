@@ -1,6 +1,6 @@
-app.controller('TripCtrl', ['$scope', '$state', 'LxNotificationService', 'LxDialogService', 'LxDatePickerService',
+app.controller('TripCtrl', ['$scope', '$state', 'LxNotificationService', 'LxDatePickerService',
     'gettextCatalog', 'authService', 'tripService', 'trip', function (
-    $scope, $state, LxNotificationService, LxDialogService, LxDatePickerService, gettextCatalog, authService, tripService, trip) {
+    $scope, $state, LxNotificationService, LxDatePickerService, gettextCatalog, authService, tripService, trip) {
 
     if (authService.isLoggedIn() && tripService.all.length ===0) {
         tripService.getAll();
@@ -14,15 +14,9 @@ app.controller('TripCtrl', ['$scope', '$state', 'LxNotificationService', 'LxDial
     $scope.editedTrip.resetTo($scope.trip);
     $scope.editedTrip.isEditing = false;
     $scope.tempDestination = new tripService.Destination();
-    $scope.polyline = new google.maps.Polyline({
-        strokeColor: '#6060FB',
-        strokeOpacity: 1.0,
-        geodesic: true,
-        strokeWeight: 3
-    });
+    $scope.isAddDestinationShowned = false;
     setTimeout(function() { LxDatePickerService.disableAll() }, 1000);
     // In display mode, will display the current trip
-
 
     $scope.enterEditMode = function() {
         LxDatePickerService.enableAll();
@@ -31,10 +25,10 @@ app.controller('TripCtrl', ['$scope', '$state', 'LxNotificationService', 'LxDial
 
     $scope.cancelEdit = function() {
         $scope.editedTrip.resetTo($scope.trip);
-        $state.go('trip', {id: $scope.trip._id})
+        $state.go('trip', {id: $scope.trip._id});
         LxDatePickerService.disableAll();
         $scope.editedTrip.isEditing = false;
-        $scope.loadDestinationsInMap($scope.trip);
+        $scope.mapData.loadDestinations($scope.trip);
     };
 
     $scope.confirmEdit = function() {
@@ -42,7 +36,7 @@ app.controller('TripCtrl', ['$scope', '$state', 'LxNotificationService', 'LxDial
         $scope.trip.resetTo($scope.editedTrip);
         LxDatePickerService.disableAll();
         $scope.editedTrip.isEditing = false;
-        $scope.loadDestinationsInMap($scope.trip);
+        $scope.mapData.loadDestinations($scope.trip);
     };
 
     $scope.confirmDelete = function() {
@@ -59,26 +53,24 @@ app.controller('TripCtrl', ['$scope', '$state', 'LxNotificationService', 'LxDial
             });
     };
 
-    $scope.showAddDestinationDialog = function (ev) {
-        LxDialogService.open('add-destination-dialog');
+    $scope.showAddDestinationBox = function () {
+        $scope.isAddDestinationShowned = true;
         $scope.tempDestination.resetTo(new tripService.Destination());
-        LxDatePickerService.handleClicks('add-destination-dialog');
     };
 
-    $scope.closeAddDestinationDialog = function() {
-        LxDatePickerService.endHandleClicks('add-destination-dialog');
-
+    $scope.closeAddDestinationBox = function() {
+        $scope.isAddDestinationShowned = false;
     };
 
     $scope.addDestination = function(destination) {
         var dest = new tripService.Destination();
         dest.resetTo($scope.tempDestination);
-        dest = $scope.addLatLongToDestination(dest);
+        dest.latitude = $scope.tempDestination.latitude;
+        dest.longitude = $scope.tempDestination.longitude;
         $scope.editedTrip.addDestination(dest);
-        $scope.loadDestinationsInMap($scope.editedTrip);
+        $scope.mapData.loadDestinations($scope.editedTrip);
         $scope.tempDestination.resetTo(new tripService.Destination());
-        LxDialogService.close('add-destination-dialog');
-
+        $scope.isAddDestinationShowned = false;
     };
 
     $scope.removeDestination = function(destination) {
@@ -90,47 +82,45 @@ app.controller('TripCtrl', ['$scope', '$state', 'LxNotificationService', 'LxDial
             }, function(answer) {
                 if (answer) {
                     $scope.editedTrip.removeDestination(destination);
-                    $scope.loadDestinationsInMap($scope.editedTrip);
+                    $scope.mapData.loadDestinations($scope.editedTrip);
                 }
             });
     };
 
     $scope.placeChanged = function() {
-        $scope.place = this.getPlace();
-    };
-
-    $scope.addLatLongToDestination = function(destination) {
-        var location = $scope.place.geometry.location;
-        destination.location.latitude = location.A;
-        destination.location.longitude = location.F;
-        return destination;
+        var place = this.getPlace();
+        var location = place.geometry.location;
+        $scope.tempDestination.latitude = location.A;
+        $scope.tempDestination.longitude = location.F
     };
 
 
-    updateMapBounds = function (aTrip) {
-        var bounds = new google.maps.LatLngBounds();
-        _.each($scope.polyline.getPath().j, function(latLng){
-            bounds.extend(latLng);
-        });
-        $scope.map.setCenter(bounds.getCenter());
-        $scope.map.fitBounds(bounds);
-    };
 
-    $scope.loadDestinationsInMap = function(aTrip){
-        if(!aTrip.destinations || aTrip.destinations.length === 0) { return; }
-
-        if($scope.map){
-            $scope.polyline.setPath(_.map(aTrip.destinations, function(destination){
-                var location = destination.location;
-                return new google.maps.LatLng(location.latitude, location.longitude);
+    $scope.mapData = {};
+    $scope.mapData.polyline = new google.maps.Polyline({
+        strokeColor: '#6060FB',
+        strokeOpacity: 1.0,
+        geodesic: true,
+        strokeWeight: 3
+    });
+    $scope.mapData.loadDestinations = function(trip) {
+        if(trip.destinations && trip.destinations.length > 0 && $scope.map) {
+            this.polyline.setPath(_.map(trip.destinations, function(destination) {
+                return new google.maps.LatLng(destination.latitude, destination.longitude);
             }));
-            updateMapBounds(aTrip);
+            // Update map bound
+            var bounds = new google.maps.LatLngBounds();
+            _.each(this.polyline.getPath().j, function(latLng){
+                bounds.extend(latLng);
+            });
+            $scope.map.setCenter(bounds.getCenter());
+            $scope.map.fitBounds(bounds);
         }
     };
 
     $scope.$on('mapInitialized', function(event, map) {
-        $scope.loadDestinationsInMap(trip);
-        $scope.polyline.setMap($scope.map);
+        $scope.mapData.loadDestinations(trip);
+        $scope.mapData.polyline.setMap($scope.map);
     });
 
 }]);

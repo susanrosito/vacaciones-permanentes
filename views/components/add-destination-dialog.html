@@ -1,10 +1,9 @@
-<lx-dialog class="dialog dialog--l add-trip-dialog" id="add-destination-dialog" auto-close="true" onclose="closeAddDestinationDialog()">
+<div class="trip-add-destination-box" ng-show="editedTrip.isEditing && isAddDestinationShowned">
     <div class="sticky-container">
-        <h3 translate>Add New Destination</h3>
         <div class="dialog-content">
-
             <lx-text-field label="[['City' | translate]]">
-                <input type="text" ng-model="tempDestination.title" focus-on="add-dialog-show" places-auto-complete types="['geocode']", placeholder="" on-place-changed="placeChanged(place)">
+                <input type="text" ng-model="tempDestination.title" focus-on="add-dialog-show"
+                       places-auto-complete types="['geocode']" placeholder="" on-place-changed="placeChanged(place)">
             </lx-text-field>
             <lx-date-picker id="startDate" model="tempDestination.startDate" label="[['Start Date' | translate]]"
                             auto-close="true" locale="es" class="date-start"
@@ -16,14 +15,14 @@
             </lx-date-picker>
         </div>
     </div>
-    <div class="action-buttons">
+    <div class="box-action-buttons">
         <span flex></span>
-        <button class="btn btn--m btn--flat" lx-ripple lx-dialog-close translate>
+        <a class="btn btn--m btn--flat" lx-ripple  ng-click="closeAddDestinationBox()"  translate>
             Cancel
-        </button>
-        <button class="btn btn--m btn--primary btn--raised" ng-disabled="!tempDestination.readyToSave()"
+        </a>
+        <a class="btn btn--m btn--primary btn--raised" ng-disabled="!tempDestination.readyToSave()"
                 ng-click="addDestination()" lx-ripple  translate>
             Add New Destination
-        </button>
+        </a>
     </div>
-</lx-dialog>
+</div>
