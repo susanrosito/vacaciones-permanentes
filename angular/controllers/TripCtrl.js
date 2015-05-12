@@ -37,6 +37,7 @@ app.controller('TripCtrl', ['$scope', '$state', 'LxNotificationService', 'LxDate
         LxDatePickerService.disableAll();
         $scope.editedTrip.isEditing = false;
         $scope.mapData.loadDestinations($scope.trip);
+        $state.go('trip', {id: $scope.trip._id});
     };
 
     $scope.confirmDelete = function() {

@@ -1,7 +1,9 @@
 logger.info(__('Creating models...'));
 
-module.exports = {
-    User: require("./user.js"),
-    Destination: require("./destination.js"),
-    Trip: require("./trip.js")
-};
+var UserSchema = require("./user.js");
+var DestinationSchema = require("./destination.js");
+var TripSchema = require("./trip.js");
+
+mongoose.model('User', UserSchema);
+mongoose.model("Destination", DestinationSchema);
+mongoose.model("Trip", TripSchema);
