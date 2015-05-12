@@ -1,6 +1,7 @@
 logger.info(__('Creating trip routes...'));
 
-var Trip = mongoose.model('Trip');
+var Trip = mongoose.model('Trip'),
+    Destination = mongoose.model('Destination');
 
 var router = module.exports = express.Router();
 
@@ -52,14 +53,21 @@ router.delete('/:trip', auth, function(req, res, next) {
 });
 
 router.put('/:trip', auth, function(req, res, next) {
-    var destinations = req.trip.updateDestinations(req.body);
-    logger.info(req.body.destinations);
-    req.trip.update({ $pullAll: {destinations: destinations.toRemove }});
-    req.trip.update({ $push: {destinations: {$each: destinations.toAdd }}});
+    var destinations = req.trip.getFilteredDestinations(req.body.destinations);
+    _.each(destinations.toRemove, function(destination) {
+        Destination.findById(destination, function(err, dest){
+            dest.remove();
+        });
+    });
+    _.each(destinations.toAdd, function(destination) {
+        var dest = new Destination(destination);
+        dest.trip = req.trip;
+        dest.save();
+    });
+    delete req.body.destinations;
     req.trip.update(req.body, function(err, trip){
-        if(err) {
-            return next(err); }
-        logger.info(trip);
+        if(err) { return next(err); }
         res.json(trip);
     });
+
 });

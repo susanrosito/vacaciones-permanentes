@@ -4,6 +4,7 @@
 <div class="sidebar" ng-class="{ 'sidebar--is-shown': isSidebarToggled }" ng-show="isLoggedIn()">
     <div class="sidebar-menu">
         <ul ng-controller="TripListCtrl">
+            <li class="sidebar-menu__link" ng-hide="trips.length" translate>No Trips added yet</li>
             <li ng-repeat="trip in trips | orderBy: '-startDate'" id="[[trip._id]]">
                 <a class="sidebar-menu__link" ui-sref="trip({id: trip._id})" ng-click="toggleSidebar()">[[trip.title]]</a>
             </li>

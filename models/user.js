@@ -3,7 +3,7 @@ logger.info(__('Creating User Schema'));
 var crypto = require('crypto');
 var jwt = require('jsonwebtoken');
 
-var UserSchema = new mongoose.Schema({
+var UserSchema = module.exports = new mongoose.Schema({
     email: {type: String, lowercase: true, unique: true},
     hash: String,
     salt: String,
@@ -33,5 +33,3 @@ UserSchema.methods.generateJWT = function() {
         exp: parseInt(exp.getTime() / 1000)
     }, config.auth.secret);
 };
-
-module.exports = mongoose.model('User', UserSchema);

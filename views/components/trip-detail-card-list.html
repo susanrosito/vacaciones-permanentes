@@ -1,4 +1,8 @@
 <div class="trip-detail-list">
+    <div class="no-trips-message-container" ng-hide="trips.length">
+        <h2 translate>No Trips Yet.</h2>
+        <h3 translate>Go ahead and add a trip.</h3>
+    </div>
     <div class="trip-detail-card" ng-repeat="trip in trips | orderBy: '-startDate'" id="[[post._id]]">
         <div class="card">
             <div class="card__img card__img--top">
