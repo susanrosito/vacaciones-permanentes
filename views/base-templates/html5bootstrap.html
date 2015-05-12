@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="{{ language }}"><![endif]-->
+<!--[if IE 7]><html class="no-js lt-ie9 lt-ie8" lang="{{ language }}"><![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie9" lang="{{ language }}"><![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="{{ language }}"><!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>{{ title }}</title>
+        {% if description %}<meta name="description" content="{{ description }}">{% endif %}
+        {% if keywords %}<meta name="keywords" content="{{ keywords }}">{% endif %}
+        {% if author %}<meta name="author" content="{{ author }}">{% endif %}
+        <meta http-equiv="content-language" content="{{ language }}">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" href="favicon.ico?v=1.0">
+
+        <!-- Apple iPhone iPad WebApp Icons -->
+        <link rel="apple-touch-icon" href="touch-icon-iphone.png">
+        <link rel="apple-touch-icon" sizes="76x76" href="touch-icon-ipad.png">
+        <link rel="apple-touch-icon" sizes="120x120" href="touch-icon-iphone-retina.png">
+        <link rel="apple-touch-icon" sizes="152x152" href="touch-icon-ipad-retina.png">
+
+        <!-- Windows Phone and Windows 8.1 WebApp icons -->
+        <meta name="application-name" content=" CenturyCutCook" />
+        <meta name="msapplication-TileColor" content=" #009900" />
+
+        <!-- Logos for all four tile sizes -->
+        <meta name="msapplication-square70x70logo" content="tile.png" />
+        <meta name="msapplication-square150x150logo" content="tile.png" />
+        <meta name="msapplication-wide310x150logo" content="tile-wide.png" />
+        <meta name="msapplication-square310x310logo" content="tile.png" />
+
+        <!-- Notification URL -->
+        <meta name="msapplication-notification" content="frequency=30; polling-uri=1.xml; polling-uri2=2.xml; polling-uri3=3.xml; polling-uri4=4.xml; polling-uri5=5.xml" />
+        <!-- bower:css -->
+        <!-- endbower -->
+        <link rel="stylesheet" href="styles/main.css">
+    </head>
+    <body ng-app="{{ ng_app }}">
+        <!--[if lt IE 8]>
+            {% block upgrade_browser_notice %}{% endblock %}
+        <![endif]-->
+        <script src="http://maps.google.com/maps/api/js?libraries=places"></script>
+        {% block main %}{% endblock %}
+        <!-- bower:js -->
+        <!-- endbower -->
+        <script src="javascripts/controllers.js"></script>
+        {% block inline_views %}{% endblock %}
+    </body>
+</html>

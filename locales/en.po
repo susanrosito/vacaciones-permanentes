@@ -1,0 +1,181 @@
+# VACACIONES PERMANENTES ENGLISH TRANSLATION.
+# Copyright (C) 2015
+# This file is distributed under the Apache 2.0 licence.
+# Alan Rodas Bonjour <alanrodas@gmail.com>, 2015.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Vacaciones-Permanentes-EN 1.0\n"
+"Report-Msgid-Bugs-To: https://github.com/robaud/vacaciones-permanentes/issues\n"
+"POT-Creation-Date: 2015-05-02 18:30+0300\n"
+"PO-Revision-Date: 2015-05-02 18:30+0300\n"
+"Last-TranslatorAlan Rodas Bonjour <alanrodas@gmail.com>\n"
+"Language: en\n"
+"Language-Team: EN <alanrodas@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=s;\n"
+
+# server.js : Line 19
+msgid "Connecting to MongoDB at %s"
+msgstr ""
+
+# server.js : Line 21
+msgid "Database connected"
+msgstr ""
+
+# server.js : Line 34
+msgid "Express Server started at port: %d"
+msgstr ""
+
+# models/index.js : Line 1
+msgid "Creating models..."
+msgstr ""
+
+# models/trip.js : Line 1
+msgid "Creating Trip Schema"
+msgstr ""
+
+# models/user.js : Line 1
+msgid "Creating User Schema"
+msgstr ""
+
+# routes/index.js : Line 1
+msgid "Creating routes..."
+msgstr ""
+
+# routes/authentication.js : Line 1
+msgid "Creating authentication routes..."
+msgstr ""
+
+# routes/not_found.js : Line 1
+msgid "Defining 404 page not found actions..."
+msgstr ""
+
+# routes/not_found.js : Line 9
+msgid "NOT FOUND"
+msgstr ""
+
+# routes/request_logger.js : Line 4
+msgid "%s Request to \"%s\""
+msgstr ""
+
+# request/trip.js : Line 1
+msgid "Creating trip routes...'"
+msgstr ""
+
+# views/navigations.html : Line 6
+msgid "Permanent Vacations"
+msgstr ""
+
+# views/navigations.html : Line 15
+# views/login.html : Line 8
+msgid "Log In"
+msgstr ""
+
+# views/navigations.html : Line 18
+# views/register.html : Line 8
+msgid "Register"
+msgstr ""
+
+# views/navigations.html : Line 6
+# views/register.html : Line 6
+msgid "Please fill out all fields"
+msgstr ""
+
+# views/navigations.html : Line 6
+# views/register.html : Line 6
+msgid "There is no user with that email registered"
+msgstr ""
+
+# views/navigations.html : Line 6
+# views/register.html : Line 6
+msgid "The username and password do not match"
+msgstr ""
+
+# views/navigations.html : Line 50
+msgid "Log Out"
+msgstr ""
+
+# views/login.html : Line 11
+# views/register.html : Line 11
+msgid "Email"
+msgstr ""
+
+# views/login.html : Line 15
+# views/register.html : Line 15
+msgid "Password"
+msgstr ""
+
+# views/login.html : Line 12
+# views/register.html : Line 12
+msgid "e.g. someone@company.com"
+msgstr ""
+
+
+# views/login.html : Line 20
+# views/register.html : Line 20
+# assets/partials/trip.html : Line 22
+msgid "Cancel"
+msgstr ""
+
+# views/login.html : Line 23
+msgid "Log In"
+msgstr ""
+
+# views/register.html : Line 23
+msgid "Register"
+msgstr ""
+
+# views/login.html : Line 16
+# views/register.html : Line 16
+msgid "Use letters and numbers only"
+msgstr ""
+
+# views/trip.html : Line 12
+# views/home.html : Line 14
+# assets/partials/trip.html : Line 3
+# assets/partials/trip.html : Line 25
+msgid "Add New Trip"
+msgstr ""
+
+# views/trip.html : Line 22
+# assets/partials/trip.html : Line 3
+# assets/partials/trip.html : Line 25
+msgid "Edit Trip"
+msgstr ""
+
+# views/login.html : Line 17
+msgid "Delete Trip"
+msgstr ""
+
+# views/trip.html : Line 5
+# views/home.html : Line 5
+msgid "from"
+msgstr ""
+
+# views/trip.html : Line 6
+# views/home.html : Line 6
+msgid "to"
+msgstr ""
+
+# assets/partials/trip.html : Line 6
+msgid "Title"
+msgstr ""
+
+# assets/partials/trip.html : Line 10
+msgid "Start Date"
+msgstr ""
+
+# assets/partials/trip.html : Line 14
+msgid "End Date"
+msgstr ""
+
+# assets/partials/trip.html : Line 11
+msgid "e.g. Summer Vacations"
+msgstr ""
+
+# assets/partials/trip.html : Line 15
+msgid "e.g. August 1, 2015"
+msgstr ""

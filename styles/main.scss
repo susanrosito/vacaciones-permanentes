@@ -1,0 +1,233 @@
+@import "_bourbon.scss";
+@import "_neat.scss";
+@import "_lumx.scss";
+@import "_media-queries.scss";
+@import "modules/_sidebar.scss";
+
+$primary-color:              $light-green     !default;
+$primary-color-light:        $light-green-100 !default;
+$primary-color-dark:         $light-green-700 !default;
+$accent-color:               $pink-A200  !default;
+$accent-color-light:         $pink-A100  !default;
+$accent-color-dark:          $pink-A400  !default;
+$primary-text-color-dark:    rgba(0,0,0,0.87);
+$secondary-text-color-dark:  rgba(0,0,0,0.54);
+$hint-text-color-dark:       rgba(0,0,0,0.26);
+$primary-text-color-light:   rgba(255,255,255,1);
+$secondary-text-color-light: rgba(255,255,255,0.7);
+$hint-text-color-light:      rgba(255,255,255,0.3);
+$background-color:           #eeeeee;
+
+
+$mobile: 500px;
+$tablet: 700px;
+$desktop: 1023px;
+$large: 1300px;
+$largest: 1600px;
+
+body {
+  background-color: $background-color;
+}
+
+.header.toolbar {
+  background-color: $primary-color;
+  position: fixed;
+  width: 100%;
+  z-index: 998;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  span, a, li, i, { color: $primary-text-color-light; }
+  .btn { @include transition(background-color 0.8s);
+    &:hover { background-color: $primary-color-dark; }
+  }
+  .main-nav {
+    ul, ol { list-style: none;
+      li { display: inline-block; }
+    }
+    .main-nav__link {
+      display: block;
+      padding: 0 12px;
+      border-radius: 2px;
+      font-size: 18px;
+      font-size: 1.125rem;
+      font-weight: 500;
+      color: white;
+      line-height: 36px;
+      text-decoration: none;
+    }
+  }
+}
+
+
+.sidebar, .user-menu {
+  top: 64px !important;
+  @include max-screen($desktop) { top: 56px !important; }
+}
+.user-menu {
+  position: fixed;
+  .face {
+    display: inline-block;
+    margin-left: 10px;
+    width: 40px;
+    border-radius: 50%;
+  }
+  .user-info {
+    display: inline-block;
+    vertical-align: top;
+    margin-top: -5px;
+  }
+  .user-name {
+    font-weight: bold;
+    color: $primary-text-color-dark;
+  }
+  .user-email { margin-top: -10px; }
+}
+.main-content {
+  margin-left: 0;
+  padding-top: 60px;
+  &.sidebar--is-shown {
+    margin-left: 260px;
+  }
+}
+
+
+@mixin fab-primary-button($bgColor) {
+  background-color: $bgColor;
+  color: $primary-text-color-light;
+  width: 54px;
+  height: 54px;
+}
+@mixin fab-secondary-button($bgColor) {
+  background-color: $bgColor;
+  color: $primary-text-color-light;
+  width: 40px;
+  height: 40px;
+}
+@mixin fab-floating-button() {
+  position: fixed !important;
+  bottom: 50px;
+  right: 50px;
+}
+.fab.btn-edit-group {
+  @include fab-floating-button();
+  bottom: 120px;
+}
+a.btn.btn--fab .mdi { line-height: 54px !important; }
+.btn {
+  &.btn-add, &.btn-back, &.btn-discard-changes { @include fab-floating-button(); }
+  &.btn-back, &.btn-discard-changes { @include fab-primary-button($primary-color); }
+  &.btn-add, &.btn-edit, &.btn-save-changes { @include fab-primary-button($accent-color); }
+  &.btn-delete { @include fab-secondary-button(red); }
+  &.btn-edit-add { @include fab-secondary-button(orange); }
+}
+.btn--primary { color: $primary-color; }
+.btn--raised.btn--primary {
+  color: $primary-text-color-light;
+  background-color: $primary-color;
+}
+
+.dt-picker-error {
+  .text-field:before { border-color: red !important; }
+  input.text-field__input { color: red; }
+}
+.dialog-content {
+  .date-end .lx-date, .date-start .lx-date {
+    width: 50%;
+    display: inline-block;
+  }
+  .date-end .lx-date {float: right;}
+}
+.dialog--alert .dialog__actions {
+  .btn--red { color: $primary-text-color-dark; }
+  .btn--blue {
+    color: $primary-text-color-light;
+    background-color: $primary-color;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    -webkit-transition-property: box-shadow;
+    -moz-transition-property: box-shadow;
+    transition-property: box-shadow;
+    -webkit-transition-duration: 0.2s;
+    -moz-transition-duration: 0.2s;
+    transition-duration: 0.2s;
+  }
+  .btn--blue:hover { box-shadow: 0 3px 6px rgba(0, 0, 0, 0.4); }
+}
+
+.card {
+  &.register, &.login {
+    margin-top: 100px;
+    @include span-columns(6);
+    @include shift(3);
+    .inner-form { padding: 10px 30px; }
+  }
+}
+.outer-form-card {
+  @include outer-container;
+}
+
+.trip-detail-list {
+  padding: 20px;
+  @include outer-container;
+}
+.trip-detail-card {
+  margin-top: 26px;
+  @include max-screen($tablet) { @include span-columns(6); @include omega(2n); }
+  @include screen($tablet, $large) { @include span-columns(4); @include omega(3n); }
+  @include screen($large, $largest) { @include span-columns(3); @include omega(4n); }
+  @include min-screen($largest) { @include span-columns(2); @include omega(5n); }
+
+  //@include media($mobile) {
+  //  @include span-columns(4);
+  //  @include omega(3n);
+  //}
+}
+
+.trip-card {
+  padding: 20px;
+  .card {
+    @include outer-container;
+    .left { @include span-columns(6); }
+    .right { @include span-columns(6); padding: 10px; }
+    .trip-map { margin-top: 10px;}
+    .trip-calendar {
+      .trip-calendar-title { display: inline-block; }
+      .btn-add-city { float: right; }
+      .city-image { width: 40px; height: 40px; }
+      padding: 10px;
+    }
+    .trip-image-container .trip-image { border-radius: 20px; }
+  }
+  .angular-google-map-container {
+    height: 350px;
+    border-radius: 20px;
+  }
+}
+
+.add-trip-dialog {
+  padding: 20px;
+}
+
+.action-buttons { float: right; padding: 20px 0;}
+
+.remove-destination-button {
+  cursor: pointer;
+}
+
+.trip-add-destination-box {
+  padding: 0 15px;
+  margin-top: 20px;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  .box-action-buttons { padding: 20px 0; }
+}
+
+.no-trips-message-container {
+  border: 4px dotted darkgray;
+  color: darkgray;
+  border-radius: 10px;
+  text-align: center;
+  padding: 20px;
+  margin-top: 150px;
+  @include span-columns(8);
+  @include shift(2);
+}

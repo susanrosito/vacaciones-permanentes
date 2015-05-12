@@ -1,0 +1,30 @@
+<div class="trip-detail-list">
+    <div class="no-trips-message-container" ng-hide="trips.length">
+        <h2 translate>No Trips Yet.</h2>
+        <h3 translate>Go ahead and add a trip.</h3>
+    </div>
+    <div class="trip-detail-card" ng-repeat="trip in trips | orderBy: '-startDate'" id="[[post._id]]">
+        <div class="card">
+            <div class="card__img card__img--top">
+                <img src="http://ui.lumapps.com/images/placeholder/2-horizontal.jpg">
+                <span class="fs-headline tc-white-1 display-block">[[trip.title]]</span>
+            </div>
+
+            <div class="p+">
+                <span class="fs-subhead tc-black-2 display-block">[[trip.title]]</span>
+
+                <div class="paragraph fs-body-1">
+                    <p>
+                        <span translate>from</span> [[trip.startDate | amDateFormat:'MMMM DD, YYYY']]<br>
+                        <span translate>to</span> [[trip.endDate | amDateFormat:'MMMM, DD, YYYY']]
+                    </p>
+                </div>
+            </div>
+
+            <div class="card__actions">
+                <button class="btn btn--m btn--orange btn--flat"
+                        ui-sref="trip({id: trip._id})" lx-ripple translate>Read More</button>
+            </div>
+        </div>
+    </div>
+</div>

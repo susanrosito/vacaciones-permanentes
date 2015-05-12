@@ -1,3 +1,12 @@
+# OS Specific files
+.DS_Store
+*/.DS_Store
+thumbs.db
+*/thumbs.db
+
+# IDE Files
+.idea
+
 # Logs
 logs
 *.log
@@ -25,3 +34,9 @@ build/Release
 # Dependency directory
 # https://www.npmjs.org/doc/misc/npm-faq.html#should-i-check-my-node_modules-folder-into-git
 node_modules
+
+# Bower dependency directory
+bower_components
+
+#Target directory
+target/

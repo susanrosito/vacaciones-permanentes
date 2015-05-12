@@ -1,0 +1,16 @@
+{% extends "base-templates/base.html" %}
+
+{% block inline_views %}
+    <script type="text/ng-template" id="/home.html">
+        {% include "states/home.html" %}
+    </script>
+    <script type="text/ng-template" id="/login.html">
+        {% include "states/login.html" %}
+    </script>
+    <script type="text/ng-template" id="/register.html">
+        {% include "states/register.html" %}
+    </script>
+    <script type="text/ng-template" id="/trip.html">
+        {% include "states/trip.html" %}
+    </script>
+{% endblock %}

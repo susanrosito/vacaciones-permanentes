@@ -1,0 +1,42 @@
+<div class="header toolbar">
+    <div class="toolbar__left mr" ng-show="isLoggedIn() && !isVisibleByWidth">
+        <button class="btn btn--l btn--black btn--icon" lx-ripple ng-click="toggleSidebar()">
+            <i class="mdi mdi-menu"></i>
+        </button>
+    </div>
+
+    <span class="toolbar__label fs-title" translate>Permanent Vacations</span>
+
+    <div class="toolbar__right" ng-hide="isLoggedIn()">
+        <nav class="main-nav main-nav--lap-and-up">
+            <ul>
+                <li><a class="main-nav__link" ui-sref="login" translate>Log In</a></li>
+                <li><a class="main-nav__link" ui-sref="register" translate>Register</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <div class="toolbar__right" ng-show="isLoggedIn()">
+
+        <lx-dropdown position="right">
+            <button class="btn btn--l btn--black btn--icon" lx-ripple lx-dropdown-toggle>
+                <img gravatar-src="[['currentUser().email']]" gravatar-size="100" class="face">
+            </button>
+
+            <lx-dropdown-menu class="user-menu">
+                <div class="arrow"></div>
+                <ul>
+                    <li>
+                        <img gravatar-src="[['currentUser().email']]" gravatar-size="100" class="face">
+                        <div class="user-info">
+                            <span class="user-name dropdown-link dropdown-link--is-header">[[currentUser().name]]</span>
+                            <span class="user-email dropdown-link dropdown-link--is-header">[[currentUser().email]]</span>
+                        </div>
+                    </li>
+                    <li class="dropdown-divider"></li>
+                    <li><a class="dropdown-link" ng-click="logOut()" translate>Log Out</a></li>
+                </ul>
+            </lx-dropdown-menu>
+        </lx-dropdown>
+    </div>
+</div>

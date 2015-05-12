@@ -1,0 +1,19 @@
+{% set language = "es" %}
+{% set author = "Alan Rodas Bonjour / Susana Rosito" %}
+{% set ng_app = "vacacionesPermanentes" %}
+{% set title = "Vacaciones Permanentes" %}
+{% set description = "Trabajo Práctico de la materia Desarrollo de Software de la UNQ" %}
+{% set keywords = "Vacaciones, Permanentes, TP, MEAN, UNQ, Desarrollo, Software" %}
+
+{% extends "base-templates/html5bootstrap.html" %}
+
+{% block main %}
+<div ng-controller="NavigationCtrl">
+    {% include "components/top-toolbar.html" %}
+    {% include "components/sidebar.html" %}
+    <div class="main-content"
+    ng-class="{ 'sidebar--is-shown': isVisibleByWidth && isLoggedIn()}">
+        <ui-view></ui-view>
+    </div>
+</div>
+{% endblock %}
