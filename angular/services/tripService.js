@@ -48,9 +48,21 @@ app.factory('tripService', ['$http', 'authService', function ($http, authService
         });
     };
 
+    //Esto es horrible. Lo tuve que hacer porque las fechas se crean con hora cuando haces new Date(), si se puede evitar esto
+    // de la manera mas linda. bienvenido sea :D
+    tripService.newDateWithOutHours = function(date){
+        var newDate = new Date();
+        if (date){
+            newDate = new Date(date);
+        }else{
+            newDate.setHours(0,0,0,0);
+        }
+        return newDate;
+    };
+
     tripService.Trip = function() {
-        var today = new Date();
-        var defaultEnd = new Date(today);
+        var today = tripService.newDateWithOutHours();
+        var defaultEnd = tripService.newDateWithOutHours(today);
         // Set end as 15 days from now
         defaultEnd.setDate(today.getDate() + 15);
         this._id = null;
@@ -61,9 +73,9 @@ app.factory('tripService', ['$http', 'authService', function ($http, authService
         tripService.addMethods(this);
     };
     tripService.Destination = function() {
-        var today = new Date();
-        var defaultEnd = new Date(today);
-        // Set end as 5 days from now
+        var today = tripService.newDateWithOutHours();
+        var defaultEnd = tripService.newDateWithOutHours(today);
+        // Set en   d as 5 days from now
         defaultEnd.setDate(today.getDate() + 5);
         this.title = '';
         this.startDate = today;
@@ -74,6 +86,7 @@ app.factory('tripService', ['$http', 'authService', function ($http, authService
     };
     tripService.addValidationMethods = function(dateable) {
         if (!dateable.hasValidDates) {
+
             dateable.hasValidDates = function () {
                 return !this.startDate || !this.endDate ||
                         this.startDate < this.endDate;
@@ -85,8 +98,8 @@ app.factory('tripService', ['$http', 'authService', function ($http, authService
             dateable._resetTo = function (reseter) {
                 this._id = reseter._id;
                 this.title = reseter.title;
-                this.startDate = new Date(reseter.startDate);
-                this.endDate = new Date(reseter.endDate);
+                this.startDate = tripService.newDateWithOutHours(reseter.startDate);
+                this.endDate = tripService.newDateWithOutHours(reseter.endDate);
             };
             dateable.resetTo = dateable._resetTo
         }
@@ -109,6 +122,18 @@ app.factory('tripService', ['$http', 'authService', function ($http, authService
                 // Called city in the server
                 destination.city = destination.title;
                 this.destinations.push(destination);
+            };
+
+            trip.hasDestinationValidDates = function(destination){
+                return destination.startDate >= this.startDate && destination.startDate <= this.endDate &&
+                       destination.endDate <= this.endDate && destination.endDate >= this.startDate;
+            };
+            trip.hasBetweenDestinationValidDates = function(destination){
+                var isValidDates = this.hasDestinationValidDates(destination);
+
+                return isValidDates  && _.all(this.destinations, function(dest){
+                    return destination.startDate >= dest.endDate || destination.endDate <= dest.startDate;
+                });
             };
             trip.removeDestination = function(destination) {
                 var index = this.destinations.indexOf(destination);
