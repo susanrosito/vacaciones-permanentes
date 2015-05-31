@@ -5,8 +5,17 @@ exports.getTrip = ['$stateParams', 'LxNotificationService', 'gettextCatalog', 't
     result.error(function(err) {
         LxNotificationService.error(gettextCatalog.getString(err.message));
     });
-    return result.then(function(res) { return tripService.addMethods(res.data); });
+    return result.then(function(res) { return new tripService.Trip(res.data); });
 }];
+
+exports.getDestination = ['$stateParams', 'LxNotificationService', 'gettextCatalog', 'tripService',
+    function($stateParams, LxNotificationService, gettextCatalog, tripService) {
+        var result =  tripService.getDestination($stateParams.id, $stateParams.destinationId);
+        result.error(function(err) {
+            LxNotificationService.error(gettextCatalog.getString(err.message));
+        });
+        return result.then(function(res) { return new tripService.Destination(res.data); });
+    }];
 
 exports.getAllTrips = ['tripService', function (tripService) {
     return tripService.getAll();

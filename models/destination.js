@@ -8,9 +8,28 @@ var DestinationSchema = module.exports = new mongoose.Schema({
     startDate: Date,
     endDate: Date,
     latitude: Number,
-    longitude: Number
-    //}
-    // image: {data: Buffer, contentType: String}
-    // activities: [{type: ActivitySchema}]
+    longitude: Number,
+    pois: [{type: ObjectId, ref:'POI'}]
 });
+
+DestinationSchema.methods.getFilteredPOIs = function (pois) {
+
+    var poisIds = _.map(pois, function (e) {
+        return e._id;
+    });
+
+    var poisToRemove = _.filter(this.pois, function (each) {
+        return !_.some(poisIds, function (id) {
+            return each.equals(id)
+        });
+    });
+    var poisToAdd = _.filter(pois, function (each) {
+        return !each._id;
+    });
+    return {
+        toRemove: poisToRemove,
+        toAdd: poisToAdd
+    };
+};
+
 DestinationSchema.plugin(relationship, { relationshipPathName: 'trip' });
