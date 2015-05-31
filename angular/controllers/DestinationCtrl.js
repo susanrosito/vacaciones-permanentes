@@ -46,13 +46,47 @@ app.controller('DestinationCtrl', ['$scope', '$state', 'LxNotificationService',
 
         $scope.addPOI = function(poi) {
             $scope.editedDestination.addPOI($scope.tempPOI.clone());
-            // $scope.mapData.loadDestinations($scope.editedTrip);
             $scope.tempPOI.resetTo(new tripService.POI());
             $scope.isAddPOIshowned = false;
+            $scope.mapData.loadPOI($scope.editedDestination);
         };
 
         $scope.removePOI = function(poi) {
             $scope.editedDestination.removePOI(poi);
-            // $scope.mapData.loadDestinations($scope.editedDestination);
+            $scope.mapData.loadPOI($scope.editedDestination);
         };
+
+        $scope.placeChanged = function() {
+            var place = this.getPlace();
+            var location = place.geometry.location;
+            $scope.tempPOI.name = place.name;
+            $scope.tempPOI.address = place.formatted_address;
+            $scope.tempPOI.ranking = place.rating;
+            $scope.tempPOI.latitude = location.A;
+            $scope.tempPOI.longitude = location.F;
+            //$scope.tempPOI.description
+        };
+
+        $scope.mapData = {};
+
+        $scope.mapData.markers = {};
+
+        $scope.mapData.loadPOI = function(destination) {
+            if(destination.pois && destination.pois.length > 0 && $scope.map) {
+                var bounds = new google.maps.LatLngBounds();
+                _.each(destination.pois, function(poi) {
+                    var marker = new google.maps.Marker({
+                        position: new google.maps.LatLng(poi.latitude, poi.longitude)
+                    });
+                    marker.setMap($scope.map);
+                    bounds.extend(marker.position);
+                });
+                $scope.map.setCenter(bounds.getCenter());
+                $scope.map.fitBounds(bounds);
+            }
+        };
+
+       $scope.$on('mapInitialized', function(event, map) {
+            $scope.mapData.loadPOI(destination);
+        });
 }]);

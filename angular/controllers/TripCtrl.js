@@ -87,7 +87,7 @@ app.controller('TripCtrl', ['$scope', '$state', 'LxNotificationService', 'LxDate
         var place = this.getPlace();
         var location = place.geometry.location;
         $scope.tempDestination.latitude = location.A;
-        $scope.tempDestination.longitude = location.F
+        $scope.tempDestination.longitude = location.F;
     };
 
 
