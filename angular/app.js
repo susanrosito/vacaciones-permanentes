@@ -36,6 +36,17 @@ app.config(['$interpolateProvider', '$stateProvider', '$urlRouterProvider', func
                 trips: helpers.getAllTrips,
                 trip: helpers.getTrip
             }
+        })
+        .state('destination', {
+            url: '/trip/:id/destination/:destinationId',
+            templateUrl: '/destination.html',
+            controller: 'DestinationCtrl',
+            onEnter: helpers.goToLogin,
+            resolve: {
+                trips: helpers.getAllTrips,
+                trip: helpers.getTrip,
+                destination: helpers.getDestination
+            }
         });
 
     $urlRouterProvider.otherwise('home');

@@ -57,6 +57,20 @@ body {
   }
 }
 
+.lx-date-input[disabled], .lx-date-input input[disabled]:hover {
+  cursor: default !important;
+}
+
+.list-row__content a {
+  &, &:hover, &:active, &:focus {
+    text-decoration: none;
+    color: $primary-text-color-dark;
+  }
+}
+.city-list-item:hover {
+  background-color: lightgray;
+  @include transition(background-color 0.8s);
+}
 
 .sidebar, .user-menu {
   top: 64px !important;

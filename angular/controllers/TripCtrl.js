@@ -10,8 +10,7 @@ app.controller('TripCtrl', ['$scope', '$state', 'LxNotificationService', 'LxDate
     $scope.trip = trip;
 
 
-    $scope.editedTrip = new tripService.Trip();
-    $scope.editedTrip.resetTo($scope.trip);
+    $scope.editedTrip = new tripService.Trip($scope.trip);
     $scope.editedTrip.isEditing = false;
     $scope.tempDestination = new tripService.Destination();
     $scope.isAddDestinationShowned = false;
@@ -25,19 +24,19 @@ app.controller('TripCtrl', ['$scope', '$state', 'LxNotificationService', 'LxDate
 
     $scope.cancelEdit = function() {
         $scope.editedTrip.resetTo($scope.trip);
-        $state.go('trip', {id: $scope.trip._id});
-        LxDatePickerService.disableAll();
         $scope.editedTrip.isEditing = false;
+        LxDatePickerService.disableAll();
         $scope.mapData.loadDestinations($scope.trip);
+        $state.go('trip', {id: $scope.trip._id});
     };
 
     $scope.confirmEdit = function() {
-        tripService.update($scope.editedTrip);
-        $scope.trip.resetTo($scope.editedTrip);
-        LxDatePickerService.disableAll();
         $scope.editedTrip.isEditing = false;
+        LxDatePickerService.disableAll();
         $scope.mapData.loadDestinations($scope.trip);
-        $state.go('trip', {id: $scope.trip._id});
+        tripService.update($scope.editedTrip).success(function(trip) {
+            $state.go('trip', {id: $scope.trip._id}, {reload: true});
+        });
     };
 
     $scope.confirmDelete = function() {
@@ -64,14 +63,10 @@ app.controller('TripCtrl', ['$scope', '$state', 'LxNotificationService', 'LxDate
     };
 
     $scope.addDestination = function(destination) {
-        var dest = new tripService.Destination();
-        dest.resetTo($scope.tempDestination);
-        dest.latitude = $scope.tempDestination.latitude;
-        dest.longitude = $scope.tempDestination.longitude;
-        $scope.editedTrip.addDestination(dest);
-        $scope.mapData.loadDestinations($scope.editedTrip);
+        $scope.editedTrip.addDestination($scope.tempDestination.clone());
         $scope.tempDestination.resetTo(new tripService.Destination());
         $scope.isAddDestinationShowned = false;
+        $scope.mapData.loadDestinations($scope.editedTrip);
     };
 
     $scope.removeDestination = function(destination) {

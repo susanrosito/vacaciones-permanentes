@@ -172,5 +172,6 @@ module.exports = function(grunt) {
     });
 
     grunt.registerTask('install', ['npm-install', 'bower-install-simple']);
-    grunt.registerTask('run', ['cwd:target', 'shell:mongodb', 'express', 'cwd:current', 'watch']);//,  'express-keepalive']);
+    grunt.registerTask('run', ['cwd:target', // 'shell:mongodb',
+        'express', 'cwd:current', 'watch']);//,  'express-keepalive']);
 };

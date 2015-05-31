@@ -2,16 +2,16 @@
     <div class="sticky-container">
         <div class="dialog-content">
             <lx-text-field label="[['City' | translate]]">
-                <input type="text" ng-model="tempDestination.title" focus-on="add-dialog-show"
+                <input type="text" ng-model="tempDestination.city" focus-on="add-dialog-show"
                        places-auto-complete types="['geocode']" placeholder="" on-place-changed="placeChanged(place)">
             </lx-text-field>
             <lx-date-picker id="startDate" model="tempDestination.startDate" label="[['Start Date' | translate]]"
                             auto-close="true" locale="es" class="date-start"
-                            ng-class="{'dt-picker-error': !tempDestination.hasValidDates() || !editedTrip.hasBetweenDestinationValidDates(tempDestination)}">
+                            ng-class="{'dt-picker-error': !tempDestination.hasValidDates()}">
             </lx-date-picker>
             <lx-date-picker id="endDate" model="tempDestination.endDate" label="[['End Date' | translate]]"
                             auto-close="true" locale="es" class="date-end"
-                            ng-class="{'dt-picker-error': !tempDestination.hasValidDates() || !editedTrip.hasBetweenDestinationValidDates(tempDestination)}">
+                            ng-class="{'dt-picker-error': !tempDestination.hasValidDates()}">
             </lx-date-picker>
         </div>
     </div>

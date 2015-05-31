@@ -1,0 +1,35 @@
+<form ng-submit="confirmEdit()">
+    {% include "components/destination-card.html" %}
+
+    <div ng-show="editedDestination.isEditing">
+        <a class="btn btn--m btn--fab btn-discard-changes" lx-tooltip="[['Discard Changes' | translate]]"
+           tooltip-position="left" lx-ripple ng-click="cancelEdit()">
+            <i class="mdi mdi-close"></i>
+        </a>
+
+        <div class="fab btn-edit-group">
+            <button class="fab__primary btn btn--xl btn--fab btn-save-changes" lx-ripple
+                    lx-tooltip="[['Edit Destination' | translate]]" tooltip-position="left"
+                    type="submit">
+                <i class="mdi mdi-content-save"></i>
+                <i class="mdi mdi-content-save"></i>
+            </button>
+        </div>
+    </div>
+</form>
+
+<div ng-hide="editedDestination.isEditing">
+    <a class="btn btn--m btn--fab btn-back" lx-tooltip="[['Back to Trip' | translate]]"
+       tooltip-position="left" lx-ripple ui-sref="trip({id: trip._id})">
+        <i class="mdi mdi-arrow-left"></i>
+    </a>
+
+    <div class="fab btn-edit-group">
+        <button class="fab__primary btn btn--xl btn--fab btn-edit" lx-ripple
+                lx-tooltip="[['Edit Trip' | translate]]" tooltip-position="left"
+                ng-click="enterEditMode()">
+            <i class="mdi mdi-pencil"></i>
+            <i class="mdi mdi-pencil"></i>
+        </button>
+    </div>
+</div>
