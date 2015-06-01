@@ -90,7 +90,11 @@ app.controller('TripCtrl', ['$scope', '$state', 'LxNotificationService', 'LxDate
         $scope.tempDestination.longitude = location.F;
     };
 
-
+    // Esto estaria bueno para que filtre por ciudad de un pais.
+    //$scope.options = {
+    //    types: ['(cities)'],
+    //    componentRestrictions: { country: 'FR' }
+    //};
 
     $scope.mapData = {};
     $scope.mapData.polyline = new google.maps.Polyline({
