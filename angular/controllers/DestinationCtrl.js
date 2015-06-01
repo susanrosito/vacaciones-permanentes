@@ -23,7 +23,7 @@ app.controller('DestinationCtrl', ['$scope', '$state', 'LxNotificationService',
             $scope.editedDestination.resetTo($scope.destination);
             $scope.editedDestination.isEditing = false;
             $state.go('destination', {id: $scope.trip._id, destinationId: $scope.destination._id});
-            // $scope.mapData.loadDestinations($scope.trip);
+            $scope.mapData.loadPOI($scope.trip);
         };
 
         $scope.confirmEdit = function() {
