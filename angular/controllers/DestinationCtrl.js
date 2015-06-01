@@ -73,6 +73,7 @@ app.controller('DestinationCtrl', ['$scope', '$state', 'LxNotificationService',
 
         $scope.mapData = {};
 
+        $scope.selectedMarker = '';
 
         $scope.mapData.loadPOI = function(destination) {
             if(destination.pois && destination.pois.length > 0 && $scope.map) {
@@ -96,19 +97,26 @@ app.controller('DestinationCtrl', ['$scope', '$state', 'LxNotificationService',
                 types: ['lodging']
             };
 
-            $scope.places.nearbySearch(search, function(results, status) {
+        $scope.showDetailLodging = function() {
+            $scope.selectedMarker = this;
+        };
+
+        $scope.places.nearbySearch(search, function(results, status) {
                 if (status == google.maps.places.PlacesServiceStatus.OK) {
                     for (var i = 0; i < results.length; i++) {
                         var markerLetter = String.fromCharCode('A'.charCodeAt(0) + i);
+                        /*var markerIcon = markerLetter + '.png';*/
                         var marker = new google.maps.Marker({
                             position: results[i].geometry.location,
-                            animation: google.maps.Animation.DROP
+                            animation: google.maps.Animation.DROP,
+                            placeResult: results[i]
+                            /*icon: markerIcon*/
                         });
                         marker.setMap($scope.map);
+                        google.maps.event.addListener(marker, 'click', $scope.showDetailLodging);
                     }
                 }
             });
-
         };
 
         $scope.$on('mapInitialized', function(event, map) {
