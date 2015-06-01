@@ -1,0 +1,22 @@
+<div class="trip-info">
+    <div class="p+">
+        <h4>[[destination.city]]</h4>
+
+        <lx-text-field label="[['Hotel' | translate]]" ng-hide="!editedDestination.isEditing">
+            <angucomplete-alt class="autocomplete" id="hotel-autocomplete"
+                              pause="100" minlength="1" input-class="form-control form-control-small"
+                              selected-object="updateHotel"
+                              local-data="hotelsInCity"
+                              search-fields="name"
+                              title-field="name"
+                              image-field=icon"
+                              description-field="address"></angucomplete-alt>
+        </lx-text-field>
+        <lx-text-field label="[['Hotel' | translate]]" ng-show="!editedDestination.isEditing">
+            <input type="text" ng-model="editedDestination.hotel.name" ng-disabled="!editedDestination.isEditing">
+        </lx-text-field>
+        <star-rating ng-hide="!editedDestination.hotel.name" ng-model="editedDestination.hotel.ranking" readonly="true" max="10"></star-rating>
+        <span ng-hide="!editedDestination.hotel.name" class="display-block poi-address">[[editedDestination.hotel.address]]</span>
+        <span ng-hide="!editedDestination.hotel.name" class="display-block poi-address">[[editedDestination.hotel.phone]]</span>
+    </div>
+</div>

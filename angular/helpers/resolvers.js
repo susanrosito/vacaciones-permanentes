@@ -5,7 +5,9 @@ exports.getTrip = ['$stateParams', 'LxNotificationService', 'gettextCatalog', 't
     result.error(function(err) {
         LxNotificationService.error(gettextCatalog.getString(err.message));
     });
-    return result.then(function(res) { return new tripService.Trip(res.data); });
+    return result.then(function(res) {
+        return new tripService.Trip(res.data);
+    });
 }];
 
 exports.getDestination = ['$stateParams', 'LxNotificationService', 'gettextCatalog', 'tripService',
@@ -14,7 +16,9 @@ exports.getDestination = ['$stateParams', 'LxNotificationService', 'gettextCatal
         result.error(function(err) {
             LxNotificationService.error(gettextCatalog.getString(err.message));
         });
-        return result.then(function(res) { return new tripService.Destination(res.data); });
+        return result.then(function(res) {
+            return new tripService.Destination(res.data);
+        });
     }];
 
 exports.getAllTrips = ['tripService', function (tripService) {

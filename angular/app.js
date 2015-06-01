@@ -1,7 +1,7 @@
 helpers = require('./helpers');
 
 var app = angular.module('vacacionesPermanentes',
-    ['ui.router', 'ui.gravatar', 'lumx', 'angularMoment','gettext', 'ngMap']);
+    ['ui.router', 'ui.gravatar', 'lumx', 'angularMoment','gettext', 'ngMap', 'angucomplete-alt']);
 
 app.config(['$interpolateProvider', '$stateProvider', '$urlRouterProvider', function (
         $interpolateProvider, $stateProvider, $urlRouterProvider) {

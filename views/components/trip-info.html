@@ -1,7 +1,8 @@
 <div class="trip-info">
     <div class="p+">
         <lx-text-field label="[['Title' | translate]]">
-            <input type="text" ng-model="editedTrip.title" ng-disabled="!editedTrip.isEditing">
+            <input type="text" ng-model="editedTrip.title" ng-disabled="!editedTrip.isEditing"
+                   focus-on="enter-edit-mode">
         </lx-text-field>
         <lx-date-picker model="editedTrip.startDate" label="[['Start Date' | translate]]"
                         auto-close="true" locale="es" class="date-start"

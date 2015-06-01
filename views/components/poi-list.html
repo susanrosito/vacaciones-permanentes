@@ -1,6 +1,6 @@
 <div class="trip-calendar">
     <div class="mt++">
-        <span class="trip-calendar-title fs-title display-block mb" translate>Places to Visit on [[editedDestination.city]]</span>
+        <span class="trip-calendar-title fs-title display-block mb" translate>Places to Visit</span>
         <a class="btn-add-city btn btn--m btn--primary btn--flat" ng-show="editedDestination.isEditing"
            ng-click="showAddPOIBox()">
             <i class="icon icon--xs icon--flat mdi mdi-plus"></i>
@@ -12,24 +12,15 @@
 
         <ul class="list mt++">
             <li class="list-row list-row--has-separator " ng-repeat="poi in editedDestination.pois">
-                <div class="list-row__primary" ng-hide="editedDestination.isEditing">
-                    <a ng-click="changeSelectedPOI(poi)">
-                        <img src="http://ui.lumapps.com/images/placeholder/2-horizontal.jpg"
-                             class="img-round city-image">
-                    </a>
+                <div class="list-row__primary">
+                    <img ng-src="[[poi.icon]]" class="img-round city-image">
                 </div>
-                <div class="list-row__content" ng-hide="editedDestination.isEditing">
-                    <a ng-click="changeSelectedPOI(poi)">
-                        <span class="display-block">[[poi.name]]</span>
-                    </a>
+                <div class="list-row__content">
+                    <span class="display-block">[[poi.name]]</span>
+                    <star-rating ng-model="poi.ranking" readonly="true" max="10"></star-rating>
+                    <span class="display-block poi-address">[[poi.address]]</span>
                 </div>
 
-                <div class="list-row__primary" ng-show="editedDestination.isEditing">
-                    <img src="http://ui.lumapps.com/images/placeholder/2-horizontal.jpg" class="img-round city-image">
-                </div>
-                <div class="list-row__content" ng-show="editedDestination.isEditing">
-                    <span class="display-block">[[poi.name]]</span>
-                </div>
                 <div class="list-row__secondary city-remove-icon" ng-show="editedDestination.isEditing">
                     <a ng-click="removePOI(poi)" class="remove-destination-button">
                         <i class="icon icon--xs icon--grey icon-editedDestination-flat mdi mdi-close"></i>

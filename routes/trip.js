@@ -51,6 +51,7 @@ router.get('/', auth, function (req, res, next) {
         if (err) {
             return next(err);
         }
+        _.each(trips, function(trip){delete trip.destinations;});
         res.json(trips);
     });
 });
@@ -126,6 +127,8 @@ router.put('/:trip', auth, function (req, res, next) {
 
 router.put('/:trip/destination/:destination', auth, function (req, res, next) {
     var pois = req.destination.getFilteredPOIs(req.body.pois);
+    req.body.hotel = req.body.newHotel;
+    delete req.body.newHotel;
     delete req.body.pois;
 
     _.each(pois.toRemove, function (poi) {
@@ -145,3 +148,22 @@ router.put('/:trip/destination/:destination', auth, function (req, res, next) {
         res.json(req.destination);
     });
 });
+/*
+ _id=556b1267057c06b111e6aa10, city=Wilde, Buenos Aires, Argentina,
+ startDate=2015-05-31T03:00:00.000Z, endDate=2015-06-05T13:53:32.046Z,
+ latitude=-34.7040787, longitude=-58.32059859999998,
+  pois=[_id=556ca0ec41131a171a6219e4, name=Estadio Alberto J. Armando,
+  icon=http://maps.gstatic.com/mapfiles/place_api/icons/stadium-71.png,
+   address=Brandsen 805, 1161 Buenos Aires, Argentina, description=Information of POI:
+ Estadio Alberto J. Armando
+ Brandsen 805, 1161 Buenos Aires, Argentina, ranking=9, latitude=-34.635611,
+ longitude=-58.364756, destination=556b1267057c06b111e6aa10, __v=0,
+ _id=556ca0ec41131a171a6219e5, name=Ferrocarril Oeste,
+  icon=http://maps.gstatic.com/mapfiles/place_api/icons/generic_business-71.png,
+   address=Buenos Aires, Buenos Aires, Argentina, description=Information of POI:
+ Ferrocarril Oeste
+ Buenos Aires, Buenos Aires, Argentina, ranking=9, latitude=-34.619391,
+ longitude=-58.44822799999997, destination=556b1267057c06b111e6aa10, __v=0],
+ name=Hola, isEditing=false
+
+*/

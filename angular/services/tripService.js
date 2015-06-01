@@ -60,6 +60,7 @@ app.factory('tripService', ['$http', 'authService', function ($http, authService
     };
 
     tripService.updateDestination = function (trip, destination) {
+        destination.newHotel = destination.hotel; // This is a fix for a timing request bug.
         return $http.put(remote_uri(trip._id) + '/destination/' + destination._id, destination, authService.getHeader()).success(function (remoteDestination){
             trip.updateDestination(destination, remoteDestination)
         });
