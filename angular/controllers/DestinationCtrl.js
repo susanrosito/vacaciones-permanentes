@@ -14,6 +14,7 @@ app.controller('DestinationCtrl', ['$scope', '$state', 'LxNotificationService',
         $scope.editedDestination.isEditing = false;
         $scope.tempPOI = new tripService.POI();
         $scope.isAddPOIshowned = false;
+        $scope.selectedPOI = new tripService.POI();
 
         $scope.enterEditMode = function() {
             $scope.editedDestination.isEditing = true;
@@ -32,7 +33,6 @@ app.controller('DestinationCtrl', ['$scope', '$state', 'LxNotificationService',
                 $state.go('destination', {id: $scope.trip._id, destinationId: $scope.destination._id},
                         {reload: true});
             });
-
         };
 
         $scope.showAddPOIBox = function () {
@@ -56,6 +56,10 @@ app.controller('DestinationCtrl', ['$scope', '$state', 'LxNotificationService',
             $scope.mapData.loadPOI($scope.editedDestination);
         };
 
+        $scope.changeSelectedPOI = function(poi){
+            $scope.selectedPOI = poi;
+        };
+
         $scope.placeChanged = function() {
             var place = this.getPlace();
             var location = place.geometry.location;
@@ -64,7 +68,7 @@ app.controller('DestinationCtrl', ['$scope', '$state', 'LxNotificationService',
             $scope.tempPOI.ranking = place.rating;
             $scope.tempPOI.latitude = location.A;
             $scope.tempPOI.longitude = location.F;
-            //$scope.tempPOI.description
+            $scope.tempPOI.description = "Information of POI: "+ '\n' + $scope.tempPOI.name + '\n' + $scope.tempPOI.address;
         };
 
         $scope.mapData = {};
