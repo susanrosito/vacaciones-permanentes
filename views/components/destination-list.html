@@ -10,13 +10,22 @@
 
         <ul class="list mt++">
             <li class="list-row list-row--has-separator city-list-item" ng-repeat="destination in editedTrip.destinations | orderBy: 'startDate'">
-                <div class="list-row__primary">
-                    <img src="http://ui.lumapps.com/images/placeholder/2-horizontal.jpg" class="img-round city-image">
+                <div class="list-row__primary" ng-hide="editedTrip.isEditing">
+                    <a ui-sref="destination({id: trip._id, destinationId: destination._id})">
+                        <img ng-src="[[destination.getImage()]]" class="img-round city-image">
+                    </a>
                 </div>
-                <div class="list-row__content">
+                <div class="list-row__content" ng-hide="editedTrip.isEditing">
+                    <a ui-sref="destination({id: trip._id, destinationId: destination._id})">
+                        <span class="display-block">[[destination.city]]</span>
+                    </a>
+                </div>
+
+                <div class="list-row__primary" ng-show="editedTrip.isEditing">
+                    <img ng-src="[[destination.getImage()]]" class="img-round city-image">
+                </div>
+                <div class="list-row__content" ng-show="editedTrip.isEditing">
                     <span class="display-block">[[destination.city]]</span>
-                    <span class="display-block fs-body-1 tc-black-2"><span translate>from</span> [[destination.startDate | amDateFormat:'DD [de] MMMM [de] YYYY']]</span>
-                    <span class="display-block fs-body-1 tc-black-2"><span translate>to</span> [[destination.endDate | amDateFormat:'DD [de] MMMM [de] YYYY']]</span>
                 </div>
                 <div class="list-row__secondary city-remove-icon" ng-show="editedTrip.isEditing">
                     <a ng-click="removeDestination(destination)" class="remove-destination-button">

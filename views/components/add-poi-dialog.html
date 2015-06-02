@@ -1,0 +1,20 @@
+<div class="trip-add-destination-box" ng-show="editedDestination.isEditing && isAddPOIshowned">
+    <div class="sticky-container">
+        <div class="dialog-content">
+            <lx-text-field label="[['Point of Interest' | translate]]">
+                <input type="text" ng-model="tempPOI.name" focus-on="add-dialog-show"
+                       places-auto-complete types="['establishment']" placeholder="" on-place-changed="placeChanged(place)">
+            </lx-text-field>
+        </div>
+    </div>
+    <div class="box-action-buttons">
+        <span flex></span>
+        <a class="btn btn--m btn--flat" lx-ripple  ng-click="closeAddPOIBox()"  translate>
+            Cancel
+        </a>
+        <a class="btn btn--m btn--primary btn--raised" ng-disabled="!tempPOI.readyToSave()"
+                ng-click="addPOI()" lx-ripple  translate>
+            Add New Point of Interest
+        </a>
+    </div>
+</div>

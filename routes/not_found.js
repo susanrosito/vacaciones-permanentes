@@ -8,7 +8,7 @@ router.use(function(req, res){
     res.status(404);
     logger.info(__('NOT FOUND'));
     if (req.accepts('html')) {
-        res.status(404).send(fs.readFileSync('public/404.html'));
+        res.status(404).send(fs.readFileSync('/public/404.html'));
     }
     else if (req.accepts('json')) {
         res.send({

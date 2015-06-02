@@ -5,7 +5,13 @@ app.factory('tripService', ['$http', 'authService', function ($http, authService
     };
 
     var tripService = {};
+
+    tripService.Trip = require('../types/Trip.js');
+    tripService.POI = require('../types/POI.js');
+    tripService.Destination = require('../types/Destination');
+
     tripService.all = [];
+
     tripService.getIndexById = function(id) {
         function arrayObjectIndexOf(myArray, searchTerm, property) {
             for(var i = 0, len = myArray.length; i < len; i++) {
@@ -17,17 +23,22 @@ app.factory('tripService', ['$http', 'authService', function ($http, authService
     };
     tripService.getAll = function () {
         return $http.get(remote_uri(), authService.getHeader()).success(function (allTrips) {
-            angular.copy(allTrips, tripService.all);
+            angular.copy(_.each(allTrips, function(t){new tripService.Trip(t)}), tripService.all);
         });
     };
     tripService.create = function (trip) {
         return $http.post(remote_uri(), trip, authService.getHeader()).success(function (remoteTrip) {
-            tripService.all.push(remoteTrip);
+            tripService.all.push(new tripService.Trip(remoteTrip));
         });
     };
     tripService.get = function (id) {
         return $http.get(remote_uri(id), authService.getHeader()).success(function(remoteTrip) {
             return remoteTrip;
+        });
+    };
+    tripService.getDestination = function (tripId, destinationId) {
+        return $http.get(remote_uri(tripId) + '/destination/' + destinationId, authService.getHeader()).success(function(remoteDestination) {
+            return remoteDestination;
         });
     };
     tripService.remove = function (trip) {
@@ -43,81 +54,16 @@ app.factory('tripService', ['$http', 'authService', function ($http, authService
         return $http.put(remote_uri(trip._id), trip, authService.getHeader()).success(function (remoteTrip){
             var index = tripService.getIndexById(remoteTrip._id);
             if(index != -1) {
-                tripService.all.splice(index, 1, remoteTrip);
+                tripService.all.splice(index, 1, new tripService.Trip(remoteTrip));
             }
         });
     };
 
-    tripService.Trip = function() {
-        var today = new Date();
-        var defaultEnd = new Date(today);
-        // Set end as 15 days from now
-        defaultEnd.setDate(today.getDate() + 15);
-        this._id = null;
-        this.title = '';
-        this.startDate = today;
-        this.endDate = defaultEnd;
-        this.destinations = [];
-        tripService.addMethods(this);
-    };
-    tripService.Destination = function() {
-        var today = new Date();
-        var defaultEnd = new Date(today);
-        // Set end as 5 days from now
-        defaultEnd.setDate(today.getDate() + 5);
-        this.title = '';
-        this.startDate = today;
-        this.endDate = defaultEnd;
-        this.latitude = 0;
-        this.longitude = 0;
-        tripService.addValidationMethods(this);
-    };
-    tripService.addValidationMethods = function(dateable) {
-        if (!dateable.hasValidDates) {
-            dateable.hasValidDates = function () {
-                return !this.startDate || !this.endDate ||
-                        this.startDate < this.endDate;
-            };
-            dateable.readyToSave = function () {
-                return (this.startDate && this.endDate && !(this.title === '') && this.hasValidDates()) == true;
-                // Yes, I have to compare to true for the ng-disabled to work
-            };
-            dateable._resetTo = function (reseter) {
-                this._id = reseter._id;
-                this.title = reseter.title;
-                this.startDate = new Date(reseter.startDate);
-                this.endDate = new Date(reseter.endDate);
-            };
-            dateable.resetTo = dateable._resetTo
-        }
-        return dateable;
-    };
-    tripService.addMethods = function(trip) {
-        if (!trip.hasValidDates) {
-            tripService.addValidationMethods(trip);
-            trip.resetTo = function (reseter) {
-                this._resetTo(reseter);
-                this.destinations = [];
-                angular.copy(reseter.destinations, this.destinations);
-            };
-            trip.copy = function() {
-                var newTrip = new tripService.Trip();
-                newTrip.resetTo(this);
-                return newTrip;
-            };
-            trip.addDestination = function(destination) {
-                // Called city in the server
-                destination.city = destination.title;
-                this.destinations.push(destination);
-            };
-            trip.removeDestination = function(destination) {
-                var index = this.destinations.indexOf(destination);
-                if (index != -1) {
-                    this.destinations.splice(index, 1);
-                }
-            }
-        }
-        return trip;
+    tripService.updateDestination = function (trip, destination) {
+        destination.newHotel = destination.hotel; // This is a fix for a timing request bug.
+        return $http.put(remote_uri(trip._id) + '/destination/' + destination._id, destination, authService.getHeader()).success(function (remoteDestination){
+            trip.updateDestination(destination, remoteDestination)
+        });
     };
 
     return tripService;

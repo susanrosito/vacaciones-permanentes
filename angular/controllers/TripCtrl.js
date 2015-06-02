@@ -1,6 +1,6 @@
-app.controller('TripCtrl', ['$scope', '$state', 'LxNotificationService', 'LxDatePickerService',
+app.controller('TripCtrl', ['$scope', '$state', '$focus', '$googleImageSearch', 'LxNotificationService', 'LxDatePickerService',
     'gettextCatalog', 'authService', 'tripService', 'trip', function (
-    $scope, $state, LxNotificationService, LxDatePickerService, gettextCatalog, authService, tripService, trip) {
+    $scope, $state, $focus, $googleImageSearch, LxNotificationService, LxDatePickerService, gettextCatalog, authService, tripService, trip) {
 
     if (authService.isLoggedIn() && tripService.all.length ===0) {
         tripService.getAll();
@@ -10,8 +10,7 @@ app.controller('TripCtrl', ['$scope', '$state', 'LxNotificationService', 'LxDate
     $scope.trip = trip;
 
 
-    $scope.editedTrip = new tripService.Trip();
-    $scope.editedTrip.resetTo($scope.trip);
+    $scope.editedTrip = new tripService.Trip($scope.trip);
     $scope.editedTrip.isEditing = false;
     $scope.tempDestination = new tripService.Destination();
     $scope.isAddDestinationShowned = false;
@@ -21,23 +20,24 @@ app.controller('TripCtrl', ['$scope', '$state', 'LxNotificationService', 'LxDate
     $scope.enterEditMode = function() {
         LxDatePickerService.enableAll();
         $scope.editedTrip.isEditing = true;
+        $focus('enter-edit-mode');
     };
 
     $scope.cancelEdit = function() {
         $scope.editedTrip.resetTo($scope.trip);
-        $state.go('trip', {id: $scope.trip._id});
-        LxDatePickerService.disableAll();
         $scope.editedTrip.isEditing = false;
+        LxDatePickerService.disableAll();
         $scope.mapData.loadDestinations($scope.trip);
+        $state.go('trip', {id: $scope.trip._id});
     };
 
     $scope.confirmEdit = function() {
-        tripService.update($scope.editedTrip);
-        $scope.trip.resetTo($scope.editedTrip);
-        LxDatePickerService.disableAll();
         $scope.editedTrip.isEditing = false;
+        LxDatePickerService.disableAll();
         $scope.mapData.loadDestinations($scope.trip);
-        $state.go('trip', {id: $scope.trip._id});
+        tripService.update($scope.editedTrip).success(function(trip) {
+            $state.go('trip', {id: $scope.trip._id}, {reload: true});
+        });
     };
 
     $scope.confirmDelete = function() {
@@ -57,6 +57,7 @@ app.controller('TripCtrl', ['$scope', '$state', 'LxNotificationService', 'LxDate
     $scope.showAddDestinationBox = function () {
         $scope.isAddDestinationShowned = true;
         $scope.tempDestination.resetTo(new tripService.Destination());
+        $focus('add-dialog-show');
     };
 
     $scope.closeAddDestinationBox = function() {
@@ -64,14 +65,14 @@ app.controller('TripCtrl', ['$scope', '$state', 'LxNotificationService', 'LxDate
     };
 
     $scope.addDestination = function(destination) {
-        var dest = new tripService.Destination();
-        dest.resetTo($scope.tempDestination);
-        dest.latitude = $scope.tempDestination.latitude;
-        dest.longitude = $scope.tempDestination.longitude;
-        $scope.editedTrip.addDestination(dest);
-        $scope.mapData.loadDestinations($scope.editedTrip);
+        var newDest =$scope.tempDestination.clone();
+        $googleImageSearch.getImage(newDest.city, function(img) {
+            newDest.image = img.url;
+        });
+        $scope.editedTrip.addDestination(newDest);
         $scope.tempDestination.resetTo(new tripService.Destination());
         $scope.isAddDestinationShowned = false;
+        $scope.mapData.loadDestinations($scope.editedTrip);
     };
 
     $scope.removeDestination = function(destination) {
@@ -92,10 +93,14 @@ app.controller('TripCtrl', ['$scope', '$state', 'LxNotificationService', 'LxDate
         var place = this.getPlace();
         var location = place.geometry.location;
         $scope.tempDestination.latitude = location.A;
-        $scope.tempDestination.longitude = location.F
+        $scope.tempDestination.longitude = location.F;
     };
 
-
+    // Esto estaria bueno para que filtre por ciudad de un pais.
+    //$scope.options = {
+    //    types: ['(cities)'],
+    //    componentRestrictions: { country: 'FR' }
+    //};
 
     $scope.mapData = {};
     $scope.mapData.polyline = new google.maps.Polyline({
@@ -116,6 +121,9 @@ app.controller('TripCtrl', ['$scope', '$state', 'LxNotificationService', 'LxDate
             });
             $scope.map.setCenter(bounds.getCenter());
             $scope.map.fitBounds(bounds);
+            if (trip.destinations.length == 1) {
+                $scope.map.setZoom(14);
+            }
         }
     };
 

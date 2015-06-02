@@ -1,7 +1,7 @@
 helpers = require('./helpers');
 
 var app = angular.module('vacacionesPermanentes',
-    ['ui.router', 'ui.gravatar', 'lumx', 'angularMoment','gettext', 'ngMap']);
+    ['ui.router', 'ui.gravatar', 'lumx', 'angularMoment','gettext', 'ngMap', 'angucomplete-alt']);
 
 app.config(['$interpolateProvider', '$stateProvider', '$urlRouterProvider', function (
         $interpolateProvider, $stateProvider, $urlRouterProvider) {
@@ -35,6 +35,17 @@ app.config(['$interpolateProvider', '$stateProvider', '$urlRouterProvider', func
             resolve: {
                 trips: helpers.getAllTrips,
                 trip: helpers.getTrip
+            }
+        })
+        .state('destination', {
+            url: '/trip/:id/destination/:destinationId',
+            templateUrl: '/destination.html',
+            controller: 'DestinationCtrl',
+            onEnter: helpers.goToLogin,
+            resolve: {
+                trips: helpers.getAllTrips,
+                trip: helpers.getTrip,
+                destination: helpers.getDestination
             }
         });
 
