@@ -1,6 +1,6 @@
-app.controller('DestinationCtrl', ['$scope', '$state', 'LxNotificationService',
+app.controller('DestinationCtrl', ['$scope', '$state', '$focus', 'LxNotificationService',
     'gettextCatalog', 'authService', 'tripService', 'trip', 'destination', function (
-            $scope, $state, LxNotificationService, gettextCatalog, authService, tripService, trip, destination) {
+            $scope, $state, $focus, LxNotificationService, gettextCatalog, authService, tripService, trip, destination) {
 
         if (authService.isLoggedIn() && tripService.all.length ===0) {
             tripService.getAll();
@@ -9,35 +9,45 @@ app.controller('DestinationCtrl', ['$scope', '$state', 'LxNotificationService',
         $scope.trips = tripService.all;
         $scope.trip = trip;
         $scope.destination = destination;
+        $scope.hotelsInCity = [];
 
         $scope.editedDestination = new tripService.Destination($scope.destination);
         $scope.editedDestination.isEditing = false;
         $scope.tempPOI = new tripService.POI();
         $scope.isAddPOIshowned = false;
-        $scope.selectedPOI = new tripService.POI();
 
         $scope.enterEditMode = function() {
             $scope.editedDestination.isEditing = true;
+            setTimeout(function(){ angular.element('#hotel-autocomplete_value').focus(); }, 50);
         };
 
         $scope.cancelEdit = function() {
             $scope.editedDestination.resetTo($scope.destination);
             $scope.editedDestination.isEditing = false;
-            $state.go('destination', {id: $scope.trip._id, destinationId: $scope.destination._id});
+            // $state.go('destination', {id: $scope.trip._id, destinationId: $scope.destination._id});
             $scope.mapData.loadPOI($scope.trip);
+            angular.element('#hotel-autocomplete_value').val($scope.editedDestination.hotel.name);
         };
 
         $scope.confirmEdit = function() {
-            $scope.cancelEdit();
-            tripService.updateDestination($scope.trip, $scope.editedDestination).success(function(){
+            angular.element();
+            tripService.updateDestination($scope.trip, $scope.editedDestination).success(function() {
                 $state.go('destination', {id: $scope.trip._id, destinationId: $scope.destination._id},
                         {reload: true});
             });
+            $scope.cancelEdit();
+        };
+
+        $scope.updateHotel = function(data) {
+            if (data.originalObject) {
+                $scope.editedDestination.hotel = data.originalObject;
+            }
         };
 
         $scope.showAddPOIBox = function () {
             $scope.isAddPOIshowned = true;
             $scope.tempPOI.resetTo(new tripService.POI());
+            $focus('add-dialog-show');
         };
 
         $scope.closeAddPOIBox = function() {
@@ -56,19 +66,14 @@ app.controller('DestinationCtrl', ['$scope', '$state', 'LxNotificationService',
             $scope.mapData.loadPOI($scope.editedDestination);
         };
 
-        $scope.changeSelectedPOI = function(poi){
-            $scope.selectedPOI = poi;
-        };
-
         $scope.placeChanged = function() {
             var place = this.getPlace();
-            var location = place.geometry.location;
             $scope.tempPOI.name = place.name;
+            $scope.tempPOI.icon = place.icon;
             $scope.tempPOI.address = place.formatted_address;
-            $scope.tempPOI.ranking = place.rating;
-            $scope.tempPOI.latitude = location.A;
-            $scope.tempPOI.longitude = location.F;
-            $scope.tempPOI.description = "Information of POI: "+ '\n' + $scope.tempPOI.name + '\n' + $scope.tempPOI.address;
+            $scope.tempPOI.ranking = Math.round(place.rating * 2) || 0;
+            $scope.tempPOI.latitude = place.geometry.location.A;
+            $scope.tempPOI.longitude = place.geometry.location.F;
         };
 
         $scope.mapData = {};
@@ -85,6 +90,14 @@ app.controller('DestinationCtrl', ['$scope', '$state', 'LxNotificationService',
                     marker.setMap($scope.map);
                     bounds.extend(marker.position);
                 });
+                if (destination.hotel.name) {
+                    var marker = new google.maps.Marker({
+                        position: new google.maps.LatLng(destination.hotel.latitude, destination.hotel.longitude),
+                        icon: 'images/hotel.png'
+                    });
+                    marker.setMap($scope.map);
+                    bounds.extend(marker.position);
+                }
                 $scope.map.setCenter(bounds.getCenter());
                 $scope.map.fitBounds(bounds);
             }
@@ -92,35 +105,45 @@ app.controller('DestinationCtrl', ['$scope', '$state', 'LxNotificationService',
 
         $scope.search = function(){
             $scope.places = new google.maps.places.PlacesService($scope.map);
-            var search = {
-                bounds: $scope.map.getBounds(),
-                types: ['lodging']
+
+            $scope.showDetailLodging = function() {
+                $scope.selectedMarker = this;
             };
 
-        $scope.showDetailLodging = function() {
-            $scope.selectedMarker = this;
-        };
-
-        $scope.places.nearbySearch(search, function(results, status) {
+            $scope.places.nearbySearch({ bounds: $scope.map.getBounds(), types: ['lodging'] }, function(results, status) {
                 if (status == google.maps.places.PlacesServiceStatus.OK) {
+                    $scope.hotelsInCity = [];
                     for (var i = 0; i < results.length; i++) {
-                        var markerLetter = String.fromCharCode('A'.charCodeAt(0) + i);
-                        /*var markerIcon = markerLetter + '.png';*/
-                        var marker = new google.maps.Marker({
-                            position: results[i].geometry.location,
-                            animation: google.maps.Animation.DROP,
-                            placeResult: results[i]
-                            /*icon: markerIcon*/
+                        $scope.hotelsInCity.push({
+                            name: results[i].name,
+                            icon: results[i].icon,
+                            address: results[i].vicinity,
+                            ranking: Math.round(results[i].rating * 2) || 0,
+                            latitude: results[i].geometry.location.A,
+                            longitude: results[i].geometry.location.F
                         });
-                        marker.setMap($scope.map);
-                        google.maps.event.addListener(marker, 'click', $scope.showDetailLodging);
                     }
                 }
             });
         };
 
         $scope.$on('mapInitialized', function(event, map) {
-             $scope.mapData.loadPOI(destination);
+            var bounds = new google.maps.LatLngBounds();
+            bounds.extend(new google.maps.LatLng(
+                    $scope.destination.latitude,
+                    $scope.destination.longitude
+            ));
+            $scope.map.setCenter(bounds.getCenter());
+            $scope.map.fitBounds(bounds);
+            $scope.map.setZoom(14);
+            $scope.mapData.loadPOI(destination);
             $scope.search();
         });
+
+        setTimeout(function() {
+            if ($scope.editedDestination.hotel.name) {
+                angular.element('#hotel-autocomplete_value').val($scope.editedDestination.hotel.name)
+                    .closest('.text-field').addClass('text-field--is-active');
+            }
+        }, 1000);
 }]);

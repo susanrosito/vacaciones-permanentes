@@ -12,7 +12,7 @@
             <li class="list-row list-row--has-separator city-list-item" ng-repeat="destination in editedTrip.destinations | orderBy: 'startDate'">
                 <div class="list-row__primary" ng-hide="editedTrip.isEditing">
                     <a ui-sref="destination({id: trip._id, destinationId: destination._id})">
-                        <img src="http://ui.lumapps.com/images/placeholder/2-horizontal.jpg" class="img-round city-image">
+                        <img ng-src="[[destination.getImage()]]" class="img-round city-image">
                     </a>
                 </div>
                 <div class="list-row__content" ng-hide="editedTrip.isEditing">
@@ -22,7 +22,7 @@
                 </div>
 
                 <div class="list-row__primary" ng-show="editedTrip.isEditing">
-                    <img src="http://ui.lumapps.com/images/placeholder/2-horizontal.jpg" class="img-round city-image">
+                    <img ng-src="[[destination.getImage()]]" class="img-round city-image">
                 </div>
                 <div class="list-row__content" ng-show="editedTrip.isEditing">
                     <span class="display-block">[[destination.city]]</span>

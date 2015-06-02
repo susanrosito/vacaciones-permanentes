@@ -5,10 +5,20 @@ var relationship = require("mongoose-relationship");
 var DestinationSchema = module.exports = new mongoose.Schema({
     trip: { type: ObjectId, ref:"Trip", childPath:"destinations" },
     city: String,
+    image: String,
     startDate: Date,
     endDate: Date,
     latitude: Number,
     longitude: Number,
+    hotel: {
+        name: String,
+        icon: String,
+        ranking: Number,
+        address: String,
+        phone: String,
+        latitude: Number,
+        longitude: Number
+    },
     pois: [{type: ObjectId, ref:'POI'}]
 });
 

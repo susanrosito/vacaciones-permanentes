@@ -1,6 +1,6 @@
-app.controller('TripCtrl', ['$scope', '$state', 'LxNotificationService', 'LxDatePickerService',
+app.controller('TripCtrl', ['$scope', '$state', '$focus', '$googleImageSearch', 'LxNotificationService', 'LxDatePickerService',
     'gettextCatalog', 'authService', 'tripService', 'trip', function (
-    $scope, $state, LxNotificationService, LxDatePickerService, gettextCatalog, authService, tripService, trip) {
+    $scope, $state, $focus, $googleImageSearch, LxNotificationService, LxDatePickerService, gettextCatalog, authService, tripService, trip) {
 
     if (authService.isLoggedIn() && tripService.all.length ===0) {
         tripService.getAll();
@@ -20,6 +20,7 @@ app.controller('TripCtrl', ['$scope', '$state', 'LxNotificationService', 'LxDate
     $scope.enterEditMode = function() {
         LxDatePickerService.enableAll();
         $scope.editedTrip.isEditing = true;
+        $focus('enter-edit-mode');
     };
 
     $scope.cancelEdit = function() {
@@ -56,6 +57,7 @@ app.controller('TripCtrl', ['$scope', '$state', 'LxNotificationService', 'LxDate
     $scope.showAddDestinationBox = function () {
         $scope.isAddDestinationShowned = true;
         $scope.tempDestination.resetTo(new tripService.Destination());
+        $focus('add-dialog-show');
     };
 
     $scope.closeAddDestinationBox = function() {
@@ -63,7 +65,11 @@ app.controller('TripCtrl', ['$scope', '$state', 'LxNotificationService', 'LxDate
     };
 
     $scope.addDestination = function(destination) {
-        $scope.editedTrip.addDestination($scope.tempDestination.clone());
+        var newDest =$scope.tempDestination.clone();
+        $googleImageSearch.getImage(newDest.city, function(img) {
+            newDest.image = img.url;
+        });
+        $scope.editedTrip.addDestination(newDest);
         $scope.tempDestination.resetTo(new tripService.Destination());
         $scope.isAddDestinationShowned = false;
         $scope.mapData.loadDestinations($scope.editedTrip);
@@ -115,6 +121,9 @@ app.controller('TripCtrl', ['$scope', '$state', 'LxNotificationService', 'LxDate
             });
             $scope.map.setCenter(bounds.getCenter());
             $scope.map.fitBounds(bounds);
+            if (trip.destinations.length == 1) {
+                $scope.map.setZoom(14);
+            }
         }
     };
 

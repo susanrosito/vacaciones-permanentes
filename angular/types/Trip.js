@@ -1,10 +1,15 @@
+var Destination = require('./Destination.js');
+
 module.exports = Trip = function(tripData) {
     tripData = tripData || {};
     this._id = tripData._id || null;
     this.title = tripData.title || '';
     this.startDate = tripData.startDate ? moment(tripData.startDate) : moment().startOf('day');
     this.endDate = tripData.endtDate ? moment(tripData.endDate) : moment().add(15, 'day');
-    this.destinations = tripData.destinations || [];
+    this.destinations = _.map(tripData.destinations || [], function(dest){
+        return typeof(dest) === 'object' ? new Destination(dest) : dest;
+    });
+    // angular.copy(tripData.destinations, this.destinations);
     /*Clone this trip into a new one */
     this.clone = function() { return new Trip(this);};
     /* Set this object's data to that of reseter */
@@ -15,6 +20,15 @@ module.exports = Trip = function(tripData) {
         this.endDate = reseter.endDate;
         this.destinations = [];
         angular.copy(reseter.destinations, this.destinations);
+    };
+    this.getImage = function() {
+        var destinationWithImage = {};
+        if (this.destinations.length > 0) {
+            destinationWithImage = _.find(this.destinations, function(destination){
+                return destination.image;
+            });
+        }
+        return destinationWithImage.image || 'http://www.myfreephotoshop.com/wp-content/uploads/2014/10/223.jpg';
     };
     /* Return true if this trips dates are valid, that is, they are setted, and
      * the endDate is after the startDate
