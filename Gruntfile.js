@@ -163,7 +163,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-sass');
 
     grunt.loadNpmTasks('grunt-contrib-jshint');
-    //grunt.registerTask('', 'jshint');
+    grunt.registerTask('default', 'jshint');
 
     grunt.registerMultiTask('cwd', function() {
         if (this.data && this.data !== process.cwd()) {
@@ -178,5 +178,5 @@ module.exports = function(grunt) {
 
     grunt.registerTask('install', ['npm-install', 'bower-install-simple']);
     grunt.registerTask('run', ['cwd:target', // 'shell:mongodb',
-        'express', 'cwd:current','watch', 'jshint']);//,  'express-keepalive']);
+        'express', 'cwd:current','watch']);//,  'express-keepalive']);
 };
