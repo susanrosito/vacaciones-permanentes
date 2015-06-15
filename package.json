@@ -9,7 +9,7 @@
   "license": "Apache v2",
   "main": "server.js",
   "scripts": {
-    "test": "grunt --verbose"
+    "test": "grunt run"
   },
   "dependencies": {
     "body-parser": "^1.12.2",
