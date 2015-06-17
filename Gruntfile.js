@@ -131,13 +131,15 @@ module.exports = function(grunt) {
                 includePaths:
                     require('node-neat').includePaths.concat([
                         'bower_components/lumx/dist/scss/',
-                        'bower_components/sass-mediaqueries/',
+                        'bower_components/sass-mediaqueries/'
                     ])
             },
             files: {
                 'target/public/styles/main.css': 'styles/main.scss'
             }
         } },
+
+        jshint: { all: ['Gruntfile.js', 'hello.js'] },
 
         default: ['run']
     });
@@ -160,6 +162,9 @@ module.exports = function(grunt) {
 
     grunt.loadNpmTasks('grunt-sass');
 
+    grunt.loadNpmTasks('grunt-contrib-jshint');
+    grunt.registerTask('default', 'jshint');
+
     grunt.registerMultiTask('cwd', function() {
         if (this.data && this.data !== process.cwd()) {
             process.chdir(this.data);
@@ -173,5 +178,5 @@ module.exports = function(grunt) {
 
     grunt.registerTask('install', ['npm-install', 'bower-install-simple']);
     grunt.registerTask('run', ['cwd:target', // 'shell:mongodb',
-        'express', 'cwd:current', 'watch']);//,  'express-keepalive']);
+        'express', 'cwd:current','watch']);//,  'express-keepalive']);
 };
