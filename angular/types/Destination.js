@@ -1,4 +1,4 @@
-module.exports = Destination = function(destinationData) {
+var Destination = module.exports = function(destinationData) {
     destinationData = destinationData || {};
     destinationData.hotel = destinationData.hotel || {};
     this._id = destinationData._id || null;
@@ -19,9 +19,9 @@ module.exports = Destination = function(destinationData) {
         longitude: destinationData.hotel.longitude
     };
     /* Clone this destination */
-    this.clone = function() {return new Destination(this);};
+    this.clone = function() { return new Destination(this); };
     /* Set this object's data to that of reseter */
-    this.resetTo = function (reseter) {
+    this.resetTo = function(reseter) {
         this._id = reseter._id;
         this.city = reseter.city;
         this.image = reseter.image;
@@ -39,7 +39,7 @@ module.exports = Destination = function(destinationData) {
             phone: reseter.hotel.phone,
             latitude: reseter.hotel.latitude,
             longitude: reseter.hotel.longitude
-        }
+        };
     };
     this.getImage = function() {
         return this.image ? this.image : 'http://p1.pichost.me/640/34/1569306.jpg';
@@ -47,14 +47,14 @@ module.exports = Destination = function(destinationData) {
     /* Return true if this destination dates are valid, that is, they are setted, and
      * the endDate is after the startDate
      */
-    this.hasValidDates = function () {
+    this.hasValidDates = function() {
         return !this.startDate || !this.endDate || this.startDate.isBefore(this.endDate);
     };
     /* Return true if this destination is ready to save in the server. That is, it has a valid
      * city, and valid dates, non of them empty.
      */
-    this.readyToSave = function () {
-        return (this.startDate && this.endDate && !(this.title === '') && this.hasValidDates()) == true;
+    this.readyToSave = function() {
+        return (this.startDate && this.endDate && (this.title !== '') && this.hasValidDates()) === true;
     };
 
     this.addPOI = function(poi) {

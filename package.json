@@ -9,7 +9,7 @@
   "license": "Apache v2",
   "main": "server.js",
   "scripts": {
-    "test": "grunt --verbose"
+    "test": "grunt check"
   },
   "dependencies": {
     "body-parser": "^1.12.2",
@@ -44,11 +44,13 @@
     "grunt-contrib-jshint": "^0.11.2",
     "grunt-contrib-watch": "^0.6.1",
     "grunt-express": "^1.4.1",
+    "grunt-jscs": "^1.8.0",
     "grunt-npm-install": "^0.2.0",
     "grunt-nunjucks-2-html": "^0.2.6",
     "grunt-sass": "^0.18.1",
     "grunt-shell-spawn": "^0.3.8",
     "grunt-wiredep": "^2.0.0",
+    "jscs": "^1.13.1",
     "jshint": "^2.8.0",
     "node-bourbon": "^4.2.2",
     "node-neat": "^1.7.1-beta1",

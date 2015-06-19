@@ -1,19 +1,18 @@
 var Destination = require('./Destination.js');
 
-module.exports = Trip = function(tripData) {
+var Trip = module.exports = function(tripData) {
     tripData = tripData || {};
     this._id = tripData._id || null;
     this.title = tripData.title || '';
     this.startDate = tripData.startDate ? moment(tripData.startDate) : moment().startOf('day');
     this.endDate = tripData.endtDate ? moment(tripData.endDate) : moment().add(15, 'day');
-    this.destinations = _.map(tripData.destinations || [], function(dest){
+    this.destinations = _.map(tripData.destinations || [], function(dest) {
         return typeof(dest) === 'object' ? new Destination(dest) : dest;
     });
-    // angular.copy(tripData.destinations, this.destinations);
-    /*Clone this trip into a new one */
+    /* Clone this trip into a new one */
     this.clone = function() { return new Trip(this);};
     /* Set this object's data to that of reseter */
-    this.resetTo = function (reseter) {
+    this.resetTo = function(reseter) {
         this._id = reseter._id;
         this.title = reseter.title;
         this.startDate = reseter.startDate;
@@ -24,7 +23,7 @@ module.exports = Trip = function(tripData) {
     this.getImage = function() {
         var destinationWithImage = {};
         if (this.destinations.length > 0) {
-            destinationWithImage = _.find(this.destinations, function(destination){
+            destinationWithImage = _.find(this.destinations, function(destination) {
                 return destination.image;
             });
         }
@@ -33,14 +32,14 @@ module.exports = Trip = function(tripData) {
     /* Return true if this trips dates are valid, that is, they are setted, and
      * the endDate is after the startDate
      */
-    this.hasValidDates = function () {
+    this.hasValidDates = function() {
         return !this.startDate || !this.endDate || this.startDate.isBefore(this.endDate);
     };
     /* Return true if this trip is ready to save in the server. That is, it has a valid
      * title, and valid dates, non of them empty.
      */
-    this.readyToSave = function () {
-        return (this.startDate && this.endDate && !(this.title === '') && this.hasValidDates()) == true;
+    this.readyToSave = function() {
+        return (this.startDate && this.endDate && (this.title !== '') && this.hasValidDates()) === true;
     };
     /* Add a destination to this trip */
     this.addDestination = function(destination) {
@@ -60,18 +59,4 @@ module.exports = Trip = function(tripData) {
             this.destinations.splice(index, 1, newDestination);
         }
     };
-
-    /*
-    this.hasDestinationValidDates = function(destination){
-        return destination.startDate >= this.startDate && destination.startDate <= this.endDate &&
-                destination.endDate <= this.endDate && destination.endDate >= this.startDate;
-    };
-    this.hasBetweenDestinationValidDates = function(destination){
-        var isValidDates = this.hasDestinationValidDates(destination);
-
-        return isValidDates  && _.all(this.destinations, function(dest){
-                    return destination.startDate >= dest.endDate || destination.endDate <= dest.startDate;
-                });
-    };
-    */
 };

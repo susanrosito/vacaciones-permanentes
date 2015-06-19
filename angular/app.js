@@ -1,9 +1,9 @@
-helpers = require('./helpers');
+var helpers = require('./helpers');
 
-var app = angular.module('vacacionesPermanentes',
-    ['ui.router', 'ui.gravatar', 'lumx', 'angularMoment','gettext', 'ngMap', 'angucomplete-alt']);
+global.app = module.exports = angular.module('vacacionesPermanentes',
+    ['ui.router', 'ui.gravatar', 'lumx', 'angularMoment', 'gettext', 'ngMap', 'angucomplete-alt']);
 
-app.config(['$interpolateProvider', '$stateProvider', '$urlRouterProvider', function (
+app.config(['$interpolateProvider', '$stateProvider', '$urlRouterProvider', function(
         $interpolateProvider, $stateProvider, $urlRouterProvider) {
     $interpolateProvider.startSymbol('[[');
     $interpolateProvider.endSymbol(']]');
@@ -56,13 +56,11 @@ app.config(['$interpolateProvider', '$stateProvider', '$urlRouterProvider', func
 app.run(['amMoment', 'gettextCatalog', function(amMoment, gettextCatalog) {
     var defaultLang = 'es';
 
-    gettextCatalog.loadRemote("/locales/" + defaultLang + ".json");
+    gettextCatalog.loadRemote('/locales/' + defaultLang + '.json');
 
     amMoment.changeLocale(defaultLang);
     gettextCatalog.setCurrentLanguage(defaultLang);
 }]);
-
-global.app = module.exports = app;
 
 require('./directives');
 require('./services');

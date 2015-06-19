@@ -4,7 +4,7 @@ var fs = require('fs');
 
 var router = module.exports = express.Router();
 
-router.use(function(req, res){
+router.use(function(req, res) {
     res.status(404);
     logger.info(__('NOT FOUND'));
     if (req.accepts('html')) {

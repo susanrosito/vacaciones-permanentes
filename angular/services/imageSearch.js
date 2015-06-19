@@ -11,4 +11,4 @@ app.factory('$googleImageSearch', [function() {
         imageSearch.execute(query);
     };
     return searcher;
-}]);
+} ]);
