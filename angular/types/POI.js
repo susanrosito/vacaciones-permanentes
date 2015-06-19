@@ -1,4 +1,4 @@
-module.exports = POI = function(poiData) {
+var POI = module.exports = function(poiData) {
     poiData = poiData || {};
     this._id = poiData._id || null;
     this.name = poiData.name || '';
@@ -11,7 +11,7 @@ module.exports = POI = function(poiData) {
     /*Clone this trip into a new one */
     this.clone = function() { return new POI(this);};
     /* Set this object's data to that of reseter */
-    this.resetTo = function (reseter) {
+    this.resetTo = function(reseter) {
         this._id = reseter._id;
         this.name = reseter.name;
         this.icon = reseter.icon;
@@ -23,5 +23,5 @@ module.exports = POI = function(poiData) {
     };
     this.readyToSave = function() {
         return this.name;
-    }
+    };
 };

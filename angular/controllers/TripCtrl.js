@@ -1,8 +1,17 @@
-app.controller('TripCtrl', ['$scope', '$state', '$focus', '$googleImageSearch', 'LxNotificationService', 'LxDatePickerService',
-    'gettextCatalog', 'authService', 'tripService', 'trip', function (
-    $scope, $state, $focus, $googleImageSearch, LxNotificationService, LxDatePickerService, gettextCatalog, authService, tripService, trip) {
+app.controller('TripCtrl', ['$scope', '$state', '$focus', '$googleImageSearch', 'LxNotificationService',
+    'LxDatePickerService', 'gettextCatalog', 'authService', 'tripService', 'trip', function(
+    $scope,
+    $state,
+    $focus,
+    $googleImageSearch,
+    LxNotificationService,
+    LxDatePickerService,
+    gettextCatalog,
+    authService,
+    tripService,
+    trip) {
 
-    if (authService.isLoggedIn() && tripService.all.length ===0) {
+    if (authService.isLoggedIn() && tripService.all.length === 0) {
         tripService.getAll();
     }
 
@@ -14,7 +23,7 @@ app.controller('TripCtrl', ['$scope', '$state', '$focus', '$googleImageSearch', 
     $scope.editedTrip.isEditing = false;
     $scope.tempDestination = new tripService.Destination();
     $scope.isAddDestinationShowned = false;
-    setTimeout(function() { LxDatePickerService.disableAll() }, 1000);
+    setTimeout(function() { LxDatePickerService.disableAll(); }, 1000);
     // In display mode, will display the current trip
 
     $scope.enterEditMode = function() {
@@ -28,15 +37,15 @@ app.controller('TripCtrl', ['$scope', '$state', '$focus', '$googleImageSearch', 
         $scope.editedTrip.isEditing = false;
         LxDatePickerService.disableAll();
         $scope.mapData.loadDestinations($scope.trip);
-        $state.go('trip', {id: $scope.trip._id});
+        $state.go('trip', { id: $scope.trip._id });
     };
 
     $scope.confirmEdit = function() {
         $scope.editedTrip.isEditing = false;
         LxDatePickerService.disableAll();
         $scope.mapData.loadDestinations($scope.trip);
-        tripService.update($scope.editedTrip).success(function(trip) {
-            $state.go('trip', {id: $scope.trip._id}, {reload: true});
+        tripService.update($scope.editedTrip).success(function() {
+            $state.go('trip', { id: $scope.trip._id }, { reload: true });
         });
     };
 
@@ -44,8 +53,8 @@ app.controller('TripCtrl', ['$scope', '$state', '$focus', '$googleImageSearch', 
         LxNotificationService.confirm(gettextCatalog.getString('Delete Trip'),
             gettextCatalog.getString('Are you sure you want to delete the trip') + ' "' +
             trip.title + '"', {
-                cancel:gettextCatalog.getString('Cancel'),
-                ok:gettextCatalog.getString('Confirm')
+                cancel: gettextCatalog.getString('Cancel'),
+                ok: gettextCatalog.getString('Confirm')
             }, function(answer) {
                 if (answer) {
                     tripService.remove($scope.trip);
@@ -54,7 +63,7 @@ app.controller('TripCtrl', ['$scope', '$state', '$focus', '$googleImageSearch', 
             });
     };
 
-    $scope.showAddDestinationBox = function () {
+    $scope.showAddDestinationBox = function() {
         $scope.isAddDestinationShowned = true;
         $scope.tempDestination.resetTo(new tripService.Destination());
         $focus('add-dialog-show');
@@ -64,8 +73,8 @@ app.controller('TripCtrl', ['$scope', '$state', '$focus', '$googleImageSearch', 
         $scope.isAddDestinationShowned = false;
     };
 
-    $scope.addDestination = function(destination) {
-        var newDest =$scope.tempDestination.clone();
+    $scope.addDestination = function() {
+        var newDest = $scope.tempDestination.clone();
         $googleImageSearch.getImage(newDest.city, function(img) {
             newDest.image = img.url;
         });
@@ -79,8 +88,8 @@ app.controller('TripCtrl', ['$scope', '$state', '$focus', '$googleImageSearch', 
         LxNotificationService.confirm(gettextCatalog.getString('Delete Destination'),
             gettextCatalog.getString('Are you sure you want to delete the destination') + ' "' +
             destination.city + '"', {
-                cancel:gettextCatalog.getString('Cancel'),
-                ok:gettextCatalog.getString('Confirm')
+                cancel: gettextCatalog.getString('Cancel'),
+                ok: gettextCatalog.getString('Confirm')
             }, function(answer) {
                 if (answer) {
                     $scope.editedTrip.removeDestination(destination);
@@ -96,12 +105,6 @@ app.controller('TripCtrl', ['$scope', '$state', '$focus', '$googleImageSearch', 
         $scope.tempDestination.longitude = location.F;
     };
 
-    // Esto estaria bueno para que filtre por ciudad de un pais.
-    //$scope.options = {
-    //    types: ['(cities)'],
-    //    componentRestrictions: { country: 'FR' }
-    //};
-
     $scope.mapData = {};
     $scope.mapData.polyline = new google.maps.Polyline({
         strokeColor: '#6060FB',
@@ -110,13 +113,13 @@ app.controller('TripCtrl', ['$scope', '$state', '$focus', '$googleImageSearch', 
         strokeWeight: 3
     });
     $scope.mapData.loadDestinations = function(trip) {
-        if(trip.destinations && trip.destinations.length > 0 && $scope.map) {
+        if (trip.destinations && trip.destinations.length > 0 && $scope.map) {
             this.polyline.setPath(_.map(trip.destinations, function(destination) {
                 return new google.maps.LatLng(destination.latitude, destination.longitude);
             }));
             // Update map bound
             var bounds = new google.maps.LatLngBounds();
-            _.each(this.polyline.getPath().j, function(latLng){
+            _.each(this.polyline.getPath().j, function(latLng) {
                 bounds.extend(latLng);
             });
             $scope.map.setCenter(bounds.getCenter());
@@ -127,9 +130,9 @@ app.controller('TripCtrl', ['$scope', '$state', '$focus', '$googleImageSearch', 
         }
     };
 
-    $scope.$on('mapInitialized', function(event, map) {
+    $scope.$on('mapInitialized', function() {
         $scope.mapData.loadDestinations(trip);
         $scope.mapData.polyline.setMap($scope.map);
     });
 
-}]);
+} ]);

@@ -3,21 +3,22 @@ var config = require('./config');
 var cors = require('cors'),
     bodyParser = require('body-parser'),
     expressWinston = require('express-winston'),
-    errorHandler= require('express-error-handler'),
     passport = require('passport');
 
 app.use(cors());
 
 app.use(require('./routes/request_logger.js'));
 
+// jscs:disable disallowSpaceAfterKeywords
 app.use(function staticsPlaceholder(req, res, next) {
     return next();
 });
+// jscs:enable disallowSpaceAfterKeywords
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({ extended: true }));
 // Set UTF-8 Encoding
-app.use('/', function(req, res, next){ res.charset = 'utf-8'; next(); });
+app.use('/', function(req, res, next) { res.charset = 'utf-8'; next(); });
 
 logger.info(__('Connecting to MongoDB at %s', config.mongo.connectionString));
 mongoose.connect(config.mongo.connectionString);

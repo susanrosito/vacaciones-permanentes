@@ -1,7 +1,8 @@
-app.controller('AuthCtrl', ['$scope', '$state', '$focus', 'LxNotificationService', 'gettextCatalog', 'authService', function(
-        $scope, $state, $focus, LxNotificationService, gettextCatalog, authService) {
+app.controller('AuthCtrl', ['$scope', '$state', '$focus', 'LxNotificationService',
+    'gettextCatalog', 'authService', function(
+    $scope, $state, $focus, LxNotificationService, gettextCatalog, authService) {
 
-    $scope.user = { name: '', email : '', password: '', passwordRepeat: '' };
+    $scope.user = { name: '', email: '', password: '', passwordRepeat: '' };
     $scope.user.hasValidEmail = function() {
         var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
         return this.email === '' || re.test(this.email);
@@ -38,4 +39,4 @@ app.controller('AuthCtrl', ['$scope', '$state', '$focus', 'LxNotificationService
     };
 
     $focus('init-or-fail-form');
-}]);
+} ]);

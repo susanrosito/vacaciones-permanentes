@@ -29,9 +29,8 @@ module.exports = function(grunt) {
                 expand: true, cwd: 'bower_components/', dest: target.path + 'public/vendor/',
                 src: ['**']
             }] },
-            // Needed as modernizr does not provide a bower.json file.
             modernizr: { files: [{
-                expand:true, cwd: 'bower_components/modernizr/',
+                expand: true, cwd: 'bower_components/modernizr/',
                 dest: target.path + 'public/vendor/modernizr/', src: ['.bower.json'],
                 rename: function(dest, src) {
                     return dest + src.replace('.bower.js', 'bower.js');
@@ -44,7 +43,7 @@ module.exports = function(grunt) {
             render: { files: [{
                 expand: true, cwd: 'views/', ext: '.html',
                 src: ['index.html', '404.html'],
-                dest:  target.path + 'public/'
+                dest: target.path + 'public/'
             }] }
         },
 
@@ -57,10 +56,9 @@ module.exports = function(grunt) {
         wiredep: { target: {
             directory: target.path + 'public/vendor',
             src: [target.path + 'public/*.html'],
-            // excludes: ['bower_components/lumx/dist/lumx.css'],
             overrides: {
-                angular: { dependencies: { jquery : '>=2.1'} },
-                moment: { main: 'min/moment-with-locales.js'}
+                angular: { dependencies: { jquery: '>=2.1' } },
+                moment: { main: 'min/moment-with-locales.js' }
             }
         } },
 
@@ -100,7 +98,9 @@ module.exports = function(grunt) {
             target: [target.path]
         },
 
+        // jscs:disable requireCamelCaseOrUpperCaseIdentifiers
         nggettext_compile: {
+            // jscs:enable requireCamelCaseOrUpperCaseIdentifiers
             all: {
                 options: {
                     format: 'json'
@@ -120,14 +120,12 @@ module.exports = function(grunt) {
             command: 'mongod',
             options: {
                 async: true, stdout: false, stderr: true, failOnError: true,
-                execOptions: {cwd: '.'}
+                execOptions: { cwd: '.' }
             } }
         },
 
         sass: { target: {
             options: {
-            // includePaths: require('node-bourbon').with('other/path', 'another/path')
-            // - or -
                 includePaths:
                     require('node-neat').includePaths.concat([
                         'bower_components/lumx/dist/scss/',
@@ -139,31 +137,137 @@ module.exports = function(grunt) {
             }
         } },
 
-        jshint: { all: ['Gruntfile.js', 'hello.js'] },
+        jshint: {
+            options: {
+                undef: true,
+                unused: true
+            },
+            angular: {
+                options: {
+                    browserify: true,
+                    browser: true,
+                    jquery: true,
+                    predef: ['_', 'angular', 'app', 'google', 'moment'] },
+                src: ['angular/**/*.js'] },
+            config: {
+                options: { node: true },
+                src: ['config/**/*.js'] },
+            models: {
+                options: {
+                    node: true,
+                    predef: ['_', 'mongoose',
+                        'ObjectId', 'express', 'app', 'HTTPStatus',
+                        'loggerTransports', 'logger', 'translations',
+                        '__', '_n', '_x', '_nx', 'setLanguage',
+                        'auth', 'config'] },
+                src: ['models/**/*.js'] },
+            routes: {
+                options: {
+                    node: true,
+                    predef: ['_', 'mongoose',
+                        'ObjectId', 'express', 'app', 'HTTPStatus',
+                        'loggerTransports', 'logger', 'translations',
+                        '__', '_n', '_x', '_nx', 'setLanguage',
+                        'auth', 'config', 'StatusError'] },
+                src: ['routes/**/*.js'] },
+            server: {
+                options: {
+                    node: true,
+                    predef: ['_', 'mongoose',
+                        'ObjectId', 'express', 'app', 'HTTPStatus',
+                        'loggerTransports', 'logger', 'translations',
+                        '__', '_n', '_x', '_nx', 'setLanguage',
+                        'auth', 'StatusError'] },
+                src: ['server.js', 'Gruntfile.js']
+            }
+        },
+
+        jscs: {
+            options: {
+                disallowEmptyBlocks: true,
+                disallowMixedSpacesAndTabs: true,
+                disallowMultipleLineStrings: true,
+                disallowMultipleSpaces: true,
+                disallowNewlineBeforeBlockStatements: true,
+                disallowQuotedKeysInObjects: true,
+                disallowYodaConditions: true,
+                maximumLineLength: 120,
+                requireCamelCaseOrUpperCaseIdentifiers: true,
+                requireCapitalizedComments: true,
+                requireCapitalizedConstructors: true,
+                requireCommaBeforeLineBreak: true,
+                requireCurlyBraces: true,
+                requireDollarBeforejQueryAssignment: true,
+                requireDotNotation: true,
+                requireLineFeedAtFileEnd: true,
+                requireParenthesesAroundIIFE: true,
+                requireSemicolons: true,
+                requireSpaceAfterBinaryOperators: true,
+                requireSpaceAfterKeywords: [
+                        'if',
+                        'for',
+                        'while',
+                        'return',
+                        'do',
+                        'else',
+                        'switch',
+                        'try',
+                        'catch',
+                        'in',
+                        'return',
+                        'void'
+                    ],
+                disallowSpaceAfterKeywords: ['function', 'typeof'],
+                requireSpaceAfterLineComment: true,
+                disallowSpaceAfterObjectKeys: true,
+                requireSpaceBeforeBinaryOperators: true,
+                requireSpaceBeforeBlockStatements: true,
+                requireSpaceBeforeObjectValues: true,
+                requireSpaceBetweenArguments: true,
+                requireSpacesInAnonymousFunctionExpression: {
+                    beforeOpeningCurlyBrace: true
+                },
+                requireSpacesInConditionalExpression: true,
+                requireSpacesInForStatement: true,
+                requireSpacesInsideObjectBrackets: 'all',
+                validateAlignedFunctionParameters: true,
+                validateIndentation: 4,
+                validateParameterSeparator: ', ',
+                validateQuoteMarks: true
+            },
+            routes: ['routes/**/*.js'],
+            angular: ['angular/**/*.js'],
+            config: ['config/**/*.js'],
+            models: ['models/**/*.js'],
+            server: ['server.js', 'Gruntfile.js']
+        },
+
+        check: {
+            routes: ['jshint:routes', 'jscs:routes'],
+            angular: ['jshint:angular', 'jscs:angular'],
+            config: ['jshint:config', 'jscs:config'],
+            models: ['jshint:models', 'jscs:models'],
+            server: ['jshint:server', 'jscs:server']
+        },
 
         default: ['run']
     });
 
     grunt.loadNpmTasks('grunt-npm-install');
     grunt.loadNpmTasks('grunt-bower-install-simple');
-
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-nunjucks-2-html');
     grunt.loadNpmTasks('grunt-browserify');
-
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-express');
-
     grunt.loadNpmTasks('grunt-angular-gettext');
     grunt.loadNpmTasks('grunt-wiredep');
-
     grunt.loadNpmTasks('grunt-shell-spawn');
-
     grunt.loadNpmTasks('grunt-sass');
-
     grunt.loadNpmTasks('grunt-contrib-jshint');
-    grunt.registerTask('default', 'jshint');
+    grunt.loadNpmTasks('grunt-jscs');
+
 
     grunt.registerMultiTask('cwd', function() {
         if (this.data && this.data !== process.cwd()) {
@@ -176,7 +280,12 @@ module.exports = function(grunt) {
         grunt.task.run(this.data);
     });
 
+    grunt.registerMultiTask('check', function() {
+        grunt.task.run(this.data);
+    });
+
     grunt.registerTask('install', ['npm-install', 'bower-install-simple']);
-    grunt.registerTask('run', ['cwd:target', // 'shell:mongodb',
-        'express', 'cwd:current','watch']);//,  'express-keepalive']);
+    grunt.registerTask('run', ['cwd:target', 'express', 'cwd:current', 'watch']);
+
+    grunt.registerTask('test', ['jshint']);
 };

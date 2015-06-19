@@ -28,7 +28,7 @@ module.exports = function(config) {
         // If there is no code, send basic Error 500
         if (typeof(statusCode) == 'string') {
             message = statusCode;
-            statusCode = HttpStatus.INTERNAL_SERVER_ERROR;
+            statusCode = HTTPStatus.INTERNAL_SERVER_ERROR;
         }
         var status = http.STATUS_CODES[statusCode] || String(statusCode);
         return this.status(statusCode).json({
@@ -47,7 +47,7 @@ module.exports = function(config) {
         })
     ];
     global.logger = new (winston.Logger)({
-        transports: loggerTransports
+        transports: global.loggerTransports
     });
 
     // Set global translations for gettext
@@ -62,7 +62,7 @@ module.exports = function(config) {
         translator.setLanguage(langId);
     };
 
-    global.auth = jwt({secret: config.auth.secret});
+    global.auth = jwt({ secret: config.auth.secret });
 
     global.config = config;
 };
