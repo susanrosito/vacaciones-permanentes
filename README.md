@@ -1,5 +1,5 @@
 # vacaciones-permanentes [![Build Status](https://travis-ci.org/robaud/vacaciones-permanentes.svg?branch=develop)](https://travis-ci.org/robaud/vacaciones-permanentes)
-Proyecto MEAN para la materia de Desarrollo de Softwaregit st
+Proyecto MEAN para la materia de Desarrollo de Software
 
 ## Correr el proyecto
 

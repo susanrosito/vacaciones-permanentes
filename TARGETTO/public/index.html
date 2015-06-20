@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="es"><![endif]-->
+<!--[if IE 7]><html class="no-js lt-ie9 lt-ie8" lang="es"><![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie9" lang="es"><![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="es"><!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Vacaciones Permanentes</title>
+        <meta name="description" content="Trabajo Práctico de la materia Desarrollo de Software de la UNQ">
+        <meta name="keywords" content="Vacaciones, Permanentes, TP, MEAN, UNQ, Desarrollo, Software">
+        <meta name="author" content="Alan Rodas Bonjour / Susana Rosito">
+        <meta http-equiv="content-language" content="es">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" href="favicon.ico?v=1.0">
+
+        <!-- Apple iPhone iPad WebApp Icons -->
+        <link rel="apple-touch-icon" href="touch-icon-iphone.png">
+        <link rel="apple-touch-icon" sizes="76x76" href="touch-icon-ipad.png">
+        <link rel="apple-touch-icon" sizes="120x120" href="touch-icon-iphone-retina.png">
+        <link rel="apple-touch-icon" sizes="152x152" href="touch-icon-ipad-retina.png">
+
+        <!-- Windows Phone and Windows 8.1 WebApp icons -->
+        <meta name="application-name" content=" CenturyCutCook" />
+        <meta name="msapplication-TileColor" content=" #009900" />
+
+        <!-- Logos for all four tile sizes -->
+        <meta name="msapplication-square70x70logo" content="tile.png" />
+        <meta name="msapplication-square150x150logo" content="tile.png" />
+        <meta name="msapplication-wide310x150logo" content="tile-wide.png" />
+        <meta name="msapplication-square310x310logo" content="tile.png" />
+
+        <!-- Notification URL -->
+        <meta name="msapplication-notification" content="frequency=30; polling-uri=1.xml; polling-uri2=2.xml; polling-uri3=3.xml; polling-uri4=4.xml; polling-uri5=5.xml" />
+        <!-- bower:css -->
+        <link rel="stylesheet" href="vendor/angucomplete-alt/angucomplete-alt.css" />
+        <link rel="stylesheet" href="vendor/font-awesome/css/font-awesome.css" />
+        <link rel="stylesheet" href="vendor/mdi/css/materialdesignicons.css" />
+        <link rel="stylesheet" href="vendor/mdi/css/materialdesignicons.min.css" />
+        <link rel="stylesheet" href="vendor/lumx/dist/lumx.css" />
+        <link rel="stylesheet" href="vendor/roboto-fontface/css/roboto-fontface.css" />
+        <!-- endbower -->
+        <link rel="stylesheet" href="styles/main.css">
+    </head>
+    <body ng-app="vacacionesPermanentes">
+        <!--[if lt IE 8]>
+            
+        <![endif]-->
+        <script src="https://www.google.com/jsapi"></script>
+        <script>google.load('search', '1');</script>
+        <script src="http://maps.google.com/maps/api/js?libraries=places"></script>
+        
+<div ng-controller="NavigationCtrl">
+    <div class="header toolbar">
+    <div class="toolbar__left mr" ng-show="isLoggedIn() && !isVisibleByWidth">
+        <button class="btn btn--l btn--black btn--icon" lx-ripple ng-click="toggleSidebar()">
+            <i class="mdi mdi-menu"></i>
+        </button>
+    </div>
+
+    <span class="toolbar__label fs-title" translate>Permanent Vacations</span>
+
+    <div class="toolbar__right" ng-hide="isLoggedIn()">
+        <nav class="main-nav main-nav--lap-and-up">
+            <ul>
+                <li><a class="main-nav__link" ui-sref="login" translate>Log In</a></li>
+                <li><a class="main-nav__link" ui-sref="register" translate>Register</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <div class="toolbar__right" ng-show="isLoggedIn()">
+
+        <lx-dropdown position="right">
+            <button class="btn btn--l btn--black btn--icon" lx-ripple lx-dropdown-toggle>
+                <img gravatar-src="[['currentUser().email']]" gravatar-size="100" class="face">
+            </button>
+
+            <lx-dropdown-menu class="user-menu">
+                <div class="arrow"></div>
+                <ul>
+                    <li>
+                        <img gravatar-src="[['currentUser().email']]" gravatar-size="100" class="face">
+                        <div class="user-info">
+                            <span class="user-name dropdown-link dropdown-link--is-header">[[currentUser().name]]</span>
+                            <span class="user-email dropdown-link dropdown-link--is-header">[[currentUser().email]]</span>
+                        </div>
+                    </li>
+                    <li class="dropdown-divider"></li>
+                    <li><a class="dropdown-link" ng-click="logOut()" translate>Log Out</a></li>
+                </ul>
+            </lx-dropdown-menu>
+        </lx-dropdown>
+    </div>
+</div>
+    <div class="sidebar-filter" ng-class="{'sidebar-filter--is-shown' : isSidebarToggled}"
+     ng-show="isLoggedIn()" ng-click="toggleSidebar()"></div>
+
+<div class="sidebar" ng-class="{ 'sidebar--is-shown': isSidebarToggled }" ng-show="isLoggedIn()">
+    <div class="sidebar-menu">
+        <ul ng-controller="TripListCtrl">
+            <li class="sidebar-menu__link" ng-hide="trips.length" translate>No Trips added yet</li>
+            <li ng-repeat="trip in trips | orderBy: '-startDate'" id="[[trip._id]]">
+                <a class="sidebar-menu__link" ui-sref="trip({id: trip._id})" ng-click="toggleSidebar()">[[trip.title]]</a>
+            </li>
+        </ul>
+    </div>
+</div>
+    <div class="main-content"
+    ng-class="{ 'sidebar--is-shown': isVisibleByWidth && isLoggedIn()}">
+        <ui-view></ui-view>
+    </div>
+</div>
+
+        <!-- bower:js -->
+        <script src="vendor/modernizr/modernizr.js"></script>
+        <script src="vendor/jquery/dist/jquery.js"></script>
+        <script src="vendor/angular/angular.js"></script>
+        <script src="vendor/angular-gettext/dist/angular-gettext.js"></script>
+        <script src="vendor/angular-gravatar/build/angular-gravatar.js"></script>
+        <script src="vendor/moment/min/moment-with-locales.js"></script>
+        <script src="vendor/angular-moment/angular-moment.js"></script>
+        <script src="vendor/angular-ui-router/release/angular-ui-router.js"></script>
+        <script src="vendor/angucomplete-alt/angucomplete-alt.js"></script>
+        <script src="vendor/velocity/velocity.js"></script>
+        <script src="vendor/velocity/velocity.ui.js"></script>
+        <script src="vendor/lumx/dist/lumx.js"></script>
+        <script src="vendor/ngmap/build/scripts/ng-map.js"></script>
+        <script src="vendor/underscore/underscore.js"></script>
+        <script src="vendor/underscore.string/dist/underscore.string.js"></script>
+        <!-- endbower -->
+        <script src="javascripts/controllers.js"></script>
+        
+    <script type="text/ng-template" id="/home.html">
+        <div class="trip-detail-list">
+    <div class="no-trips-message-container" ng-hide="trips.length">
+        <h2 translate>No Trips Yet.</h2>
+        <h3 translate>Go ahead and add a trip.</h3>
+    </div>
+    <div class="trip-detail-card" ng-repeat="trip in trips | orderBy: '-startDate'" id="[[post._id]]">
+        <div class="card">
+            <div class="card__img card__img--top">
+                <img src="http://ui.lumapps.com/images/placeholder/2-horizontal.jpg">
+                <span class="fs-headline tc-white-1 display-block">[[trip.title]]</span>
+            </div>
+
+            <div class="p+">
+                <span class="fs-subhead tc-black-2 display-block">[[trip.title]]</span>
+
+                <div class="paragraph fs-body-1">
+                    <p>
+                        <span translate>from</span> [[trip.startDate | amDateFormat:'MMMM DD, YYYY']]<br>
+                        <span translate>to</span> [[trip.endDate | amDateFormat:'MMMM, DD, YYYY']]
+                    </p>
+                </div>
+            </div>
+
+            <div class="card__actions">
+                <button class="btn btn--m btn--orange btn--flat"
+                        ui-sref="trip({id: trip._id})" lx-ripple translate>Read More</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<lx-dialog class="dialog dialog--l add-trip-dialog" id="add-trip-dialog" auto-close="true" onclose="closeAddDialog()">
+    <div class="sticky-container">
+        <h3 translate>Add New Trip</h3>
+        <div class="dialog-content">
+
+            <lx-text-field label="[['Ttitle' | translate]]">
+                <input type="text" ng-model="newTrip.title" focus-on="add-dialog-show">
+            </lx-text-field>
+
+            <lx-date-picker id="startDate" model="newTrip.startDate" label="[['Start Date' | translate]]"
+                            auto-close="true" locale="es" class="date-start"
+                            ng-class="{'dt-picker-error': !newTrip.hasValidDates()}">
+            </lx-date-picker>
+            <lx-date-picker id="endDate" model="newTrip.endDate" label="[['End Date' | translate]]"
+                            auto-close="true" locale="es" class="date-end"
+                            ng-class="{'dt-picker-error': !newTrip.hasValidDates()}">
+            </lx-date-picker>
+        </div>
+    </div>
+    <div class="action-buttons">
+        <span flex></span>
+        <button class="btn btn--m btn--flat" lx-ripple lx-dialog-close translate>
+            Cancel
+        </button>
+        <button class="btn btn--m btn--primary btn--raised" ng-disabled="!newTrip.readyToSave()"
+                ng-click="newTrip.create()" lx-ripple  translate>
+            Add New Trip
+        </button>
+    </div>
+</lx-dialog>
+
+<button class="btn btn--m btn--fab btn-add" lx-tooltip="[['Add New Trip' | translate]]"
+        tooltip-position="left" ng-click="showAddDialog()" lx-ripple>
+    <i class="mdi mdi-plus"></i>
+</button>
+    </script>
+    <script type="text/ng-template" id="/login.html">
+        <div class="outer-form-card">
+    <div class="card login">
+        <div class="inner-form">
+            <h3 translate>Log In</h3>
+            <form ng-submit="logIn()">
+
+                <lx-text-field label="[['Email' | translate]]" error="!user.hasValidEmail()">
+                    <input type="email" ng-model="user.email" focus-on="init-or-fail-form">
+                </lx-text-field>
+                <lx-text-field label="[['Password' | translate]]" error="!user.hasValidPassword()">
+                    <input type="password" ng-model="user.password">
+                </lx-text-field>
+
+                <div class="action-buttons">
+                    <button class="btn btn--m btn--primary btn--raised" ng-disabled="!user.readyToLogin()"
+                            type="submit" ng-click="post()" translate>
+                        Log In
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+    </script>
+    <script type="text/ng-template" id="/register.html">
+        <div class="outer-form-card">
+    <div class="card register">
+        <div class="inner-form">
+            <h3 translate>Register</h3>
+            <form ng-submit="register()">
+
+                <lx-text-field label="[['Full Name' | translate]]">
+                    <input type="text" ng-model="user.name" focus-on="init-or-fail-form">
+                </lx-text-field>
+                <lx-text-field label="[['Email' | translate]]" error="!user.hasValidEmail()">
+                    <input type="email" ng-model="user.email">
+                </lx-text-field>
+                <lx-text-field label="[['Password' | translate]]" error="!user.hasValidPassword()">
+                    <input type="password" ng-model="user.password">
+                </lx-text-field>
+                <lx-text-field label="[['Repeat Password' | translate]]" error="!user.hasValidRepeatedPassword()">
+                    <input type="password" ng-model="user.passwordRepeat">
+                </lx-text-field>
+
+                <div class="action-buttons">
+                    <a class="btn btn--m btn--flat" ui-sref="login" translate>
+                        Cancel
+                    </a>
+                    <button class="btn btn--m btn--primary btn--raised" ng-disabled="!user.readyToRegister()"
+                            type="submit" ng-click="post()" translate>
+                        Register
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+    </script>
+    <script type="text/ng-template" id="/trip.html">
+        <form ng-submit="confirmEdit()">
+    <div class="trip-card">
+    <div class="card">
+        <div class="left">
+            <div class="trip-info">
+    <div class="p+">
+        <lx-text-field label="[['Title' | translate]]">
+            <input type="text" ng-model="editedTrip.title" ng-disabled="!editedTrip.isEditing"
+                   focus-on="enter-edit-mode">
+        </lx-text-field>
+        <lx-date-picker model="editedTrip.startDate" label="[['Start Date' | translate]]"
+                        auto-close="true" locale="es" class="date-start"
+                        ng-class="{'dt-picker-error': !editedTrip.hasValidDates()}">
+        </lx-date-picker>
+        <lx-date-picker model="editedTrip.endDate" label="[['End Date' | translate]]"
+                        auto-close="true" locale="es" class="date-end"
+                        ng-class="{'dt-picker-error': !editedTrip.hasValidDates()}">
+        </lx-date-picker>
+    </div>
+</div>
+            <div class="trip-calendar">
+    <div class="mt++">
+        <span class="trip-calendar-title fs-title display-block mb" translate>Cities to Visit</span>
+        <a class="btn-add-city btn btn--m btn--primary btn--flat" ng-show="editedTrip.isEditing" ng-click="showAddDestinationBox()">
+            <i class="icon icon--xs icon--flat mdi mdi-plus"></i>
+        </a>
+        <div class="divider divider--dark"></div>
+
+        <div class="trip-add-destination-box" ng-show="editedTrip.isEditing && isAddDestinationShowned">
+    <div class="sticky-container">
+        <div class="dialog-content">
+            <lx-text-field label="[['City' | translate]]">
+                <input type="text" ng-model="tempDestination.city" focus-on="add-dialog-show"
+                       places-auto-complete types="['geocode']" placeholder="" on-place-changed="placeChanged(place)">
+            </lx-text-field>
+            <lx-date-picker id="startDate" model="tempDestination.startDate" label="[['Start Date' | translate]]"
+                            auto-close="true" locale="es" class="date-start"
+                            ng-class="{'dt-picker-error': !tempDestination.hasValidDates()}">
+            </lx-date-picker>
+            <lx-date-picker id="endDate" model="tempDestination.endDate" label="[['End Date' | translate]]"
+                            auto-close="true" locale="es" class="date-end"
+                            ng-class="{'dt-picker-error': !tempDestination.hasValidDates()}">
+            </lx-date-picker>
+        </div>
+    </div>
+    <div class="box-action-buttons">
+        <span flex></span>
+        <a class="btn btn--m btn--flat" lx-ripple  ng-click="closeAddDestinationBox()"  translate>
+            Cancel
+        </a>
+        <a class="btn btn--m btn--primary btn--raised" ng-disabled="!tempDestination.readyToSave()"
+                ng-click="addDestination()" lx-ripple  translate>
+            Add New Destination
+        </a>
+    </div>
+</div>
+
+
+        <ul class="list mt++">
+            <li class="list-row list-row--has-separator city-list-item" ng-repeat="destination in editedTrip.destinations | orderBy: 'startDate'">
+                <div class="list-row__primary" ng-hide="editedTrip.isEditing">
+                    <a ui-sref="destination({id: trip._id, destinationId: destination._id})">
+                        <img ng-src="[[destination.getImage()]]" class="img-round city-image">
+                    </a>
+                </div>
+                <div class="list-row__content" ng-hide="editedTrip.isEditing">
+                    <a ui-sref="destination({id: trip._id, destinationId: destination._id})">
+                        <span class="display-block">[[destination.city]]</span>
+                    </a>
+                </div>
+
+                <div class="list-row__primary" ng-show="editedTrip.isEditing">
+                    <img ng-src="[[destination.getImage()]]" class="img-round city-image">
+                </div>
+                <div class="list-row__content" ng-show="editedTrip.isEditing">
+                    <span class="display-block">[[destination.city]]</span>
+                </div>
+                <div class="list-row__secondary city-remove-icon" ng-show="editedTrip.isEditing">
+                    <a ng-click="removeDestination(destination)" class="remove-destination-button">
+                        <i class="icon icon--xs icon--grey icon--flat mdi mdi-close"></i>
+                    </a>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+
+        </div>
+        <div class="right">
+            <div class="trip-image-container">
+    <div class="card__img card__img--top">
+        <img class="trip-image" ng-src="[[trip.getImage()]]">
+    </div>
+</div>
+<div class="trip-map">
+    <map center="-0.550477, -62.872236" zoom="1"></map>
+</div>
+
+        </div>
+    </div>
+</div>
+
+
+    <div ng-show="editedTrip.isEditing">
+        <a class="btn btn--m btn--fab btn-discard-changes" lx-tooltip="[['Discarg Changes' | translate]]"
+           tooltip-position="left" lx-ripple ng-click="cancelEdit()">
+            <i class="mdi mdi-close"></i>
+        </a>
+
+        <div class="fab btn-edit-group">
+            <button class="fab__primary btn btn--xl btn--fab btn-save-changes" lx-ripple
+                    lx-tooltip="[['Edit Trip' | translate]]" tooltip-position="left"
+                    type="submit">
+                <i class="mdi mdi-content-save"></i>
+                <i class="mdi mdi-content-save"></i>
+            </button>
+
+            <div class="fab__actions fab__actions--up">
+                <button class="btn btn--l btn--fab btn-delete" lx-ripple lx-tooltip="[['Delete Trip' | translate]]"
+                        tooltip-position="left" ng-click="confirmDelete()">
+                    <i class="mdi mdi-delete"></i></button>
+            </div>
+        </div>
+    </div>
+</form>
+
+<div ng-hide="editedTrip.isEditing">
+    <a class="btn btn--m btn--fab btn-back" lx-tooltip="[['Back to Trip List' | translate]]"
+       tooltip-position="left" lx-ripple ui-sref="home">
+        <i class="mdi mdi-arrow-left"></i>
+    </a>
+
+    <div class="fab btn-edit-group">
+        <button class="fab__primary btn btn--xl btn--fab btn-edit" lx-ripple
+                lx-tooltip="[['Edit Trip' | translate]]" tooltip-position="left"
+                ng-click="enterEditMode()">
+            <i class="mdi mdi-pencil"></i>
+            <i class="mdi mdi-pencil"></i>
+        </button>
+
+        <div class="fab__actions fab__actions--up">
+            <button class="btn btn--l btn--fab btn-delete" lx-ripple lx-tooltip="[['Delete Trip' | translate]]"
+                    tooltip-position="left" ng-click="confirmDelete()">
+                <i class="mdi mdi-delete"></i></button>
+        </div>
+    </div>
+</div>
+    </script>
+    <script type="text/ng-template" id="/destination.html">
+        <form ng-submit="confirmEdit()">
+    <div class="trip-card">
+    <div class="card">
+        <div class="left">
+            <div class="trip-info">
+    <div class="p+">
+        <h4>[[destination.city]]</h4>
+
+        <lx-text-field label="[['Hotel' | translate]]" ng-hide="!editedDestination.isEditing">
+            <angucomplete-alt class="autocomplete" id="hotel-autocomplete"
+                              pause="100" minlength="1" input-class="form-control form-control-small"
+                              selected-object="updateHotel"
+                              local-data="hotelsInCity"
+                              search-fields="name"
+                              title-field="name"
+                              image-field=icon"
+                              description-field="address"></angucomplete-alt>
+        </lx-text-field>
+        <lx-text-field label="[['Hotel' | translate]]" ng-show="!editedDestination.isEditing">
+            <input type="text" ng-model="editedDestination.hotel.name" ng-disabled="!editedDestination.isEditing">
+        </lx-text-field>
+        <star-rating ng-hide="!editedDestination.hotel.name" ng-model="editedDestination.hotel.ranking" readonly="true" max="10"></star-rating>
+        <span ng-hide="!editedDestination.hotel.name" class="display-block poi-address">[[editedDestination.hotel.address]]</span>
+        <span ng-hide="!editedDestination.hotel.name" class="display-block poi-address">[[editedDestination.hotel.phone]]</span>
+    </div>
+</div>
+            <div class="trip-calendar">
+    <div class="mt++">
+        <span class="trip-calendar-title fs-title display-block mb" translate>Places to Visit</span>
+        <a class="btn-add-city btn btn--m btn--primary btn--flat" ng-show="editedDestination.isEditing"
+           ng-click="showAddPOIBox()">
+            <i class="icon icon--xs icon--flat mdi mdi-plus"></i>
+        </a>
+
+        <div class="divider divider--dark"></div>
+
+        <div class="trip-add-destination-box" ng-show="editedDestination.isEditing && isAddPOIshowned">
+    <div class="sticky-container">
+        <div class="dialog-content">
+            <lx-text-field label="[['Point of Interest' | translate]]">
+                <input type="text" ng-model="tempPOI.name" focus-on="add-dialog-show"
+                       places-auto-complete types="['establishment']" placeholder="" on-place-changed="placeChanged(place)">
+            </lx-text-field>
+        </div>
+    </div>
+    <div class="box-action-buttons">
+        <span flex></span>
+        <a class="btn btn--m btn--flat" lx-ripple  ng-click="closeAddPOIBox()"  translate>
+            Cancel
+        </a>
+        <a class="btn btn--m btn--primary btn--raised" ng-disabled="!tempPOI.readyToSave()"
+                ng-click="addPOI()" lx-ripple  translate>
+            Add New Point of Interest
+        </a>
+    </div>
+</div>
+
+
+        <ul class="list mt++">
+            <li class="list-row list-row--has-separator " ng-repeat="poi in editedDestination.pois">
+                <div class="list-row__primary">
+                    <img ng-src="[[poi.icon]]" class="img-round city-image">
+                </div>
+                <div class="list-row__content">
+                    <span class="display-block">[[poi.name]]</span>
+                    <star-rating ng-model="poi.ranking" readonly="true" max="10"></star-rating>
+                    <span class="display-block poi-address">[[poi.address]]</span>
+                </div>
+
+                <div class="list-row__secondary city-remove-icon" ng-show="editedDestination.isEditing">
+                    <a ng-click="removePOI(poi)" class="remove-destination-button">
+                        <i class="icon icon--xs icon--grey icon-editedDestination-flat mdi mdi-close"></i>
+                    </a>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+
+        </div>
+        <div class="right">
+            <div class="trip-image-container">
+    <div class="card__img card__img--top">
+        <img class="trip-image" ng-src="[[destination.getImage()]]">
+    </div>
+</div>
+<div class="trip-map">
+    <map center="-0.550477, -62.872236" zoom="1"></map>
+</div>
+
+        </div>
+    </div>
+</div>
+
+
+    <div ng-show="editedDestination.isEditing">
+        <a class="btn btn--m btn--fab btn-discard-changes" lx-tooltip="[['Discard Changes' | translate]]"
+           tooltip-position="left" lx-ripple ng-click="cancelEdit()">
+            <i class="mdi mdi-close"></i>
+        </a>
+
+        <div class="fab btn-edit-group">
+            <button class="fab__primary btn btn--xl btn--fab btn-save-changes" lx-ripple
+                    lx-tooltip="[['Edit Destination' | translate]]" tooltip-position="left"
+                    type="submit">
+                <i class="mdi mdi-content-save"></i>
+                <i class="mdi mdi-content-save"></i>
+            </button>
+        </div>
+    </div>
+</form>
+
+<div ng-hide="editedDestination.isEditing">
+    <a class="btn btn--m btn--fab btn-back" lx-tooltip="[['Back to Trip' | translate]]"
+       tooltip-position="left" lx-ripple ui-sref="trip({id: trip._id})">
+        <i class="mdi mdi-arrow-left"></i>
+    </a>
+
+    <div class="fab btn-edit-group">
+        <button class="fab__primary btn btn--xl btn--fab btn-edit" lx-ripple
+                lx-tooltip="[['Edit Trip' | translate]]" tooltip-position="left"
+                ng-click="enterEditMode()">
+            <i class="mdi mdi-pencil"></i>
+            <i class="mdi mdi-pencil"></i>
+        </button>
+    </div>
+</div>
+    </script>
+
+    </body>
+</html>
