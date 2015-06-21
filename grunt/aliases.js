@@ -6,9 +6,9 @@ module.exports = function (grunt, options) {
         },
         run: {
             description: 'Run the server at port 3000',
-            tasks: ['cwd:target', 'express', 'cwd:current', 'watch']
+            tasks: ['compile', 'cwd:target', 'express', 'cwd:current', 'watch']
         },
-        test: ['lint'],
-        default: ['run']
+        test: ['lint', 'compile', 'copy:test', 'cwd:test'],
+        default: ['env:develop', 'run']
     };
 };

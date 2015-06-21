@@ -13,13 +13,15 @@ module.exports = function(grunt) {
 
     require('load-grunt-config')(grunt, {
         data: {
-            target: 'TARGETTO/',
+            target: 'target/',
+            testTarget: 'target-test',
             bower: 'bower_components/'
         },
         preMerge: function(config, data) {
             config.cwd = {
                 current: process.cwd(),
-                target: data.target
+                target: data.target,
+                test: data.testTarget
             };
             config.compile = {
                 server: ['copy:server'],
