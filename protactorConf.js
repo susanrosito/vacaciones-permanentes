@@ -3,3 +3,4 @@ exports.config = {
     specs: [''] // agregas el path donde estan los test de integracion.
 
 };
+
