@@ -1,3 +1,3 @@
-module.exports = function (grunt, options) {
+module.exports = function(grunt, options) {
     return { target: [options.target] };
 };

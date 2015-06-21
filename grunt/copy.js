@@ -1,4 +1,4 @@
-module.exports = function (grunt, options) {
+module.exports = function(grunt, options) {
     return {
         server: {
             files: [{
@@ -47,7 +47,7 @@ module.exports = function (grunt, options) {
                 cwd: options.bower + 'modernizr/',
                 dest: options.target + 'public/vendor/modernizr/',
                 src: ['.bower.json'],
-                rename: function (dest, src) {
+                rename: function(dest, src) {
                     return dest + src.replace('.bower.js', 'bower.js');
                 }
             }]

@@ -1,7 +1,7 @@
-module.exports = function (grunt, options) {
+module.exports = function(grunt, options) {
     return {
         all: {
-            options: {format: 'json'},
+            options: { format: 'json' },
             files: [{
                 expand: true,
                 src: ['locales/**.po'],
