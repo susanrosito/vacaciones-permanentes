@@ -51,6 +51,14 @@ module.exports = function (grunt, options) {
                     return dest + src.replace('.bower.js', 'bower.js');
                 }
             }]
+        },
+        test: {
+            files: [{
+                expand: true,
+                cwd: options.target,
+                dest: options.testTarget,
+                src: ['**']
+            }]
         }
     };
 };

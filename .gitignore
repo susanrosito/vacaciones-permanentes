@@ -40,3 +40,4 @@ bower_components
 
 #Target directory
 target/
+target-test/
