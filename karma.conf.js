@@ -5,7 +5,7 @@ module.exports = function(config) {
   config.set({
 
     // base path that will be used to resolve all patterns (eg. files, exclude)
-    basePath: '',
+    basePath: 'target-test/public',
 
 
     // frameworks to use
@@ -15,11 +15,24 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-        'bower_components/angular/angular.js',
-        'bower_components/angular-ui-router/release/angular-ui-router.js',
-        'bower_components/angular-mocks/angular-mocks.js',
-
-        'test/**/*.js'
+        'vendor/modernizr/modernizr.js',
+        'vendor/jquery/dist/jquery.js',
+        'vendor/angular/angular.js',
+        'vendor/angular-gettext/dist/angular-gettext.js',
+        'vendor/angular-gravatar/build/angular-gravatar.js',
+        'vendor/moment/min/moment-with-locales.js',
+        'vendor/angular-moment/angular-moment.js',
+        'vendor/angular-ui-router/release/angular-ui-router.js',
+        'vendor/angucomplete-alt/angucomplete-alt.js',
+        'vendor/velocity/velocity.js',
+        'vendor/velocity/velocity.ui.js',
+        'vendor/lumx/dist/lumx.js',
+        'vendor/ngmap/build/scripts/ng-map.js',
+        'vendor/underscore/underscore.js',
+        'vendor/underscore.string/dist/underscore.string.js',
+        'vendor/angular-mocks/angular-mocks.js',
+        'javascripts/controllers.js',
+        '../../test/**/*.js'
     ],
 
 
@@ -59,12 +72,12 @@ module.exports = function(config) {
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['Firefox'],
+    browsers: ['PhantomJS'],
 
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits
-    singleRun: false
+    singleRun: true
   });
 };
 
