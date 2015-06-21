@@ -80,4 +80,18 @@ server:
       - 'setLanguage'
       - 'auth'
       - 'StatusError'
-  src: ['server.js', 'Gruntfile.js']
+  src: ['server.js']
+grunt:
+  options:
+    node: true
+  src: ['Gruntfile.js', 'grunt/**/*.js']
+tests:
+  options:
+    predef:
+      - 'describe'
+      - 'beforeEach'
+      - 'it'
+      - 'expect'
+      - 'module'
+      - 'inject'
+  src: ['test/**/*.js']

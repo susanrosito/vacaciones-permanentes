@@ -1,4 +1,4 @@
-module.exports = function (grunt, options) {
+module.exports = function() {
     return {
         html: {
             files: 'views/**',
@@ -10,7 +10,7 @@ module.exports = function (grunt, options) {
         },
         styles: {
             files: ['styles/**'],
-            task:['compile:styles']
+            task: ['compile:styles']
         },
         angular: {
             files: ['angular/**', 'locales/**'],

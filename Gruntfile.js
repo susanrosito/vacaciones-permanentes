@@ -14,7 +14,7 @@ module.exports = function(grunt) {
     require('load-grunt-config')(grunt, {
         data: {
             target: 'target/',
-            testTarget: 'target-test',
+            testTarget: 'target-test/',
             bower: 'bower_components/'
         },
         preMerge: function(config, data) {

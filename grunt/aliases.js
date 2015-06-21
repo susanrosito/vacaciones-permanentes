@@ -1,4 +1,4 @@
-module.exports = function (grunt, options) {
+module.exports = function() {
     return {
         install: ['npm-install', 'bower-install-simple'],
         lint: {
@@ -9,7 +9,7 @@ module.exports = function (grunt, options) {
             description: 'Run the server at port 3000',
             tasks: ['compile', 'cwd:target', 'express', 'cwd:current', 'watch']
         },
-        test: ['install', 'lint', 'compile', 'copy:test', 'cwd:test'],
+        test: ['install', 'lint', 'compile', 'copy:test', 'karma'],
         default: ['env:develop', 'run']
     };
 };
