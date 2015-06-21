@@ -1,4 +1,8 @@
 module.exports = function (grunt, options) {
-    return { unit: { configFile: 'karma.conf.js' } };
+    return {
+        angular: {
+            configFile: 'karma.conf.js'
+        }
+    };
 };
 
