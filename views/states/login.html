@@ -5,14 +5,14 @@
             <form ng-submit="logIn()">
 
                 <lx-text-field label="[['Email' | translate]]" error="!user.hasValidEmail()">
-                    <input type="email" ng-model="user.email" focus-on="init-or-fail-form">
+                    <input id="email" type="email" ng-model="user.email" focus-on="init-or-fail-form">
                 </lx-text-field>
                 <lx-text-field label="[['Password' | translate]]" error="!user.hasValidPassword()">
-                    <input type="password" ng-model="user.password">
+                    <input id="password" type="password" ng-model="user.password">
                 </lx-text-field>
 
                 <div class="action-buttons">
-                    <button class="btn btn--m btn--primary btn--raised" ng-disabled="!user.readyToLogin()"
+                    <button id="log-in" class="btn btn--m btn--primary btn--raised" ng-disabled="!user.readyToLogin()"
                             type="submit" ng-click="post()" translate>
                         Log In
                     </button>

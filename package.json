@@ -9,9 +9,7 @@
   "license": "Apache v2",
   "main": "server.js",
   "scripts": {
-    "compile": "grunt compile copy:test",
-    "run": "grunt run",
-    "lint": "grunt lint",
+    "start": "grunt run",
     "test": "grunt test"
   },
   "dependencies": {
@@ -46,6 +44,8 @@
     "grunt-contrib-copy": "^0.8.0",
     "grunt-contrib-jshint": "^0.11.2",
     "grunt-contrib-watch": "^0.6.1",
+    "grunt-env": "^0.4.4",
+    "grunt-execute": "^0.2.2",
     "grunt-express": "^1.4.1",
     "grunt-jscs": "^1.8.0",
     "grunt-karma": "^0.10.1",
@@ -69,6 +69,7 @@
     "node-bourbon": "^4.2.2",
     "node-neat": "^1.7.1-beta1",
     "node-refills": "^1.0.1",
-    "protractor": "^2.1.0"
+    "protractor": "^2.1.0",
+    "protractor-http-mock": "^0.1.13"
   }
 }

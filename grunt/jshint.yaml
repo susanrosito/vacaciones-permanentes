@@ -87,6 +87,7 @@ grunt:
   src: ['Gruntfile.js', 'grunt/**/*.js']
 tests:
   options:
+    node: true
     predef:
       - 'describe'
       - 'beforeEach'
@@ -94,4 +95,9 @@ tests:
       - 'expect'
       - 'module'
       - 'inject'
-  src: ['test/**/*.js']
+      - 'loggedIn'
+      - 'by'
+      - 'ObjectId'
+      - 'element'
+      - 'browser'
+  src: ['tests/**/*.js']

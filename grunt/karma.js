@@ -24,7 +24,7 @@ module.exports = function(grunt, options) {
                 'vendor/underscore.string/dist/underscore.string.js',
                 'vendor/angular-mocks/angular-mocks.js',
                 'javascripts/controllers.js',
-                '../../test/**/*.js'
+                '../../tests/unit/**/*.js'
             ]
         },
         angular: {}

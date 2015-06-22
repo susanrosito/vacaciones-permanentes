@@ -23,6 +23,7 @@ module.exports = function(grunt) {
                 target: data.target,
                 test: data.testTarget
             };
+            config.protractor = config['protractor-runner'];
             config.compile = {
                 server: ['copy:server'],
                 angular: ['browserify', 'nggettext_compile'],

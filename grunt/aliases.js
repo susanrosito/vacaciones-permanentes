@@ -10,6 +10,8 @@ module.exports = function() {
             tasks: ['compile', 'cwd:target', 'express', 'cwd:current', 'watch']
         },
         test: ['install', 'lint', 'compile', 'copy:test', 'karma'],
+        'protractor-server': ['env:test', 'run'],
+        protract: ['env:test', 'execute:createDB', 'protractor', 'execute:deleteDB'],
         default: ['env:develop', 'run']
     };
 };

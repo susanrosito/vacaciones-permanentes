@@ -21,7 +21,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/', function(req, res, next) { res.charset = 'utf-8'; next(); });
 
 logger.info(__('Connecting to MongoDB at %s', config.mongo.connectionString));
-mongoose.connect(config.mongo.connectionString);
+mongoose.connect(config.mongo.connectionString());
 logger.info(__('Database connected'));
 
 require('./models');
