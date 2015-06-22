@@ -100,4 +100,6 @@ tests:
       - 'ObjectId'
       - 'element'
       - 'browser'
+      - 'angular'
+      - '$'
   src: ['tests/**/*.js']
