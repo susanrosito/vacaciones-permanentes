@@ -18,7 +18,7 @@ app.controller('NavigationCtrl', ['$state', '$scope', '$window', 'authService', 
     updateSidebar();
 
     $scope.isSidebarVisible = function() {
-        return ($scope._isSidebarToggled || $scope.isVisibleByWidth()) && $scope.isLoggedIn;
+        return ($scope.isSidebarToggled || $scope.isVisibleByWidth) && $scope.isLoggedIn;
     };
 
     $scope.toggleSidebar = function() {
