@@ -1,18 +1,35 @@
 module.exports = function() {
     return {
         options: {
-            configFile: 'protractor.conf.js', // So "node_modules/protractor/example/conf.js", // Default config file
-            keepAlive: false, // If false, the grunt process stops when the test fails.
-            noColor: false, // If true, protractor will not use colors in its output.
-            framework: 'jamine',
-            args: {
-                // Arguments passed to the command
+            configFile: 'tests/integration/protractorConf.js',
+            keepAlive: false,
+            noColor: false
+        },
+        notLogged: {
+            options: {
+                args: {
+                    seleniumAddress: 'http://localhost:4444/wd/hub',
+                    framework: 'jasmine2',
+                    browser: 'chrome',
+                    capabilities: {
+                        browserName: 'chrome'
+                    },
+                    specs: ['tests/integration/notLogged/**/*.js']
+                }
             }
         },
-        all: { // Grunt requires at least one target to run so you can simply put 'all: {}' here too.
+        logged: {
             options: {
-                // The configFile: "e2e.conf.js", // Target-specific config file
-                args: {} // Target-specific arguments
+                args: {
+                    seleniumAddress: 'http://localhost:4444/wd/hub',
+                    framework: 'jasmine2',
+                    browser: 'chrome',
+                    capabilities: {
+                        browserName: 'chrome'
+                    },
+                    specs: ['tests/integration/logged/**/*.js'],
+                    onPrepare: 'tests/integration/logIn.js'
+                }
             }
         }
     };

@@ -1,8 +1,10 @@
-{% include "components/trip-detail-card-list.html" %}
+<div id="home">
+    {% include "components/trip-detail-card-list.html" %}
 
-{% include "components/add-trip-dialog.html" %}
+    {% include "components/add-trip-dialog.html" %}
 
-<button id="add-trip" class="btn btn--m btn--fab btn-add" lx-tooltip="[['Add New Trip' | translate]]"
-        tooltip-position="left" ng-click="showAddDialog()" lx-ripple>
-    <i class="mdi mdi-plus"></i>
-</button>
+    <button id="add-trip" class="btn btn--m btn--fab btn-add" lx-tooltip="[['Add New Trip' | translate]]"
+            tooltip-position="left" ng-click="showAddDialog()" lx-ripple>
+        <i class="mdi mdi-plus"></i>
+    </button>
+</div>

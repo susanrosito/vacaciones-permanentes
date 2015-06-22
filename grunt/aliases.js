@@ -11,7 +11,7 @@ module.exports = function() {
         },
         test: ['install', 'lint', 'compile', 'copy:test', 'karma'],
         'protractor-server': ['env:test', 'run'],
-        protract: ['env:test', 'execute:createDB', 'protractor', 'execute:deleteDB'],
+        protract: ['env:test', 'execute:createDB', 'protractor:notLogged', 'protractor:logged', 'execute:deleteDB'],
         default: ['env:develop', 'run']
     };
 };

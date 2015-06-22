@@ -1,9 +1,7 @@
 describe('NavigationCtrl', function() {
     var scope, controller, window, authServiceMock;
 
-    beforeEach(function() {
-        module('vacacionesPermanentes');
-    });
+    beforeEach(function() { module('vacacionesPermanentes'); });
 
     beforeEach(inject(function($controller, $rootScope, $httpBackend) {
         scope = $rootScope.$new();
