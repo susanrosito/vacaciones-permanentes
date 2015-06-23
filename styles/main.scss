@@ -117,10 +117,11 @@ body {
 }
 .user-menu {
   position: fixed;
+  li { text-align: center; }
   .face {
-    display: inline-block;
-    margin-left: 10px;
-    width: 40px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 70px;
     border-radius: 50%;
   }
   .user-info {

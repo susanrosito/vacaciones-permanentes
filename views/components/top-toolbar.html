@@ -20,7 +20,7 @@
 
         <lx-dropdown position="right">
             <button class="btn btn--l btn--black btn--icon" lx-ripple lx-dropdown-toggle>
-                <img gravatar-src="[['currentUser().email']]" gravatar-size="100" class="face">
+                <img id="user-account-menu" gravatar-src="[['currentUser().email']]" gravatar-size="100" class="face">
             </button>
 
             <lx-dropdown-menu class="user-menu">
@@ -29,12 +29,12 @@
                     <li>
                         <img gravatar-src="[['currentUser().email']]" gravatar-size="100" class="face">
                         <div class="user-info">
-                            <span class="user-name dropdown-link dropdown-link--is-header">[[currentUser().name]]</span>
+                            <span id="user-name" class="user-name dropdown-link dropdown-link--is-header">[[currentUser().name]]</span>
                             <span class="user-email dropdown-link dropdown-link--is-header">[[currentUser().email]]</span>
                         </div>
                     </li>
                     <li class="dropdown-divider"></li>
-                    <li><a class="dropdown-link" ng-click="logOut()" translate>Log Out</a></li>
+                    <li><a id="log-out" class="dropdown-link" ng-click="logOut()" translate>Log Out</a></li>
                 </ul>
             </lx-dropdown-menu>
         </lx-dropdown>

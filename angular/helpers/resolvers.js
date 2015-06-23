@@ -1,10 +1,11 @@
 var exports = module.exports = {};
 
-exports.getTrip = ['$stateParams', 'LxNotificationService', 'gettextCatalog', 'tripService',
-    function($stateParams, LxNotificationService, gettextCatalog, tripService) {
+exports.getTrip = ['$state', '$stateParams', 'LxNotificationService', 'gettextCatalog', 'tripService',
+    function($state, $stateParams, LxNotificationService, gettextCatalog, tripService) {
     var result = tripService.get($stateParams.id);
     result.error(function(err) {
         LxNotificationService.error(gettextCatalog.getString(err.message));
+        $state.goTo('login');
     });
     return result.then(function(res) {
         return new tripService.Trip(res.data);

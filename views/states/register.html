@@ -1,32 +1,34 @@
-<div class="outer-form-card">
-    <div class="card register">
-        <div class="inner-form">
-            <h3 translate>Register</h3>
-            <form ng-submit="register()">
+<div id="register">
+    <div class="outer-form-card">
+        <div class="card register">
+            <div class="inner-form">
+                <h3 translate>Register</h3>
+                <form ng-submit="register()">
 
-                <lx-text-field label="[['Full Name' | translate]]">
-                    <input type="text" ng-model="user.name" focus-on="init-or-fail-form">
-                </lx-text-field>
-                <lx-text-field label="[['Email' | translate]]" error="!user.hasValidEmail()">
-                    <input type="email" ng-model="user.email">
-                </lx-text-field>
-                <lx-text-field label="[['Password' | translate]]" error="!user.hasValidPassword()">
-                    <input type="password" ng-model="user.password">
-                </lx-text-field>
-                <lx-text-field label="[['Repeat Password' | translate]]" error="!user.hasValidRepeatedPassword()">
-                    <input type="password" ng-model="user.passwordRepeat">
-                </lx-text-field>
+                    <lx-text-field label="[['Full Name' | translate]]">
+                        <input type="text" ng-model="user.name" focus-on="init-or-fail-form">
+                    </lx-text-field>
+                    <lx-text-field label="[['Email' | translate]]" error="!user.hasValidEmail()">
+                        <input type="email" ng-model="user.email">
+                    </lx-text-field>
+                    <lx-text-field label="[['Password' | translate]]" error="!user.hasValidPassword()">
+                        <input type="password" ng-model="user.password">
+                    </lx-text-field>
+                    <lx-text-field label="[['Repeat Password' | translate]]" error="!user.hasValidRepeatedPassword()">
+                        <input type="password" ng-model="user.passwordRepeat">
+                    </lx-text-field>
 
-                <div class="action-buttons">
-                    <a class="btn btn--m btn--flat" ui-sref="login" translate>
-                        Cancel
-                    </a>
-                    <button class="btn btn--m btn--primary btn--raised" ng-disabled="!user.readyToRegister()"
-                            type="submit" ng-click="post()" translate>
-                        Register
-                    </button>
-                </div>
-            </form>
+                    <div class="action-buttons">
+                        <a class="btn btn--m btn--flat" ui-sref="login" translate>
+                            Cancel
+                        </a>
+                        <button class="btn btn--m btn--primary btn--raised" ng-disabled="!user.readyToRegister()"
+                                type="submit" ng-click="post()" translate>
+                            Register
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </div>
