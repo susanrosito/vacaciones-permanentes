@@ -1,23 +1,25 @@
-<div class="outer-form-card">
-    <div class="card login">
-        <div class="inner-form">
-            <h3 translate>Log In</h3>
-            <form ng-submit="logIn()">
+<div id="login">
+    <div class="outer-form-card">
+        <div class="card login">
+            <div class="inner-form">
+                <h3 translate>Log In</h3>
+                <form ng-submit="logIn()">
 
-                <lx-text-field label="[['Email' | translate]]" error="!user.hasValidEmail()">
-                    <input type="email" ng-model="user.email" focus-on="init-or-fail-form">
-                </lx-text-field>
-                <lx-text-field label="[['Password' | translate]]" error="!user.hasValidPassword()">
-                    <input type="password" ng-model="user.password">
-                </lx-text-field>
+                    <lx-text-field label="[['Email' | translate]]" error="!user.hasValidEmail()">
+                        <input id="email" type="email" ng-model="user.email" focus-on="init-or-fail-form">
+                    </lx-text-field>
+                    <lx-text-field label="[['Password' | translate]]" error="!user.hasValidPassword()">
+                        <input id="password" type="password" ng-model="user.password">
+                    </lx-text-field>
 
-                <div class="action-buttons">
-                    <button class="btn btn--m btn--primary btn--raised" ng-disabled="!user.readyToLogin()"
-                            type="submit" ng-click="post()" translate>
-                        Log In
-                    </button>
-                </div>
-            </form>
+                    <div class="action-buttons">
+                        <button id="log-in" class="btn btn--m btn--primary btn--raised" ng-disabled="!user.readyToLogin()"
+                                type="submit" ng-click="post()" translate>
+                            Log In
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </div>

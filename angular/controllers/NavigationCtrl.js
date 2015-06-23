@@ -11,14 +11,14 @@ app.controller('NavigationCtrl', ['$state', '$scope', '$window', 'authService', 
         $state.go('login');
     };
 
-    function updateSidebar() {
+    var updateSidebar = function() {
         $scope.isVisibleByWidth = $window.innerWidth > SIDEBAR_VISIBLE_DEFAULT_SIZE;
         $scope.isSidebarToggled = $scope.isVisibleByWidth;
-    }
+    };
     updateSidebar();
 
     $scope.isSidebarVisible = function() {
-        return ($scope._isSidebarToggled || $scope.isVisibleByWidth())  && $scope.isLoggedIn;
+        return ($scope.isSidebarToggled || $scope.isVisibleByWidth) && $scope.isLoggedIn;
     };
 
     $scope.toggleSidebar = function() {

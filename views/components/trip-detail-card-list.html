@@ -6,7 +6,7 @@
     <div class="trip-detail-card" ng-repeat="trip in trips | orderBy: '-startDate'" id="[[post._id]]">
         <div class="card">
             <div class="card__img card__img--top">
-                <img src="http://ui.lumapps.com/images/placeholder/2-horizontal.jpg">
+                <img ng-src="[[trip.getImage()]]">
                 <span class="fs-headline tc-white-1 display-block">[[trip.title]]</span>
             </div>
 

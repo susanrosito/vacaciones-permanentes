@@ -1,21 +1,21 @@
 app.factory('LxDatePickerService', [function() {
 
     var dtPickerService = {};
-    function avoidOpeningTwoDatePickers(ev) {
-        if (!angular.element('.lx-date-picker--is-shown').length == 0) {
+    var avoidOpeningTwoDatePickers = function(ev) {
+        if (angular.element('.lx-date-picker--is-shown').length !== 0) {
             ev.preventDefault();
             ev.stopPropagation();
             return false;
         }
-    }
+    };
 
-    function disableClicks(ev) {
+    var disableClicks = function(ev) {
         ev.preventDefault();
         ev.stopPropagation();
         return false;
-    }
+    };
 
-    dtPickerService.handleClicks = function (id) {
+    dtPickerService.handleClicks = function(id) {
         angular.element('#' + id)[0].addEventListener('click', avoidOpeningTwoDatePickers, true);
     };
 
@@ -23,7 +23,7 @@ app.factory('LxDatePickerService', [function() {
         angular.element('#' + id)[0].removeEventListener('click', avoidOpeningTwoDatePickers, true);
     };
 
-    dtPickerService.disableAll = function(id) {
+    dtPickerService.disableAll = function() {
         var dtPicker = angular.element('.lx-date');
         dtPicker.prop('disabled');
         dtPicker.each(function(index, picker) {
@@ -31,7 +31,7 @@ app.factory('LxDatePickerService', [function() {
         });
 
     };
-    dtPickerService.enableAll = function(id) {
+    dtPickerService.enableAll = function() {
         var dtPicker = angular.element('.lx-date');
         dtPicker.removeProp('disabled');
         dtPicker.each(function(index, picker) {
@@ -40,4 +40,4 @@ app.factory('LxDatePickerService', [function() {
     };
 
     return dtPickerService;
-}]);
+} ]);

@@ -1,0 +1,111 @@
+options:
+  undef: true
+  unused: true
+angular:
+  options:
+    browserify: true
+    browser: true
+    jquery: true
+    predef:
+      - '_'
+      - 'angular'
+      - 'app'
+      - 'google'
+      - 'moment'
+  src: ['angular/**/*.js']
+config:
+  options:
+    node: true
+  src: ['config/**/*.js']
+models:
+  options:
+    node: true
+    predef:
+      - '_'
+      - 'mongoose'
+      - 'ObjectId'
+      - 'express'
+      - 'app'
+      - 'HTTPStatus'
+      - 'loggerTransports'
+      - 'logger'
+      - 'translations'
+      - '__'
+      - '_n'
+      - '_x'
+      - '_nx'
+      - 'setLanguage'
+      - 'auth'
+      - 'config'
+  src: ['models/**/*.js']
+routes:
+  options:
+    node: true
+    predef:
+      - '_'
+      - 'mongoose'
+      - 'ObjectId'
+      - 'express'
+      - 'app'
+      - 'HTTPStatus'
+      - 'loggerTransports'
+      - 'logger'
+      - 'translations'
+      - '__'
+      - '_n'
+      - '_x'
+      - '_nx'
+      - 'setLanguage'
+      - 'auth'
+      - 'config'
+      - 'StatusError'
+  src: ['routes/**/*.js']
+server:
+  options:
+    node: true
+    predef:
+      - '_'
+      - 'mongoose'
+      - 'ObjectId'
+      - 'express'
+      - 'app'
+      - 'HTTPStatus'
+      - 'loggerTransports'
+      - 'logger'
+      - 'translations'
+      - '__'
+      - '_n'
+      - '_x'
+      - '_nx'
+      - 'setLanguage'
+      - 'auth'
+      - 'StatusError'
+  src: ['server.js']
+grunt:
+  options:
+    node: true
+  src: ['Gruntfile.js', 'grunt/**/*.js']
+tests:
+  options:
+    node: true
+    predef:
+      - 'describe'
+      - 'beforeEach'
+      - 'it'
+      - 'expect'
+      - 'module'
+      - 'inject'
+      - 'loggedIn'
+      - 'notLogged'
+      - 'by'
+      - 'ObjectId'
+      - 'element'
+      - 'browser'
+      - 'angular'
+      - '$'
+      - 'site'
+      - 'protractor'
+      - 'goTo'
+      - 'logInAs'
+      - 'logOut'
+  src: ['tests/**/*.js']

@@ -1,0 +1,56 @@
+options:
+  disallowEmptyBlocks: true
+  disallowMixedSpacesAndTabs: true
+  disallowMultipleLineStrings: true
+  disallowMultipleSpaces: true
+  disallowNewlineBeforeBlockStatements: true
+  disallowQuotedKeysInObjects: true
+  disallowYodaConditions: true
+  maximumLineLength: 120
+  requireCamelCaseOrUpperCaseIdentifiers: true
+  requireCapitalizedComments: true
+  requireCapitalizedConstructors: true
+  requireCommaBeforeLineBreak: true
+  requireCurlyBraces: true
+  requireDollarBeforejQueryAssignment: true
+  requireDotNotation: true
+  requireLineFeedAtFileEnd: true
+  requireParenthesesAroundIIFE: true
+  requireSemicolons: true
+  requireSpaceAfterBinaryOperators: true
+  requireSpaceAfterKeywords:
+    - 'if'
+    - 'for'
+    - 'while'
+    - 'return'
+    - 'do'
+    - 'else'
+    - 'switch'
+    - 'try'
+    - 'catch'
+    - 'in'
+    - 'return'
+    - 'void'
+  disallowSpaceAfterKeywords: ['function', 'typeof']
+  requireSpaceAfterLineComment: true
+  disallowSpaceAfterObjectKeys: true
+  requireSpaceBeforeBinaryOperators: true
+  requireSpaceBeforeBlockStatements: true
+  requireSpaceBeforeObjectValues: true
+  requireSpaceBetweenArguments: true
+  requireSpacesInAnonymousFunctionExpression:
+      beforeOpeningCurlyBrace: true
+  requireSpacesInConditionalExpression: true
+  requireSpacesInForStatement: true
+  requireSpacesInsideObjectBrackets: 'all'
+  validateAlignedFunctionParameters: true
+  validateIndentation: 4
+  validateParameterSeparator: ', '
+  validateQuoteMarks: true
+routes: ['routes/**/*.js']
+angular: ['angular/**/*.js']
+config: ['config/**/*.js']
+models: ['models/**/*.js']
+server: ['server.js']
+grunt: ['Gruntfile.js', 'grunt/**/*.js']
+test: ['test/**/*.js']

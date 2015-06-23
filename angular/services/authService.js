@@ -2,21 +2,21 @@ app.factory('authService', ['$http', '$window', function($http, $window) {
     var tokenName = 'vacaciones-permanentes-token';
 
     var authService = {};
-    authService.saveToken = function (token) {
+    authService.saveToken = function(token) {
         $window.localStorage[tokenName] = token;
     };
-    authService.getToken = function () {
+    authService.getToken = function() {
         return $window.localStorage[tokenName];
     };
     authService.getHeader = function() {
         return {
-            headers: {Authorization: 'Bearer ' + authService.getToken()},
+            headers: { Authorization: 'Bearer ' + authService.getToken() },
             timeout: 5000
         };
     };
     authService.getPayload = function() {
         var token = authService.getToken();
-        if(token) {
+        if (token) {
             return JSON.parse($window.atob(token.split('.')[1]));
         } else {
             return null;
@@ -24,14 +24,14 @@ app.factory('authService', ['$http', '$window', function($http, $window) {
     };
     authService.isLoggedIn = function() {
         var payload = authService.getPayload();
-        if(payload) {
+        if (payload) {
             return payload.exp > Date.now() / 1000;
         } else {
             return false;
         }
     };
     authService.currentUser = function() {
-        if(authService.isLoggedIn()) {
+        if (authService.isLoggedIn()) {
             var payload = authService.getPayload();
             return {
                 _id: payload._id,
@@ -56,4 +56,4 @@ app.factory('authService', ['$http', '$window', function($http, $window) {
         $window.localStorage.removeItem(tokenName);
     };
     return authService;
-}]);
+} ]);

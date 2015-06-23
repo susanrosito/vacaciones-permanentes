@@ -1,9 +1,9 @@
-logger.info("Creating Destination Schema");
+logger.info('Creating Destination Schema');
 
-var relationship = require("mongoose-relationship");
+var relationship = require('mongoose-relationship');
 
 var DestinationSchema = module.exports = new mongoose.Schema({
-    trip: { type: ObjectId, ref:"Trip", childPath:"destinations" },
+    trip: { type: ObjectId, ref: 'Trip', childPath: 'destinations' },
     city: String,
     image: String,
     startDate: Date,
@@ -19,21 +19,21 @@ var DestinationSchema = module.exports = new mongoose.Schema({
         latitude: Number,
         longitude: Number
     },
-    pois: [{type: ObjectId, ref:'POI'}]
+    pois: [{ type: ObjectId, ref: 'POI' }]
 });
 
-DestinationSchema.methods.getFilteredPOIs = function (pois) {
+DestinationSchema.methods.getFilteredPOIs = function(pois) {
 
-    var poisIds = _.map(pois, function (e) {
+    var poisIds = _.map(pois, function(e) {
         return e._id;
     });
 
-    var poisToRemove = _.filter(this.pois, function (each) {
-        return !_.some(poisIds, function (id) {
-            return each.equals(id)
+    var poisToRemove = _.filter(this.pois, function(each) {
+        return !_.some(poisIds, function(id) {
+            return each.equals(id);
         });
     });
-    var poisToAdd = _.filter(pois, function (each) {
+    var poisToAdd = _.filter(pois, function(each) {
         return !each._id;
     });
     return {
