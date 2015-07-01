@@ -7,9 +7,12 @@
     "Susana Consolacion Rosito Sayago <rosito.susana@gmail.com>"
   ],
   "license": "Apache v2",
-  "main": "server.js",
+  "main": "target/server.js",
+  "engines": {
+    "node": ">= 0.10.0"
+  },
   "scripts": {
-    "start": "grunt run",
+    "postinstall": "grunt bower-install-simple compile",
     "test": "grunt test"
   },
   "dependencies": {
@@ -31,9 +34,7 @@
     "sprintf-js": "^1.0.2",
     "underscore": "^1.8.2",
     "underscore.string": "^3.0.3",
-    "winston": "^0.9.0"
-  },
-  "devDependencies": {
+    "winston": "^0.9.0",
     "bower": "^1.3.12",
     "browserify": "^9.0.8",
     "grunt": "^0.4.5",

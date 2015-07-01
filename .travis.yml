@@ -1,3 +1,10 @@
 language: node_js
 node_js:
-  - "0.12"
+- '0.10'
+deploy:
+  provider: heroku
+  api_key:
+      secure: eNZsH4C7hat0izrYPrKuokwBIlxCS5GZW7GRQanqc6e277I1h+ILYY2FANgH1m9l9pJdB9e3RBEYoKsOK6pk7Al6IUbYQHH/Nfc6+Nf1xsAEokAZ0sfACZq/9G1WY6C8rDaxKqDX0NdLBYJt3samtLj7J8AyBhNU4BfITEn8mb2HSPAeeWYfFQyxQFrODdfeSvIaaZjbEC2lHfPQNgo6RC6YhUdoK9m6yQJUBeHyum9TGqtZ1TTKLigCoCS9dsjLd7Ed6wxTVrL8ECLfxDtALbksP8ntws9Ux2UGw05CeJ3yPDtjRWCgVW9gvp4UvDOvJ3tI5hWTD0bC3kkLixcvphoLkMGBoSiyErs+UbIgHH0kVmvmHfWdQaO2fBUXRrmzvTa7gk083NP2dNhup7+QEBBHiu6n9Pyu11V6yN+kscseaor+DaNrX7nmnU782CcFa9SH0VCuY3ACSZyRP5MPgQWV7lVDGqibpXtzgWKbPiodHbVTCEGrNxjsh/299wOMB+Vpv91gWUbDl3aBFhvDCznPfZ/LTYEYzoN9igVKZLlprOWNUHH/vWJbgiyWCHHQbyiZCQS0eTisPxs8nH0yMb0THgdTR4ZM597eBF32KzOM0xBjexeYk/h0oRYEsLvNzaPLz61RC7fJgg1WF4edfI0+3RU8TpzRhvnnjIJ2Xkw=
+  app:
+    master: vacaciones-permanentes
+    develop: vacaciones-permanentes-develop
