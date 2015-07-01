@@ -1,4 +1,4 @@
-language: node_js
+language : node_js
 node_js :
   - "0.12"
 #before_deploy:
@@ -10,13 +10,6 @@ deploy :
    app : 
 	develop : vacacionespermanentes
    on : develop
-   #deployment_branch: mybranch 
-     #all_branches: true
-   #skip_cleanup: true
-   #deployment_branch: mybranch
-
-#after_deploy:
 
 
-# comando de configuracion para que openshift deploya un branch diferente del default master.
-#rhc app-configure --deployment-branch mybranch
+
