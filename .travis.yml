@@ -1,3 +1,22 @@
 language: node_js
 node_js:
   - "0.12"
+#before_deploy:
+deploy:
+   provider: openshift	
+   user: rosito.susana@gmail.com
+   password: vacaciones123 # puede ser encriptado
+   domain: developsu 
+   app: 
+	develop: https://github.com/susanrosito/vacaciones-permanentes.git
+   on: develop
+   #deployment_branch: mybranch	
+     #all_branches: true
+   #skip_cleanup: true
+   #deployment_branch: mybranch
+
+#after_deploy:
+
+
+# comando de configuracion para que openshift deploya un branch diferente del default master.
+#rhc app-configure --deployment-branch mybranch
