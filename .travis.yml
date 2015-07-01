@@ -8,7 +8,7 @@ deploy :
    password : vacaciones123 # puede ser encriptado
    domain : developsu
    app : 
-	develop: vacacionespermanentes
+	develop : vacacionespermanentes
 
 
 
