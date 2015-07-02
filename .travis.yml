@@ -8,3 +8,6 @@ deploy :
    domain : developsu
    app : 
        develop : vacacionespermanentes
+
+   on : develop
+  
