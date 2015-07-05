@@ -2,12 +2,11 @@ language : node_js
 node_js :
   - "0.12"
 deploy :
-   provider : openshift
+   provider: openshift
    user : rosito.susana@gmail.com
    password : vacaciones123 # puede ser encriptado
    domain : developsu
    app : 
        develop : vacacionespermanentes
-
    on : develop
   
