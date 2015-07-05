@@ -5,8 +5,7 @@ deploy :
    provider: openshift
    user : rosito.susana@gmail.com
    password : vacaciones123 # puede ser encriptado
-   domain: 
-         master : developsu
+   domain: developsu
    app: 
          master : vacacionespermanentes
    on : develop 
