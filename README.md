@@ -1,6 +1,12 @@
 # vacaciones-permanentes [![Build Status](https://travis-ci.org/robaud/vacaciones-permanentes.svg?branch=develop)](https://travis-ci.org/robaud/vacaciones-permanentes)
 Proyecto MEAN para la materia de Desarrollo de Software
 
+## Acceso a los builds del proyecto
+
+Develop: http://vacaciones-permanentes-develop.herokuapp.com/#/login
+
+Master: http://vacaciones-permanentes.herokuapp.com/#/login
+
 ## Correr el proyecto
 
 Primero correr el servidor de mongo en un puerto estándar
