@@ -1,11 +1,10 @@
-language : node_js
-node_js :
-  - "0.12"
-deploy :
-   provider: openshift
-   user : rosito.susana@gmail.com
-   password : vacaciones123 # puede ser encriptado
-   domain: developsu
-   app: 
-         master : vacacionespermanentes
-   on : develop 
+language: node_js
+node_js:
+- '0.10'
+deploy:
+  provider: heroku
+  api_key:
+    secure: BWlLlqbsfALWz+LlfqlgnZ0k9NYy5Vr44FygWzHvQmeWVBLVjcH7sb95OJ06r15OUeOkGG1ZDyS3IMCcK404Hzv1wYy2VsQn7eMvLqiSuCQjhfGxo4UseY4MxpT0GLF0N05PxbyvCxNy8XWnmoJ0yacIE7PB++NAsz5LagcPTVSKC9kLJOtXe3q0fF3qAJujSGiBjjlphSFcEvYtnWM9qT8cve1zCKH9rPjx74SkREgHyTzmxNzn/A/KFDeGLFYhuLlALXkLNZtGVryci+o/MgPwsbcexb4H0IcbX69d3kny47UJLgt2dbyJY75Moci7ZdMtCfVlaUaoUpeslveaMVMu1gJ8+mPonmcKfVHn/9wcWUGdcLZ68CzEfjuBNVvpSsE/kw3IjkyIGGgTP4tMyWKm4wCtYOv3ErKcese90GnpclPvoGaTOlxlmF6eBXXpszKLdq/6Pdzxh5nA7u/T5a/D7+zD2r4ZveAoS3Ekx1l8uspr1/8VdUIZXKZNybW0G0m+MZcIW5cFGp/z0QVu+EO+NkYitjhR7NX7PPEsJ46Q7dy7K8ulv60j6I2Vr6jH16dQqXo/6qSJOGqzx0n0I2I/nEBG/vHEemoXrPN1j/1DAGtxiKJMOdmedU15MnYu+U3R6etU6CfidgZ14q4XLjNyRYBdo6LirOCtq5Pou0E=
+  app:
+    master: vacaciones-permanentes
+    develop: vacaciones-permanentes-develop
