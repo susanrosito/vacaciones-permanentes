@@ -9,5 +9,4 @@ deploy :
 	master : developsu
    app : 
 	master : vacacionespermanentes
-   on : develop
-  
+   on : develop 
