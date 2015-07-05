@@ -6,25 +6,23 @@ var underscore = require('underscore'),
     jwt = require('express-jwt'),
     HTTPStatus = require('http-status');
 
+var env = process.env;
+
 underscore.str = require('underscore.string');
 underscore.mixin(underscore.str.exports());
 
 var config = global.config = {
-    env: process.env.NODE_ENV || 'development',
-    hostname: process.env.NODE_HOST || 'http://localhost',
-    port: process.env.NODE_PORT || 3000
+    env: env.ENV || 'development',
+    hostname: env.HOST || 'http://localhost',
+    port: env.PORT || 3000
 };
 
 config.mongo = {
-    uri: process.env.MONGO_URI || 'localhost',
-    db: process.env.MONGO_DB || 'vacaciones_permanentes',
-    connectionString: function() {
-        return 'mongodb://' + this.uri + '/' + this.db;
-    }
+    connectionString: env.MONGO_URI || 'mongodb://localhost/vacaciones_permanentes'
 };
 
 config.auth = {};
-config.auth.secret = process.env.APP_SECRET || 'SOMESECRET';
+config.auth.secret = env.APP_UUID || 'V4cAc1on3SP3rm4n3n73s';
 
 config.log = {};
 config.log.level = 'info';

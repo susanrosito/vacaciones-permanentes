@@ -9,11 +9,15 @@ app.use(cors());
 
 app.use(require('./routes/request_logger.js'));
 
-// jscs:disable disallowSpaceAfterKeywords
-app.use(function staticsPlaceholder(req, res, next) {
-    return next();
-});
-// jscs:enable disallowSpaceAfterKeywords
+if (config.env == 'production') {
+    app.use(express.static(__dirname + '/public'));
+} else {
+    // jscs:disable disallowSpaceAfterKeywords
+    app.use(function staticsPlaceholder(req, res, next) {
+        return next();
+    });
+    // jscs:enable disallowSpaceAfterKeywords
+}
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -21,7 +25,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/', function(req, res, next) { res.charset = 'utf-8'; next(); });
 
 logger.info(__('Connecting to MongoDB at %s', config.mongo.connectionString));
-mongoose.connect(config.mongo.connectionString());
+mongoose.connect(config.mongo.connectionString);
 logger.info(__('Database connected'));
 
 require('./models');
@@ -39,3 +43,9 @@ app.use(function(err, req, res) {
 });
 
 module.exports = app;
+
+if (config.env == 'production') {
+    app.listen(config.port, function() {
+        logger.info('Running on port: ' + config.port);
+    });
+}
