@@ -1,28 +1,22 @@
 module.exports = function() {
     return {
         develop: {
-            NODE_ENV: 'development',
-            NODE_HOST: 'http://localhost',
-            NODE_PORT: 3000,
-            MONGO_URI: 'localhost',
-            MONGO_DB: 'vacaciones_permanentes',
-            APP_SECRET: 'SOMESECRET'
+            ENV: 'development',
+            HOST: 'http://localhost',
+            PORT: 3000,
+            MONGO_URI: 'mongodb://localhost/vacaciones_permanentes',
+            APP_UUID: 'SOMESECRET'
         },
         test: {
-            NODE_ENV: 'test',
-            NODE_HOST: 'http://localhost',
-            NODE_PORT: 3000,
-            MONGO_URI: 'localhost',
-            MONGO_DB: 'vacaciones_permanentes_test',
-            APP_SECRET: 'SOMESECRET'
+            ENV: 'test',
+            HOST: 'http://localhost',
+            PORT: 3000,
+            MONGO_URI: 'mongodb://localhost/vacaciones_permanentes_test',
+            APP_UUID: 'SOMESECRET'
         },
         prod: {
-            NODE_ENV: 'production',
-            NODE_HOST: 'http://localhost',
-            NODE_PORT: 3000,
-            MONGO_URI: 'localhost',
-            MONGO_DB: 'vacaciones_permanentes',
-            APP_SECRET: 'SOMESECRET'
+            ENV: 'production'
+            // Set other app variables directly in OpenShift for security reasons
         }
     };
 };
